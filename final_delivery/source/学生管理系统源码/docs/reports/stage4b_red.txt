@@ -1,0 +1,38 @@
+FF
+================================== FAILURES ===================================
+____________ test_homeroom_list_and_profile_only_include_own_class ____________
+
+scoped_teacher = (namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_stude...acher=1, other_teacher=2, own_class=1, other_class=2, own=1, course_only=2, unrelated=3, own_course=1, other_course=2))
+
+    def test_homeroom_list_and_profile_only_include_own_class(scoped_teacher):
+        auth, ids = scoped_teacher
+        classes = auth.client.get("/teacher/classes")
+>       assert classes.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests\test_teacher_student_read.py:7: AssertionError
+______ test_course_only_roster_deduplicates_and_withholds_private_fields ______
+
+scoped_teacher = (namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_stude...acher=1, other_teacher=2, own_class=1, other_class=2, own=1, course_only=2, unrelated=3, own_course=1, other_course=2))
+
+    def test_course_only_roster_deduplicates_and_withholds_private_fields(scoped_teacher):
+        auth, ids = scoped_teacher
+        courses = auth.client.get("/teacher/courses")
+>       assert courses.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests\test_teacher_student_read.py:21: AssertionError
+============================== warnings summary ===============================
+tests/test_teacher_student_read.py::test_homeroom_list_and_profile_only_include_own_class
+tests/test_teacher_student_read.py::test_course_only_roster_deduplicates_and_withholds_private_fields
+  F:\StudentManagementSystem\tests\teacher_scope_support.py:19: SAWarning: Object of type <SchoolClass> not in session, add operation along 'Teacher.homeroom_classes' will not proceed (This warning originated from the Session 'autoflush' process, which was invoked automatically in response to a user-initiated operation. Consider using ``no_autoflush`` context manager if this warning happened while initializing objects.)
+    own = db.session.get(Student, auth.student_ids[0])
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_teacher_student_read.py::test_homeroom_list_and_profile_only_include_own_class
+FAILED tests/test_teacher_student_read.py::test_course_only_roster_deduplicates_and_withholds_private_fields
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 2 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+2 failed, 2 warnings in 1.89s

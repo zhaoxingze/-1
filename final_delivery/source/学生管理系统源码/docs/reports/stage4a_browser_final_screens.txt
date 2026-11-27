@@ -1,0 +1,6 @@
+### Result
+{"final_detail_screenshots":4,"passed":true}
+### Ran Playwright code
+```js
+await (async(page)=>{const a={"username": "browser_admin", "password": "<temporary-password-redacted>", "user_id": 1, "student_id": null},ids={"teacher_id": 2, "class_id": 1, "student_id": 3, "parent_ids": [1, 2]};const base='http://127.0.0.1:5064';await page.goto(base+'/login');await page.locator('body').ariaSnapshot();await page.getByLabel('用户名',{exact:true}).fill(a.username);await page.getByLabel('密码',{exact:true}).fill(a.password);await page.getByRole('button',{name:'登录系统',exact:true}).click();await page.waitForURL(base+'/admin/');for(const [name,path] of [['student-detail','/admin/students/'+ids.student_id],['teacher-detail','/admin/teachers/'+ids.teacher_id],['class-detail','/admin/classes/'+ids.class_id],['parent-detail','/admin/students/'+ids.student_id+'/parents/'+ids.parent_ids[1]]]){const response=await page.goto(base+path);if(response.status()!==200)throw Error('detail');await page.locator('body').ariaSnapshot();await page.screenshot({path:'F:/StudentManagementSystem/output/playwright/stage4a-'+name+'.png',fullPage:true})}await page.getByRole('button',{name:'退出登录',exact:true}).click();await page.waitForURL(base+'/login');return {final_detail_screenshots:4,passed:true};})(page);
+```

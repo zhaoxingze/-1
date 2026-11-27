@@ -1,0 +1,23 @@
+# Python and the project-local environment
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local configuration and runtime data
+.env
+.env.*
+instance/*
+!instance/.gitkeep
+*.log
+
+# Browser automation runtime files
+.playwright-cli/
+
+# Editor and OS files
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store

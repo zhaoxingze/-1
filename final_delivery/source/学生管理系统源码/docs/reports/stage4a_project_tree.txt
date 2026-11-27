@@ -1,0 +1,285 @@
+StudentManagementSystem/
+├── .playwright-cli/ [runtime/archive, not expanded]
+├── .pytest_cache/ [runtime/archive, not expanded]
+├── .venv/ [runtime/archive, not expanded]
+├── __pycache__/ [runtime/archive, not expanded]
+├── app/
+│   ├── __pycache__/ [runtime/archive, not expanded]
+│   ├── academics/
+│   │   ├── __pycache__/ [runtime/archive, not expanded]
+│   │   └── __init__.py
+│   ├── admin/
+│   │   ├── __pycache__/ [runtime/archive, not expanded]
+│   │   ├── __init__.py
+│   │   ├── archive_forms.py
+│   │   ├── archive_views.py
+│   │   ├── class_routes.py
+│   │   ├── parent_routes.py
+│   │   ├── routes.py
+│   │   ├── student_routes.py
+│   │   └── teacher_routes.py
+│   ├── attendance/
+│   │   ├── __pycache__/ [runtime/archive, not expanded]
+│   │   └── __init__.py
+│   ├── auth/
+│   │   ├── __pycache__/ [runtime/archive, not expanded]
+│   │   ├── __init__.py
+│   │   ├── forms.py
+│   │   ├── routes.py
+│   │   └── session.py
+│   ├── dashboard/
+│   │   ├── __pycache__/ [runtime/archive, not expanded]
+│   │   ├── __init__.py
+│   │   └── routes.py
+│   ├── models/
+│   │   ├── __pycache__/ [runtime/archive, not expanded]
+│   │   ├── __init__.py
+│   │   ├── attendance.py
+│   │   ├── audit_log.py
+│   │   ├── course.py
+│   │   ├── enrollment.py
+│   │   ├── integrity.py
+│   │   ├── notification_log.py
+│   │   ├── parent.py
+│   │   ├── parent_contact.py
+│   │   ├── reward.py
+│   │   ├── role.py
+│   │   ├── school_class.py
+│   │   ├── security.py
+│   │   ├── student.py
+│   │   ├── teacher.py
+│   │   ├── types.py
+│   │   └── user.py
+│   ├── records/
+│   │   ├── __pycache__/ [runtime/archive, not expanded]
+│   │   └── __init__.py
+│   ├── services/
+│   │   ├── __pycache__/ [runtime/archive, not expanded]
+│   │   ├── __init__.py
+│   │   ├── archive_common.py
+│   │   ├── archive_references.py
+│   │   ├── audit_service.py
+│   │   ├── class_service.py
+│   │   ├── data_validation_service.py
+│   │   ├── notification_service.py
+│   │   ├── parent_service.py
+│   │   ├── password_service.py
+│   │   ├── permission_service.py
+│   │   ├── student_service.py
+│   │   └── teacher_service.py
+│   ├── static/
+│   │   ├── css/
+│   │   │   └── app.css
+│   │   ├── vendor/
+│   │   │   └── bootstrap-5.3.3.min.css
+│   │   └── brand.svg
+│   ├── students/
+│   │   ├── __pycache__/ [runtime/archive, not expanded]
+│   │   ├── __init__.py
+│   │   └── routes.py
+│   ├── templates/
+│   │   ├── admin/
+│   │   │   ├── _macros.html
+│   │   │   ├── class_detail.html
+│   │   │   ├── form.html
+│   │   │   ├── list.html
+│   │   │   ├── parent_detail.html
+│   │   │   ├── student_detail.html
+│   │   │   └── teacher_detail.html
+│   │   ├── auth/
+│   │   │   ├── login.html
+│   │   │   ├── password.html
+│   │   │   └── password_lookup.html
+│   │   ├── dashboard/
+│   │   │   ├── index.html
+│   │   │   ├── profile.html
+│   │   │   ├── student_profile.html
+│   │   │   └── workbench.html
+│   │   ├── errors/
+│   │   │   ├── 403.html
+│   │   │   ├── 404.html
+│   │   │   ├── 500.html
+│   │   │   └── base.html
+│   │   └── layout.html
+│   ├── __init__.py
+│   ├── cli.py
+│   ├── errors.py
+│   ├── extensions.py
+│   └── logging_config.py
+├── docs/
+│   ├── reports/
+│   │   ├── important_changes.md
+│   │   ├── stage1_browser.txt
+│   │   ├── stage1_environment.json
+│   │   ├── stage1_final_validation.json
+│   │   ├── stage1_http_smoke.json
+│   │   ├── stage1_pip_check.txt
+│   │   ├── stage1_project_tree.txt
+│   │   ├── stage1_pytest.txt
+│   │   ├── stage1_pytest_before_pages.txt
+│   │   ├── stage1_pytest_red.txt
+│   │   ├── stage1_report.md
+│   │   ├── stage1_source_migration.json
+│   │   ├── stage2_audit_replace_red.txt
+│   │   ├── stage2_database_inspection.json
+│   │   ├── stage2_final_validation.json
+│   │   ├── stage2_http_smoke.json
+│   │   ├── stage2_integration_first.txt
+│   │   ├── stage2_migration_check.txt
+│   │   ├── stage2_migration_logging_red.txt
+│   │   ├── stage2_migration_red.txt
+│   │   ├── stage2_pip_check.txt
+│   │   ├── stage2_project_tree.txt
+│   │   ├── stage2_pytest.txt
+│   │   ├── stage2_report.md
+│   │   ├── stage2_schema.json
+│   │   ├── stage2_stage1_regression.txt
+│   │   ├── stage2_upgrade.txt
+│   │   ├── stage3_auth_first.txt
+│   │   ├── stage3_auth_red.txt
+│   │   ├── stage3_baseline_db_check.txt
+│   │   ├── stage3_baseline_pytest.txt
+│   │   ├── stage3_boundary_red.txt
+│   │   ├── stage3_browser.json
+│   │   ├── stage3_browser.txt
+│   │   ├── stage3_final_validation.json
+│   │   ├── stage3_independent_review.md
+│   │   ├── stage3_integration_first.txt
+│   │   ├── stage3_migration_check.txt
+│   │   ├── stage3_package_validation.json
+│   │   ├── stage3_password_red.txt
+│   │   ├── stage3_password_session.txt
+│   │   ├── stage3_pip_check.txt
+│   │   ├── stage3_project_tree.txt
+│   │   ├── stage3_pytest.txt
+│   │   ├── stage3_report.md
+│   │   ├── stage3_review_green.txt
+│   │   ├── stage3_review_red.txt
+│   │   ├── stage3_server.txt
+│   │   ├── stage3_uml_render.txt
+│   │   ├── stage3_uml_validation.txt
+│   │   ├── stage4a_backup.json
+│   │   ├── stage4a_baseline_pytest.txt
+│   │   ├── stage4a_browser.json
+│   │   ├── stage4a_browser.txt
+│   │   ├── stage4a_browser_final_screens.txt
+│   │   ├── stage4a_extracted_install.txt
+│   │   ├── stage4a_extracted_pip_check.txt
+│   │   ├── stage4a_extracted_pytest.txt
+│   │   ├── stage4a_extracted_validation.json
+│   │   ├── stage4a_extracted_venv.txt
+│   │   ├── stage4a_final_validation.json
+│   │   ├── stage4a_first.txt
+│   │   ├── stage4a_independent_review.md
+│   │   ├── stage4a_integration.txt
+│   │   ├── stage4a_migration_check.txt
+│   │   ├── stage4a_package_validation.json
+│   │   ├── stage4a_pip_check.txt
+│   │   ├── stage4a_project_tree.txt
+│   │   ├── stage4a_pytest.txt
+│   │   ├── stage4a_red.txt
+│   │   ├── stage4a_report.md
+│   │   ├── stage4a_review_green.txt
+│   │   ├── stage4a_review_red.txt
+│   │   ├── stage4a_server.txt
+│   │   ├── stage4a_services.txt
+│   │   ├── stage4a_uml_render.txt
+│   │   ├── stage4a_uml_syntax.txt
+│   │   └── stage4a_warning_red.txt
+│   ├── specs/
+│   │   ├── source/
+│   │   │   └── 学生管理系统_前期设计方案与Codex分阶段提示词.docx
+│   │   ├── architecture.md
+│   │   ├── assumptions.md
+│   │   ├── database_design.md
+│   │   ├── design_review_report.md
+│   │   ├── requirements.md
+│   │   ├── stage2_decisions.md
+│   │   ├── stage3_auth_rbac_design.md
+│   │   └── stage4a_design.md
+│   ├── superpowers/
+│   │   └── plans/
+│   │       ├── 2026-11-16-phase1-flask-scaffold.md
+│   │       ├── 2026-11-16-phase2-database.md
+│   │       ├── 2026-11-17-phase3-auth-rbac.md
+│   │       └── 2026-11-18-phase4a-archives.md
+│   └── uml/
+│       ├── activity_diagram.puml
+│       ├── class_diagram.puml
+│       ├── communication_diagram.puml
+│       ├── er_diagram.puml
+│       ├── README.md
+│       ├── sequence_diagram.puml
+│       ├── state_diagram.puml
+│       └── usecase.puml
+├── instance/
+│   ├── .gitkeep
+│   └── student_management.db
+├── migrations/
+│   ├── __pycache__/ [runtime/archive, not expanded]
+│   ├── versions/
+│   │   ├── __pycache__/ [runtime/archive, not expanded]
+│   │   └── fab16ef0dd6f_initial_thirteen_domain_tables.py
+│   ├── alembic.ini
+│   ├── env.py
+│   ├── README
+│   └── script.py.mako
+├── output/
+│   ├── delivery/ [runtime/archive, not expanded]
+│   └── playwright/
+│       ├── homepage-mobile.png
+│       ├── homepage.png
+│       ├── stage2-homepage.png
+│       ├── stage3-admin-dashboard.png
+│       ├── stage3-homepage.png
+│       ├── stage3-login-mobile.png
+│       ├── stage3-login.png
+│       ├── stage3-student-dashboard.png
+│       ├── stage3-teacher-dashboard.png
+│       ├── stage4a-admin-dashboard.png
+│       ├── stage4a-archive-confirmation.png
+│       ├── stage4a-class-detail.png
+│       ├── stage4a-duplicate-student-error.png
+│       ├── stage4a-mobile-student-form.png
+│       ├── stage4a-mobile-students.png
+│       ├── stage4a-parent-detail.png
+│       ├── stage4a-parents-list.png
+│       ├── stage4a-student-detail.png
+│       ├── stage4a-student-form-error.png
+│       ├── stage4a-students-list.png
+│       └── stage4a-teacher-detail.png
+├── tests/
+│   ├── __pycache__/ [runtime/archive, not expanded]
+│   ├── archive_support.py
+│   ├── conftest.py
+│   ├── test_app.py
+│   ├── test_audit_append_only_replace.py
+│   ├── test_audit_service.py
+│   ├── test_auth_login.py
+│   ├── test_auth_logout.py
+│   ├── test_auth_passwords.py
+│   ├── test_auth_security.py
+│   ├── test_auth_session.py
+│   ├── test_class_crud.py
+│   ├── test_configuration.py
+│   ├── test_csrf.py
+│   ├── test_data_validation_service.py
+│   ├── test_database_cli.py
+│   ├── test_database_constraints.py
+│   ├── test_database_migrations.py
+│   ├── test_models.py
+│   ├── test_notification_service.py
+│   ├── test_object_permissions.py
+│   ├── test_pages.py
+│   ├── test_parent_crud.py
+│   ├── test_rbac.py
+│   ├── test_stage4_audit.py
+│   ├── test_stage4_permissions.py
+│   ├── test_student_crud.py
+│   └── test_teacher_crud.py
+├── .gitignore
+├── config.py
+├── pytest.ini
+├── README.md
+├── requirements.txt
+└── run.py

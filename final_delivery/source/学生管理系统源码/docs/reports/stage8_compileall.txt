@@ -1,0 +1,1 @@
+compileall returned exit code 0 for app, scripts, tests, migrations, config.py and run.py

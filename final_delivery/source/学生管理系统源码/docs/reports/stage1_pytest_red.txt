@@ -1,0 +1,15 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+_______________________ test_application_can_be_created _______________________
+
+    def test_application_can_be_created():
+        # A missing application package is reported as a meaningful initial failure.
+>       assert find_spec("app") is not None, "The Flask application factory is not implemented yet."
+E       AssertionError: The Flask application factory is not implemented yet.
+E       assert None is not None
+E        +  where None = find_spec('app')
+
+tests\test_app.py:10: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_app.py::test_application_can_be_created - AssertionError: T...
+1 failed in 0.26s

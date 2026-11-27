@@ -1,0 +1,83 @@
+FFFFFFFF                                                                 [100%]
+================================== FAILURES ===================================
+__________ test_demo_has_random_keys_and_http_security_without_debug __________
+tests\test_stage8_configuration.py:12: in test_demo_has_random_keys_and_http_security_without_debug
+    first = create_app("demo", {"DEBUG": True}, instance_path=str(tmp_path / "one"))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\__init__.py:22: in create_app
+    raise ValueError(f"Unknown configuration: {config_name}")
+E   ValueError: Unknown configuration: demo
+____ test_online_backup_includes_committed_wal_and_restores_independently _____
+tests\test_stage8_backup_restore.py:12: in test_online_backup_includes_committed_wal_and_restores_independently
+    from scripts.sqlite_snapshot import copy_database
+E   ModuleNotFoundError: No module named 'scripts'
+_______________ test_security_headers_cover_html_and_assets[/] ________________
+tests\test_stage8_security.py:14: in test_security_headers_cover_html_and_assets
+    assert response.headers["Referrer-Policy"] == "same-origin"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<临时验收目录>\fresh-venv\Lib\site-packages\werkzeug\datastructures\headers.py:87: in __getitem__
+    return self._get_key(key)
+           ^^^^^^^^^^^^^^^^^^
+<临时验收目录>\fresh-venv\Lib\site-packages\werkzeug\datastructures\headers.py:101: in _get_key
+    raise BadRequestKeyError(key)
+E   werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+_____________ test_security_headers_cover_html_and_assets[/login] _____________
+tests\test_stage8_security.py:14: in test_security_headers_cover_html_and_assets
+    assert response.headers["Referrer-Policy"] == "same-origin"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<临时验收目录>\fresh-venv\Lib\site-packages\werkzeug\datastructures\headers.py:87: in __getitem__
+    return self._get_key(key)
+           ^^^^^^^^^^^^^^^^^^
+<临时验收目录>\fresh-venv\Lib\site-packages\werkzeug\datastructures\headers.py:101: in _get_key
+    raise BadRequestKeyError(key)
+E   werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+________ test_security_headers_cover_html_and_assets[/a-missing-page] _________
+tests\test_stage8_security.py:14: in test_security_headers_cover_html_and_assets
+    assert response.headers["Referrer-Policy"] == "same-origin"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<临时验收目录>\fresh-venv\Lib\site-packages\werkzeug\datastructures\headers.py:87: in __getitem__
+    return self._get_key(key)
+           ^^^^^^^^^^^^^^^^^^
+<临时验收目录>\fresh-venv\Lib\site-packages\werkzeug\datastructures\headers.py:101: in _get_key
+    raise BadRequestKeyError(key)
+E   werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+______ test_security_headers_cover_html_and_assets[/static/css/app.css] _______
+tests\test_stage8_security.py:12: in test_security_headers_cover_html_and_assets
+    assert response.headers["X-Content-Type-Options"] == "nosniff"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<临时验收目录>\fresh-venv\Lib\site-packages\werkzeug\datastructures\headers.py:87: in __getitem__
+    return self._get_key(key)
+           ^^^^^^^^^^^^^^^^^^
+<临时验收目录>\fresh-venv\Lib\site-packages\werkzeug\datastructures\headers.py:101: in _get_key
+    raise BadRequestKeyError(key)
+E   werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+_ test_security_headers_cover_html_and_assets[/static/vendor/bootstrap-5.3.3.min.css] _
+tests\test_stage8_security.py:12: in test_security_headers_cover_html_and_assets
+    assert response.headers["X-Content-Type-Options"] == "nosniff"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<临时验收目录>\fresh-venv\Lib\site-packages\werkzeug\datastructures\headers.py:87: in __getitem__
+    return self._get_key(key)
+           ^^^^^^^^^^^^^^^^^^
+<临时验收目录>\fresh-venv\Lib\site-packages\werkzeug\datastructures\headers.py:101: in _get_key
+    raise BadRequestKeyError(key)
+E   werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+____________ test_security_headers_cover_html_and_assets[/health] _____________
+tests\test_stage8_security.py:12: in test_security_headers_cover_html_and_assets
+    assert response.headers["X-Content-Type-Options"] == "nosniff"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<临时验收目录>\fresh-venv\Lib\site-packages\werkzeug\datastructures\headers.py:87: in __getitem__
+    return self._get_key(key)
+           ^^^^^^^^^^^^^^^^^^
+<临时验收目录>\fresh-venv\Lib\site-packages\werkzeug\datastructures\headers.py:101: in _get_key
+    raise BadRequestKeyError(key)
+E   werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+=========================== short test summary info ===========================
+FAILED tests/test_stage8_configuration.py::test_demo_has_random_keys_and_http_security_without_debug
+FAILED tests/test_stage8_backup_restore.py::test_online_backup_includes_committed_wal_and_restores_independently
+FAILED tests/test_stage8_security.py::test_security_headers_cover_html_and_assets[/]
+FAILED tests/test_stage8_security.py::test_security_headers_cover_html_and_assets[/login]
+FAILED tests/test_stage8_security.py::test_security_headers_cover_html_and_assets[/a-missing-page]
+FAILED tests/test_stage8_security.py::test_security_headers_cover_html_and_assets[/static/css/app.css]
+FAILED tests/test_stage8_security.py::test_security_headers_cover_html_and_assets[/static/vendor/bootstrap-5.3.3.min.css]
+FAILED tests/test_stage8_security.py::test_security_headers_cover_html_and_assets[/health]
+8 failed in 1.98s

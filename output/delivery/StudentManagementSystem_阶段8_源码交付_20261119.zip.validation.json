@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "archive": "output/delivery/StudentManagementSystem_阶段8_源码交付_20261119.zip",
+  "file_count": 444,
+  "size_bytes": 5625744,
+  "sha256": "586882b3d2a1e64900ff4688a221f0b4babc768825caa69678d32149ac5ef539",
+  "crc_verified": true,
+  "extracted_sha256_manifest_verified": true,
+  "relative_markdown_links_resolved": 402,
+  "stage8_screenshots": 14,
+  "extracted_stage8_tests_passed": 27,
+  "validation_runtime": "3.12.10",
+  "temporary_credentials_and_local_data_excluded": true,
+  "publication_edition": {
+    "redacted_local_windows_account_paths": true,
+    "original_archive_sha256": "fc17fcd4d6b871c1216150f8f764691945dddcaca07c424b47668238931ea5cf",
+    "original_test_results_preserved": true,
+    "publication_crc_and_member_sha256_verified": true
+  }
+}

@@ -1,0 +1,1946 @@
+.....FFFFF..FF.FFFF                                                      [100%]
+================================== FAILURES ===================================
+_________ test_public_pages_do_not_create_database_or_business_tables _________
+
+    def test_public_pages_do_not_create_database_or_business_tables():
+        from app import create_app
+        from app.extensions import db
+    
+        application = create_app("development")
+        with application.app_context():
+            database_path = Path(db.engine.url.database)
+            assert not database_path.exists()
+            assert not db.metadata.tables
+        client = application.test_client()
+>       assert client.get("/").status_code == 200
+               ^^^^^^^^^^^^^^^
+
+tests\test_configuration.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:917: in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:902: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\dashboard\routes.py:10: in index
+    return render_template("dashboard/index.html")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:150: in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1087: in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1016: in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:975: in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\loaders.py:126: in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:66: in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <flask.templating.DispatchingJinjaLoader object at 0x00000240D3B06810>
+environment = <flask.templating.Environment object at 0x00000240D3B067B0>
+template = 'dashboard/index.html'
+
+    def _get_source_fast(
+        self, environment: BaseEnvironment, template: str
+    ) -> tuple[str, str | None, t.Callable[[], bool] | None]:
+        for _srcobj, loader in self._iter_loaders(template):
+            try:
+                return loader.get_source(environment, template)
+            except TemplateNotFound:
+                continue
+>       raise TemplateNotFound(template)
+E       jinja2.exceptions.TemplateNotFound: dashboard/index.html
+
+.venv\Lib\site-packages\flask\templating.py:100: TemplateNotFound
+------------------------------ Captured log call ------------------------------
+INFO     app:__init__.py:57 Application initialized: profile=development; business tables not created
+_________ test_business_and_debug_routes_are_not_exposed[/auth/login] _________
+
+self = <Flask 'app'>
+
+    def full_dispatch_request(self) -> Response:
+        """Dispatches the request and on top of that performs request
+        pre and postprocessing as well as HTTP exception catching and
+        error handling.
+    
+        .. versionadded:: 0.7
+        """
+        self._got_first_request = True
+    
+        try:
+            request_started.send(self, _async_wrapper=self.ensure_sync)
+            rv = self.preprocess_request()
+            if rv is None:
+>               rv = self.dispatch_request()
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\flask\app.py:917: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\flask\app.py:891: in dispatch_request
+    self.raise_routing_exception(req)
+.venv\Lib\site-packages\flask\app.py:500: in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\ctx.py:362: in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <werkzeug.routing.map.MapAdapter object at 0x00000240D3ACACF0>
+path_info = '/auth/login', method = 'GET', return_rule = True, query_args = {}
+websocket = False
+
+    def match(
+        self,
+        path_info: str | None = None,
+        method: str | None = None,
+        return_rule: bool = False,
+        query_args: t.Mapping[str, t.Any] | str | None = None,
+        websocket: bool | None = None,
+    ) -> tuple[t.Any | Rule, t.Mapping[str, t.Any]]:
+        """The usage is simple: you just pass the match method the current
+        path info as well as the method (which defaults to `GET`).  The
+        following things can then happen:
+    
+        - you receive a `NotFound` exception that indicates that no URL is
+          matching.  A `NotFound` exception is also a WSGI application you
+          can call to get a default page not found page (happens to be the
+          same object as `werkzeug.exceptions.NotFound`)
+    
+        - you receive a `MethodNotAllowed` exception that indicates that there
+          is a match for this URL but not for the current request method.
+          This is useful for RESTful applications.
+    
+        - you receive a `RequestRedirect` exception with a `new_url`
+          attribute.  This exception is used to notify you about a request
+          Werkzeug requests from your WSGI application.  This is for example the
+          case if you request ``/foo`` although the correct URL is ``/foo/``
+          You can use the `RequestRedirect` instance as response-like object
+          similar to all other subclasses of `HTTPException`.
+    
+        - you receive a ``WebsocketMismatch`` exception if the only
+          match is a WebSocket rule but the bind is an HTTP request, or
+          if the match is an HTTP rule but the bind is a WebSocket
+          request.
+    
+        - you get a tuple in the form ``(endpoint, arguments)`` if there is
+          a match (unless `return_rule` is True, in which case you get a tuple
+          in the form ``(rule, arguments)``)
+    
+        If the path info is not passed to the match method the default path
+        info of the map is used (defaults to the root URL if not defined
+        explicitly).
+    
+        All of the exceptions raised are subclasses of `HTTPException` so they
+        can be used as WSGI responses. They will all render generic error or
+        redirect pages.
+    
+        Here is a small example for matching:
+    
+        >>> m = Map([
+        ...     Rule('/', endpoint='index'),
+        ...     Rule('/downloads/', endpoint='downloads/index'),
+        ...     Rule('/downloads/<int:id>', endpoint='downloads/show')
+        ... ])
+        >>> urls = m.bind("example.com", "/")
+        >>> urls.match("/", "GET")
+        ('index', {})
+        >>> urls.match("/downloads/42")
+        ('downloads/show', {'id': 42})
+    
+        And here is what happens on redirect and missing URLs:
+    
+        >>> urls.match("/downloads")
+        Traceback (most recent call last):
+          ...
+        RequestRedirect: http://example.com/downloads/
+        >>> urls.match("/missing")
+        Traceback (most recent call last):
+          ...
+        NotFound: 404 Not Found
+    
+        :param path_info: the path info to use for matching.  Overrides the
+                          path info specified on binding.
+        :param method: the HTTP method used for matching.  Overrides the
+                       method specified on binding.
+        :param return_rule: return the rule that matched instead of just the
+                            endpoint (defaults to `False`).
+        :param query_args: optional query arguments that are used for
+                           automatic redirects as string or dictionary.  It's
+                           currently not possible to use the query arguments
+                           for URL matching.
+        :param websocket: Match WebSocket instead of HTTP requests. A
+            websocket request has a ``ws`` or ``wss``
+            :attr:`url_scheme`. This overrides that detection.
+    
+        .. versionadded:: 1.0
+            Added ``websocket``.
+    
+        .. versionchanged:: 0.8
+            ``query_args`` can be a string.
+    
+        .. versionadded:: 0.7
+            Added ``query_args``.
+    
+        .. versionadded:: 0.6
+            Added ``return_rule``.
+        """
+        self.map.update()
+        if path_info is None:
+            path_info = self.path_info
+        if query_args is None:
+            query_args = self.query_args or {}
+        method = (method or self.default_method).upper()
+    
+        if websocket is None:
+            websocket = self.websocket
+    
+        domain_part = self.server_name
+    
+        if not self.map.host_matching and self.subdomain is not None:
+            domain_part = self.subdomain
+    
+        path_part = f"/{path_info.lstrip('/')}" if path_info else ""
+    
+        try:
+            result = self.map._matcher.match(domain_part, path_part, method, websocket)
+        except RequestPath as e:
+            # safe = https://url.spec.whatwg.org/#url-path-segment-string
+            new_path = quote(e.path_info, safe="!$&'()*+,/:;=@")
+            raise RequestRedirect(
+                self.make_redirect_url(new_path, query_args)
+            ) from None
+        except RequestAliasRedirect as e:
+            raise RequestRedirect(
+                self.make_alias_redirect_url(
+                    f"{domain_part}|{path_part}",
+                    e.endpoint,
+                    e.matched_values,
+                    method,
+                    query_args,
+                )
+            ) from None
+        except NoMatch as e:
+            if e.have_match_for:
+                raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+    
+            if e.websocket_mismatch:
+                raise WebsocketMismatch() from None
+    
+>           raise NotFound() from None
+E           werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+.venv\Lib\site-packages\werkzeug\routing\map.py:629: NotFound
+
+During handling of the above exception, another exception occurred:
+
+client = <FlaskClient <Flask 'app'>>, path = '/auth/login'
+
+    @pytest.mark.parametrize("path", ["/auth/login", "/students", "/courses", "/_test/forbidden"])
+    def test_business_and_debug_routes_are_not_exposed(client, path):
+>       assert client.get(path).status_code == 404
+               ^^^^^^^^^^^^^^^^
+
+tests\test_configuration.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:802: in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:777: in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\errors.py:13: in not_found
+    return render_template("errors/404.html"), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:150: in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1087: in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1016: in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:975: in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\loaders.py:126: in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:66: in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <flask.templating.DispatchingJinjaLoader object at 0x00000240D3ACB650>
+environment = <flask.templating.Environment object at 0x00000240D3ACA900>
+template = 'errors/404.html'
+
+    def _get_source_fast(
+        self, environment: BaseEnvironment, template: str
+    ) -> tuple[str, str | None, t.Callable[[], bool] | None]:
+        for _srcobj, loader in self._iter_loaders(template):
+            try:
+                return loader.get_source(environment, template)
+            except TemplateNotFound:
+                continue
+>       raise TemplateNotFound(template)
+E       jinja2.exceptions.TemplateNotFound: errors/404.html
+
+.venv\Lib\site-packages\flask\templating.py:100: TemplateNotFound
+__________ test_business_and_debug_routes_are_not_exposed[/students] __________
+
+self = <Flask 'app'>
+
+    def full_dispatch_request(self) -> Response:
+        """Dispatches the request and on top of that performs request
+        pre and postprocessing as well as HTTP exception catching and
+        error handling.
+    
+        .. versionadded:: 0.7
+        """
+        self._got_first_request = True
+    
+        try:
+            request_started.send(self, _async_wrapper=self.ensure_sync)
+            rv = self.preprocess_request()
+            if rv is None:
+>               rv = self.dispatch_request()
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\flask\app.py:917: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\flask\app.py:891: in dispatch_request
+    self.raise_routing_exception(req)
+.venv\Lib\site-packages\flask\app.py:500: in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\ctx.py:362: in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <werkzeug.routing.map.MapAdapter object at 0x00000240D3B32300>
+path_info = '/students', method = 'GET', return_rule = True, query_args = {}
+websocket = False
+
+    def match(
+        self,
+        path_info: str | None = None,
+        method: str | None = None,
+        return_rule: bool = False,
+        query_args: t.Mapping[str, t.Any] | str | None = None,
+        websocket: bool | None = None,
+    ) -> tuple[t.Any | Rule, t.Mapping[str, t.Any]]:
+        """The usage is simple: you just pass the match method the current
+        path info as well as the method (which defaults to `GET`).  The
+        following things can then happen:
+    
+        - you receive a `NotFound` exception that indicates that no URL is
+          matching.  A `NotFound` exception is also a WSGI application you
+          can call to get a default page not found page (happens to be the
+          same object as `werkzeug.exceptions.NotFound`)
+    
+        - you receive a `MethodNotAllowed` exception that indicates that there
+          is a match for this URL but not for the current request method.
+          This is useful for RESTful applications.
+    
+        - you receive a `RequestRedirect` exception with a `new_url`
+          attribute.  This exception is used to notify you about a request
+          Werkzeug requests from your WSGI application.  This is for example the
+          case if you request ``/foo`` although the correct URL is ``/foo/``
+          You can use the `RequestRedirect` instance as response-like object
+          similar to all other subclasses of `HTTPException`.
+    
+        - you receive a ``WebsocketMismatch`` exception if the only
+          match is a WebSocket rule but the bind is an HTTP request, or
+          if the match is an HTTP rule but the bind is a WebSocket
+          request.
+    
+        - you get a tuple in the form ``(endpoint, arguments)`` if there is
+          a match (unless `return_rule` is True, in which case you get a tuple
+          in the form ``(rule, arguments)``)
+    
+        If the path info is not passed to the match method the default path
+        info of the map is used (defaults to the root URL if not defined
+        explicitly).
+    
+        All of the exceptions raised are subclasses of `HTTPException` so they
+        can be used as WSGI responses. They will all render generic error or
+        redirect pages.
+    
+        Here is a small example for matching:
+    
+        >>> m = Map([
+        ...     Rule('/', endpoint='index'),
+        ...     Rule('/downloads/', endpoint='downloads/index'),
+        ...     Rule('/downloads/<int:id>', endpoint='downloads/show')
+        ... ])
+        >>> urls = m.bind("example.com", "/")
+        >>> urls.match("/", "GET")
+        ('index', {})
+        >>> urls.match("/downloads/42")
+        ('downloads/show', {'id': 42})
+    
+        And here is what happens on redirect and missing URLs:
+    
+        >>> urls.match("/downloads")
+        Traceback (most recent call last):
+          ...
+        RequestRedirect: http://example.com/downloads/
+        >>> urls.match("/missing")
+        Traceback (most recent call last):
+          ...
+        NotFound: 404 Not Found
+    
+        :param path_info: the path info to use for matching.  Overrides the
+                          path info specified on binding.
+        :param method: the HTTP method used for matching.  Overrides the
+                       method specified on binding.
+        :param return_rule: return the rule that matched instead of just the
+                            endpoint (defaults to `False`).
+        :param query_args: optional query arguments that are used for
+                           automatic redirects as string or dictionary.  It's
+                           currently not possible to use the query arguments
+                           for URL matching.
+        :param websocket: Match WebSocket instead of HTTP requests. A
+            websocket request has a ``ws`` or ``wss``
+            :attr:`url_scheme`. This overrides that detection.
+    
+        .. versionadded:: 1.0
+            Added ``websocket``.
+    
+        .. versionchanged:: 0.8
+            ``query_args`` can be a string.
+    
+        .. versionadded:: 0.7
+            Added ``query_args``.
+    
+        .. versionadded:: 0.6
+            Added ``return_rule``.
+        """
+        self.map.update()
+        if path_info is None:
+            path_info = self.path_info
+        if query_args is None:
+            query_args = self.query_args or {}
+        method = (method or self.default_method).upper()
+    
+        if websocket is None:
+            websocket = self.websocket
+    
+        domain_part = self.server_name
+    
+        if not self.map.host_matching and self.subdomain is not None:
+            domain_part = self.subdomain
+    
+        path_part = f"/{path_info.lstrip('/')}" if path_info else ""
+    
+        try:
+            result = self.map._matcher.match(domain_part, path_part, method, websocket)
+        except RequestPath as e:
+            # safe = https://url.spec.whatwg.org/#url-path-segment-string
+            new_path = quote(e.path_info, safe="!$&'()*+,/:;=@")
+            raise RequestRedirect(
+                self.make_redirect_url(new_path, query_args)
+            ) from None
+        except RequestAliasRedirect as e:
+            raise RequestRedirect(
+                self.make_alias_redirect_url(
+                    f"{domain_part}|{path_part}",
+                    e.endpoint,
+                    e.matched_values,
+                    method,
+                    query_args,
+                )
+            ) from None
+        except NoMatch as e:
+            if e.have_match_for:
+                raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+    
+            if e.websocket_mismatch:
+                raise WebsocketMismatch() from None
+    
+>           raise NotFound() from None
+E           werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+.venv\Lib\site-packages\werkzeug\routing\map.py:629: NotFound
+
+During handling of the above exception, another exception occurred:
+
+client = <FlaskClient <Flask 'app'>>, path = '/students'
+
+    @pytest.mark.parametrize("path", ["/auth/login", "/students", "/courses", "/_test/forbidden"])
+    def test_business_and_debug_routes_are_not_exposed(client, path):
+>       assert client.get(path).status_code == 404
+               ^^^^^^^^^^^^^^^^
+
+tests\test_configuration.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:802: in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:777: in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\errors.py:13: in not_found
+    return render_template("errors/404.html"), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:150: in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1087: in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1016: in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:975: in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\loaders.py:126: in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:66: in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <flask.templating.DispatchingJinjaLoader object at 0x00000240D3B31910>
+environment = <flask.templating.Environment object at 0x00000240D3B31880>
+template = 'errors/404.html'
+
+    def _get_source_fast(
+        self, environment: BaseEnvironment, template: str
+    ) -> tuple[str, str | None, t.Callable[[], bool] | None]:
+        for _srcobj, loader in self._iter_loaders(template):
+            try:
+                return loader.get_source(environment, template)
+            except TemplateNotFound:
+                continue
+>       raise TemplateNotFound(template)
+E       jinja2.exceptions.TemplateNotFound: errors/404.html
+
+.venv\Lib\site-packages\flask\templating.py:100: TemplateNotFound
+__________ test_business_and_debug_routes_are_not_exposed[/courses] ___________
+
+self = <Flask 'app'>
+
+    def full_dispatch_request(self) -> Response:
+        """Dispatches the request and on top of that performs request
+        pre and postprocessing as well as HTTP exception catching and
+        error handling.
+    
+        .. versionadded:: 0.7
+        """
+        self._got_first_request = True
+    
+        try:
+            request_started.send(self, _async_wrapper=self.ensure_sync)
+            rv = self.preprocess_request()
+            if rv is None:
+>               rv = self.dispatch_request()
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\flask\app.py:917: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\flask\app.py:891: in dispatch_request
+    self.raise_routing_exception(req)
+.venv\Lib\site-packages\flask\app.py:500: in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\ctx.py:362: in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <werkzeug.routing.map.MapAdapter object at 0x00000240D3BF4B90>
+path_info = '/courses', method = 'GET', return_rule = True, query_args = {}
+websocket = False
+
+    def match(
+        self,
+        path_info: str | None = None,
+        method: str | None = None,
+        return_rule: bool = False,
+        query_args: t.Mapping[str, t.Any] | str | None = None,
+        websocket: bool | None = None,
+    ) -> tuple[t.Any | Rule, t.Mapping[str, t.Any]]:
+        """The usage is simple: you just pass the match method the current
+        path info as well as the method (which defaults to `GET`).  The
+        following things can then happen:
+    
+        - you receive a `NotFound` exception that indicates that no URL is
+          matching.  A `NotFound` exception is also a WSGI application you
+          can call to get a default page not found page (happens to be the
+          same object as `werkzeug.exceptions.NotFound`)
+    
+        - you receive a `MethodNotAllowed` exception that indicates that there
+          is a match for this URL but not for the current request method.
+          This is useful for RESTful applications.
+    
+        - you receive a `RequestRedirect` exception with a `new_url`
+          attribute.  This exception is used to notify you about a request
+          Werkzeug requests from your WSGI application.  This is for example the
+          case if you request ``/foo`` although the correct URL is ``/foo/``
+          You can use the `RequestRedirect` instance as response-like object
+          similar to all other subclasses of `HTTPException`.
+    
+        - you receive a ``WebsocketMismatch`` exception if the only
+          match is a WebSocket rule but the bind is an HTTP request, or
+          if the match is an HTTP rule but the bind is a WebSocket
+          request.
+    
+        - you get a tuple in the form ``(endpoint, arguments)`` if there is
+          a match (unless `return_rule` is True, in which case you get a tuple
+          in the form ``(rule, arguments)``)
+    
+        If the path info is not passed to the match method the default path
+        info of the map is used (defaults to the root URL if not defined
+        explicitly).
+    
+        All of the exceptions raised are subclasses of `HTTPException` so they
+        can be used as WSGI responses. They will all render generic error or
+        redirect pages.
+    
+        Here is a small example for matching:
+    
+        >>> m = Map([
+        ...     Rule('/', endpoint='index'),
+        ...     Rule('/downloads/', endpoint='downloads/index'),
+        ...     Rule('/downloads/<int:id>', endpoint='downloads/show')
+        ... ])
+        >>> urls = m.bind("example.com", "/")
+        >>> urls.match("/", "GET")
+        ('index', {})
+        >>> urls.match("/downloads/42")
+        ('downloads/show', {'id': 42})
+    
+        And here is what happens on redirect and missing URLs:
+    
+        >>> urls.match("/downloads")
+        Traceback (most recent call last):
+          ...
+        RequestRedirect: http://example.com/downloads/
+        >>> urls.match("/missing")
+        Traceback (most recent call last):
+          ...
+        NotFound: 404 Not Found
+    
+        :param path_info: the path info to use for matching.  Overrides the
+                          path info specified on binding.
+        :param method: the HTTP method used for matching.  Overrides the
+                       method specified on binding.
+        :param return_rule: return the rule that matched instead of just the
+                            endpoint (defaults to `False`).
+        :param query_args: optional query arguments that are used for
+                           automatic redirects as string or dictionary.  It's
+                           currently not possible to use the query arguments
+                           for URL matching.
+        :param websocket: Match WebSocket instead of HTTP requests. A
+            websocket request has a ``ws`` or ``wss``
+            :attr:`url_scheme`. This overrides that detection.
+    
+        .. versionadded:: 1.0
+            Added ``websocket``.
+    
+        .. versionchanged:: 0.8
+            ``query_args`` can be a string.
+    
+        .. versionadded:: 0.7
+            Added ``query_args``.
+    
+        .. versionadded:: 0.6
+            Added ``return_rule``.
+        """
+        self.map.update()
+        if path_info is None:
+            path_info = self.path_info
+        if query_args is None:
+            query_args = self.query_args or {}
+        method = (method or self.default_method).upper()
+    
+        if websocket is None:
+            websocket = self.websocket
+    
+        domain_part = self.server_name
+    
+        if not self.map.host_matching and self.subdomain is not None:
+            domain_part = self.subdomain
+    
+        path_part = f"/{path_info.lstrip('/')}" if path_info else ""
+    
+        try:
+            result = self.map._matcher.match(domain_part, path_part, method, websocket)
+        except RequestPath as e:
+            # safe = https://url.spec.whatwg.org/#url-path-segment-string
+            new_path = quote(e.path_info, safe="!$&'()*+,/:;=@")
+            raise RequestRedirect(
+                self.make_redirect_url(new_path, query_args)
+            ) from None
+        except RequestAliasRedirect as e:
+            raise RequestRedirect(
+                self.make_alias_redirect_url(
+                    f"{domain_part}|{path_part}",
+                    e.endpoint,
+                    e.matched_values,
+                    method,
+                    query_args,
+                )
+            ) from None
+        except NoMatch as e:
+            if e.have_match_for:
+                raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+    
+            if e.websocket_mismatch:
+                raise WebsocketMismatch() from None
+    
+>           raise NotFound() from None
+E           werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+.venv\Lib\site-packages\werkzeug\routing\map.py:629: NotFound
+
+During handling of the above exception, another exception occurred:
+
+client = <FlaskClient <Flask 'app'>>, path = '/courses'
+
+    @pytest.mark.parametrize("path", ["/auth/login", "/students", "/courses", "/_test/forbidden"])
+    def test_business_and_debug_routes_are_not_exposed(client, path):
+>       assert client.get(path).status_code == 404
+               ^^^^^^^^^^^^^^^^
+
+tests\test_configuration.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:802: in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:777: in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\errors.py:13: in not_found
+    return render_template("errors/404.html"), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:150: in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1087: in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1016: in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:975: in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\loaders.py:126: in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:66: in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <flask.templating.DispatchingJinjaLoader object at 0x00000240D3BF4050>
+environment = <flask.templating.Environment object at 0x00000240D3BF4530>
+template = 'errors/404.html'
+
+    def _get_source_fast(
+        self, environment: BaseEnvironment, template: str
+    ) -> tuple[str, str | None, t.Callable[[], bool] | None]:
+        for _srcobj, loader in self._iter_loaders(template):
+            try:
+                return loader.get_source(environment, template)
+            except TemplateNotFound:
+                continue
+>       raise TemplateNotFound(template)
+E       jinja2.exceptions.TemplateNotFound: errors/404.html
+
+.venv\Lib\site-packages\flask\templating.py:100: TemplateNotFound
+______ test_business_and_debug_routes_are_not_exposed[/_test/forbidden] _______
+
+self = <Flask 'app'>
+
+    def full_dispatch_request(self) -> Response:
+        """Dispatches the request and on top of that performs request
+        pre and postprocessing as well as HTTP exception catching and
+        error handling.
+    
+        .. versionadded:: 0.7
+        """
+        self._got_first_request = True
+    
+        try:
+            request_started.send(self, _async_wrapper=self.ensure_sync)
+            rv = self.preprocess_request()
+            if rv is None:
+>               rv = self.dispatch_request()
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\flask\app.py:917: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\flask\app.py:891: in dispatch_request
+    self.raise_routing_exception(req)
+.venv\Lib\site-packages\flask\app.py:500: in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\ctx.py:362: in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <werkzeug.routing.map.MapAdapter object at 0x00000240D3BF6510>
+path_info = '/_test/forbidden', method = 'GET', return_rule = True
+query_args = {}, websocket = False
+
+    def match(
+        self,
+        path_info: str | None = None,
+        method: str | None = None,
+        return_rule: bool = False,
+        query_args: t.Mapping[str, t.Any] | str | None = None,
+        websocket: bool | None = None,
+    ) -> tuple[t.Any | Rule, t.Mapping[str, t.Any]]:
+        """The usage is simple: you just pass the match method the current
+        path info as well as the method (which defaults to `GET`).  The
+        following things can then happen:
+    
+        - you receive a `NotFound` exception that indicates that no URL is
+          matching.  A `NotFound` exception is also a WSGI application you
+          can call to get a default page not found page (happens to be the
+          same object as `werkzeug.exceptions.NotFound`)
+    
+        - you receive a `MethodNotAllowed` exception that indicates that there
+          is a match for this URL but not for the current request method.
+          This is useful for RESTful applications.
+    
+        - you receive a `RequestRedirect` exception with a `new_url`
+          attribute.  This exception is used to notify you about a request
+          Werkzeug requests from your WSGI application.  This is for example the
+          case if you request ``/foo`` although the correct URL is ``/foo/``
+          You can use the `RequestRedirect` instance as response-like object
+          similar to all other subclasses of `HTTPException`.
+    
+        - you receive a ``WebsocketMismatch`` exception if the only
+          match is a WebSocket rule but the bind is an HTTP request, or
+          if the match is an HTTP rule but the bind is a WebSocket
+          request.
+    
+        - you get a tuple in the form ``(endpoint, arguments)`` if there is
+          a match (unless `return_rule` is True, in which case you get a tuple
+          in the form ``(rule, arguments)``)
+    
+        If the path info is not passed to the match method the default path
+        info of the map is used (defaults to the root URL if not defined
+        explicitly).
+    
+        All of the exceptions raised are subclasses of `HTTPException` so they
+        can be used as WSGI responses. They will all render generic error or
+        redirect pages.
+    
+        Here is a small example for matching:
+    
+        >>> m = Map([
+        ...     Rule('/', endpoint='index'),
+        ...     Rule('/downloads/', endpoint='downloads/index'),
+        ...     Rule('/downloads/<int:id>', endpoint='downloads/show')
+        ... ])
+        >>> urls = m.bind("example.com", "/")
+        >>> urls.match("/", "GET")
+        ('index', {})
+        >>> urls.match("/downloads/42")
+        ('downloads/show', {'id': 42})
+    
+        And here is what happens on redirect and missing URLs:
+    
+        >>> urls.match("/downloads")
+        Traceback (most recent call last):
+          ...
+        RequestRedirect: http://example.com/downloads/
+        >>> urls.match("/missing")
+        Traceback (most recent call last):
+          ...
+        NotFound: 404 Not Found
+    
+        :param path_info: the path info to use for matching.  Overrides the
+                          path info specified on binding.
+        :param method: the HTTP method used for matching.  Overrides the
+                       method specified on binding.
+        :param return_rule: return the rule that matched instead of just the
+                            endpoint (defaults to `False`).
+        :param query_args: optional query arguments that are used for
+                           automatic redirects as string or dictionary.  It's
+                           currently not possible to use the query arguments
+                           for URL matching.
+        :param websocket: Match WebSocket instead of HTTP requests. A
+            websocket request has a ``ws`` or ``wss``
+            :attr:`url_scheme`. This overrides that detection.
+    
+        .. versionadded:: 1.0
+            Added ``websocket``.
+    
+        .. versionchanged:: 0.8
+            ``query_args`` can be a string.
+    
+        .. versionadded:: 0.7
+            Added ``query_args``.
+    
+        .. versionadded:: 0.6
+            Added ``return_rule``.
+        """
+        self.map.update()
+        if path_info is None:
+            path_info = self.path_info
+        if query_args is None:
+            query_args = self.query_args or {}
+        method = (method or self.default_method).upper()
+    
+        if websocket is None:
+            websocket = self.websocket
+    
+        domain_part = self.server_name
+    
+        if not self.map.host_matching and self.subdomain is not None:
+            domain_part = self.subdomain
+    
+        path_part = f"/{path_info.lstrip('/')}" if path_info else ""
+    
+        try:
+            result = self.map._matcher.match(domain_part, path_part, method, websocket)
+        except RequestPath as e:
+            # safe = https://url.spec.whatwg.org/#url-path-segment-string
+            new_path = quote(e.path_info, safe="!$&'()*+,/:;=@")
+            raise RequestRedirect(
+                self.make_redirect_url(new_path, query_args)
+            ) from None
+        except RequestAliasRedirect as e:
+            raise RequestRedirect(
+                self.make_alias_redirect_url(
+                    f"{domain_part}|{path_part}",
+                    e.endpoint,
+                    e.matched_values,
+                    method,
+                    query_args,
+                )
+            ) from None
+        except NoMatch as e:
+            if e.have_match_for:
+                raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+    
+            if e.websocket_mismatch:
+                raise WebsocketMismatch() from None
+    
+>           raise NotFound() from None
+E           werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+.venv\Lib\site-packages\werkzeug\routing\map.py:629: NotFound
+
+During handling of the above exception, another exception occurred:
+
+client = <FlaskClient <Flask 'app'>>, path = '/_test/forbidden'
+
+    @pytest.mark.parametrize("path", ["/auth/login", "/students", "/courses", "/_test/forbidden"])
+    def test_business_and_debug_routes_are_not_exposed(client, path):
+>       assert client.get(path).status_code == 404
+               ^^^^^^^^^^^^^^^^
+
+tests\test_configuration.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:802: in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:777: in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\errors.py:13: in not_found
+    return render_template("errors/404.html"), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:150: in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1087: in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1016: in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:975: in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\loaders.py:126: in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:66: in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <flask.templating.DispatchingJinjaLoader object at 0x00000240D3BF5E20>
+environment = <flask.templating.Environment object at 0x00000240D3BF5940>
+template = 'errors/404.html'
+
+    def _get_source_fast(
+        self, environment: BaseEnvironment, template: str
+    ) -> tuple[str, str | None, t.Callable[[], bool] | None]:
+        for _srcobj, loader in self._iter_loaders(template):
+            try:
+                return loader.get_source(environment, template)
+            except TemplateNotFound:
+                continue
+>       raise TemplateNotFound(template)
+E       jinja2.exceptions.TemplateNotFound: errors/404.html
+
+.venv\Lib\site-packages\flask\templating.py:100: TemplateNotFound
+_________________ test_post_with_valid_csrf_token_is_accepted _________________
+
+app = <Flask 'app'>
+
+    def test_post_with_valid_csrf_token_is_accepted(app):
+        app.add_url_rule("/_test/token", view_func=lambda: {"token": generate_csrf()})
+>       app.add_url_rule("/_test/write", view_func=lambda: "accepted", methods=["POST"])
+
+tests\test_csrf.py:13: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\flask\sansio\scaffold.py:47: in wrapper_func
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <Flask 'app'>, rule = '/_test/write', endpoint = '<lambda>'
+view_func = <function test_post_with_valid_csrf_token_is_accepted.<locals>.<lambda> at 0x00000240D3B9AE80>
+provide_automatic_options = True, options = {'endpoint': '<lambda>'}
+
+    @setupmethod
+    def add_url_rule(
+        self,
+        rule: str,
+        endpoint: str | None = None,
+        view_func: ft.RouteCallable | None = None,
+        provide_automatic_options: bool | None = None,
+        **options: t.Any,
+    ) -> None:
+        if endpoint is None:
+            endpoint = _endpoint_from_view_func(view_func)  # type: ignore
+        options["endpoint"] = endpoint
+        methods = options.pop("methods", None)
+    
+        # if the methods are not given and the view_func object knows its
+        # methods we can use that instead.  If neither exists, we go with
+        # a tuple of only ``GET`` as default.
+        if methods is None:
+            methods = getattr(view_func, "methods", None) or ("GET",)
+        if isinstance(methods, str):
+            raise TypeError(
+                "Allowed methods must be a list of strings, for"
+                ' example: @app.route(..., methods=["POST"])'
+            )
+        methods = {item.upper() for item in methods}
+    
+        # Methods that should always be added
+        required_methods: set[str] = set(getattr(view_func, "required_methods", ()))
+    
+        # starting with Flask 0.8 the view_func object can disable and
+        # force-enable the automatic options handling.
+        if provide_automatic_options is None:
+            provide_automatic_options = getattr(
+                view_func, "provide_automatic_options", None
+            )
+    
+        if provide_automatic_options is None:
+            if "OPTIONS" not in methods and self.config["PROVIDE_AUTOMATIC_OPTIONS"]:
+                provide_automatic_options = True
+                required_methods.add("OPTIONS")
+            else:
+                provide_automatic_options = False
+    
+        # Add the required methods now.
+        methods |= required_methods
+    
+        rule_obj = self.url_rule_class(rule, methods=methods, **options)
+        rule_obj.provide_automatic_options = provide_automatic_options  # type: ignore[attr-defined]
+    
+        self.url_map.add(rule_obj)
+        if view_func is not None:
+            old_func = self.view_functions.get(endpoint)
+            if old_func is not None and old_func != view_func:
+>               raise AssertionError(
+                    "View function mapping is overwriting an existing"
+                    f" endpoint function: {endpoint}"
+                )
+E               AssertionError: View function mapping is overwriting an existing endpoint function: <lambda>
+
+.venv\Lib\site-packages\flask\sansio\app.py:657: AssertionError
+_____________ test_homepage_is_accessible_without_authentication ______________
+
+client = <FlaskClient <Flask 'app'>>
+
+    def test_homepage_is_accessible_without_authentication(client):
+>       response = client.get("/")
+                   ^^^^^^^^^^^^^^^
+
+tests\test_pages.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:917: in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:902: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\dashboard\routes.py:10: in index
+    return render_template("dashboard/index.html")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:150: in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1087: in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1016: in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:975: in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\loaders.py:126: in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:66: in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <flask.templating.DispatchingJinjaLoader object at 0x00000240D3BE1820>
+environment = <flask.templating.Environment object at 0x00000240D3BE17C0>
+template = 'dashboard/index.html'
+
+    def _get_source_fast(
+        self, environment: BaseEnvironment, template: str
+    ) -> tuple[str, str | None, t.Callable[[], bool] | None]:
+        for _srcobj, loader in self._iter_loaders(template):
+            try:
+                return loader.get_source(environment, template)
+            except TemplateNotFound:
+                continue
+>       raise TemplateNotFound(template)
+E       jinja2.exceptions.TemplateNotFound: dashboard/index.html
+
+.venv\Lib\site-packages\flask\templating.py:100: TemplateNotFound
+____________________ test_missing_page_returns_custom_404 _____________________
+
+self = <Flask 'app'>
+
+    def full_dispatch_request(self) -> Response:
+        """Dispatches the request and on top of that performs request
+        pre and postprocessing as well as HTTP exception catching and
+        error handling.
+    
+        .. versionadded:: 0.7
+        """
+        self._got_first_request = True
+    
+        try:
+            request_started.send(self, _async_wrapper=self.ensure_sync)
+            rv = self.preprocess_request()
+            if rv is None:
+>               rv = self.dispatch_request()
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\flask\app.py:917: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\flask\app.py:891: in dispatch_request
+    self.raise_routing_exception(req)
+.venv\Lib\site-packages\flask\app.py:500: in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\ctx.py:362: in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <werkzeug.routing.map.MapAdapter object at 0x00000240D3BE09B0>
+path_info = '/a-page-that-does-not-exist', method = 'GET', return_rule = True
+query_args = {}, websocket = False
+
+    def match(
+        self,
+        path_info: str | None = None,
+        method: str | None = None,
+        return_rule: bool = False,
+        query_args: t.Mapping[str, t.Any] | str | None = None,
+        websocket: bool | None = None,
+    ) -> tuple[t.Any | Rule, t.Mapping[str, t.Any]]:
+        """The usage is simple: you just pass the match method the current
+        path info as well as the method (which defaults to `GET`).  The
+        following things can then happen:
+    
+        - you receive a `NotFound` exception that indicates that no URL is
+          matching.  A `NotFound` exception is also a WSGI application you
+          can call to get a default page not found page (happens to be the
+          same object as `werkzeug.exceptions.NotFound`)
+    
+        - you receive a `MethodNotAllowed` exception that indicates that there
+          is a match for this URL but not for the current request method.
+          This is useful for RESTful applications.
+    
+        - you receive a `RequestRedirect` exception with a `new_url`
+          attribute.  This exception is used to notify you about a request
+          Werkzeug requests from your WSGI application.  This is for example the
+          case if you request ``/foo`` although the correct URL is ``/foo/``
+          You can use the `RequestRedirect` instance as response-like object
+          similar to all other subclasses of `HTTPException`.
+    
+        - you receive a ``WebsocketMismatch`` exception if the only
+          match is a WebSocket rule but the bind is an HTTP request, or
+          if the match is an HTTP rule but the bind is a WebSocket
+          request.
+    
+        - you get a tuple in the form ``(endpoint, arguments)`` if there is
+          a match (unless `return_rule` is True, in which case you get a tuple
+          in the form ``(rule, arguments)``)
+    
+        If the path info is not passed to the match method the default path
+        info of the map is used (defaults to the root URL if not defined
+        explicitly).
+    
+        All of the exceptions raised are subclasses of `HTTPException` so they
+        can be used as WSGI responses. They will all render generic error or
+        redirect pages.
+    
+        Here is a small example for matching:
+    
+        >>> m = Map([
+        ...     Rule('/', endpoint='index'),
+        ...     Rule('/downloads/', endpoint='downloads/index'),
+        ...     Rule('/downloads/<int:id>', endpoint='downloads/show')
+        ... ])
+        >>> urls = m.bind("example.com", "/")
+        >>> urls.match("/", "GET")
+        ('index', {})
+        >>> urls.match("/downloads/42")
+        ('downloads/show', {'id': 42})
+    
+        And here is what happens on redirect and missing URLs:
+    
+        >>> urls.match("/downloads")
+        Traceback (most recent call last):
+          ...
+        RequestRedirect: http://example.com/downloads/
+        >>> urls.match("/missing")
+        Traceback (most recent call last):
+          ...
+        NotFound: 404 Not Found
+    
+        :param path_info: the path info to use for matching.  Overrides the
+                          path info specified on binding.
+        :param method: the HTTP method used for matching.  Overrides the
+                       method specified on binding.
+        :param return_rule: return the rule that matched instead of just the
+                            endpoint (defaults to `False`).
+        :param query_args: optional query arguments that are used for
+                           automatic redirects as string or dictionary.  It's
+                           currently not possible to use the query arguments
+                           for URL matching.
+        :param websocket: Match WebSocket instead of HTTP requests. A
+            websocket request has a ``ws`` or ``wss``
+            :attr:`url_scheme`. This overrides that detection.
+    
+        .. versionadded:: 1.0
+            Added ``websocket``.
+    
+        .. versionchanged:: 0.8
+            ``query_args`` can be a string.
+    
+        .. versionadded:: 0.7
+            Added ``query_args``.
+    
+        .. versionadded:: 0.6
+            Added ``return_rule``.
+        """
+        self.map.update()
+        if path_info is None:
+            path_info = self.path_info
+        if query_args is None:
+            query_args = self.query_args or {}
+        method = (method or self.default_method).upper()
+    
+        if websocket is None:
+            websocket = self.websocket
+    
+        domain_part = self.server_name
+    
+        if not self.map.host_matching and self.subdomain is not None:
+            domain_part = self.subdomain
+    
+        path_part = f"/{path_info.lstrip('/')}" if path_info else ""
+    
+        try:
+            result = self.map._matcher.match(domain_part, path_part, method, websocket)
+        except RequestPath as e:
+            # safe = https://url.spec.whatwg.org/#url-path-segment-string
+            new_path = quote(e.path_info, safe="!$&'()*+,/:;=@")
+            raise RequestRedirect(
+                self.make_redirect_url(new_path, query_args)
+            ) from None
+        except RequestAliasRedirect as e:
+            raise RequestRedirect(
+                self.make_alias_redirect_url(
+                    f"{domain_part}|{path_part}",
+                    e.endpoint,
+                    e.matched_values,
+                    method,
+                    query_args,
+                )
+            ) from None
+        except NoMatch as e:
+            if e.have_match_for:
+                raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+    
+            if e.websocket_mismatch:
+                raise WebsocketMismatch() from None
+    
+>           raise NotFound() from None
+E           werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+.venv\Lib\site-packages\werkzeug\routing\map.py:629: NotFound
+
+During handling of the above exception, another exception occurred:
+
+client = <FlaskClient <Flask 'app'>>
+
+    def test_missing_page_returns_custom_404(client):
+>       response = client.get("/a-page-that-does-not-exist")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_pages.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:802: in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:777: in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\errors.py:13: in not_found
+    return render_template("errors/404.html"), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:150: in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1087: in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1016: in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:975: in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\loaders.py:126: in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:66: in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <flask.templating.DispatchingJinjaLoader object at 0x00000240D3BE0200>
+environment = <flask.templating.Environment object at 0x00000240D3BE02C0>
+template = 'errors/404.html'
+
+    def _get_source_fast(
+        self, environment: BaseEnvironment, template: str
+    ) -> tuple[str, str | None, t.Callable[[], bool] | None]:
+        for _srcobj, loader in self._iter_loaders(template):
+            try:
+                return loader.get_source(environment, template)
+            except TemplateNotFound:
+                continue
+>       raise TemplateNotFound(template)
+E       jinja2.exceptions.TemplateNotFound: errors/404.html
+
+.venv\Lib\site-packages\flask\templating.py:100: TemplateNotFound
+__________________ test_forbidden_request_returns_custom_403 __________________
+
+    def forbidden():
+>       abort(403)
+
+tests\test_pages.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\flask\helpers.py:291: in abort
+    current_app.aborter(code, *args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <werkzeug.exceptions.Aborter object at 0x00000240D3BE0F50>, code = 403
+args = (), kwargs = {}
+
+    def __call__(
+        self, code: int | SansIOResponse, *args: t.Any, **kwargs: t.Any
+    ) -> t.NoReturn:
+        from .sansio.response import Response
+    
+        if isinstance(code, Response):
+            raise HTTPException(response=code)
+    
+        if code not in self.mapping:
+            raise LookupError(f"no exception for {code!r}")
+    
+>       raise self.mapping[code](*args, **kwargs)
+E       werkzeug.exceptions.Forbidden: 403 Forbidden: You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.
+
+.venv\Lib\site-packages\werkzeug\exceptions.py:887: Forbidden
+
+During handling of the above exception, another exception occurred:
+
+app = <Flask 'app'>
+
+    def test_forbidden_request_returns_custom_403(app):
+        def forbidden():
+            abort(403)
+    
+        app.add_url_rule("/_test/forbidden", view_func=forbidden)
+>       response = app.test_client().get("/_test/forbidden")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_pages.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:802: in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:777: in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\errors.py:9: in forbidden
+    return render_template("errors/403.html"), 403
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:150: in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1087: in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1016: in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:975: in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\loaders.py:126: in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:66: in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <flask.templating.DispatchingJinjaLoader object at 0x00000240D3BE0830>
+environment = <flask.templating.Environment object at 0x00000240D3BE1370>
+template = 'errors/403.html'
+
+    def _get_source_fast(
+        self, environment: BaseEnvironment, template: str
+    ) -> tuple[str, str | None, t.Callable[[], bool] | None]:
+        for _srcobj, loader in self._iter_loaders(template):
+            try:
+                return loader.get_source(environment, template)
+            except TemplateNotFound:
+                continue
+>       raise TemplateNotFound(template)
+E       jinja2.exceptions.TemplateNotFound: errors/403.html
+
+.venv\Lib\site-packages\flask\templating.py:100: TemplateNotFound
+________ test_unexpected_error_returns_generic_500_and_logs_exception _________
+
+    def broken():
+>       raise RuntimeError("sensitive-internal-detail")
+E       RuntimeError: sensitive-internal-detail
+
+tests\test_pages.py:42: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+app = <Flask 'app'>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x00000240D2031970>
+
+    def test_unexpected_error_returns_generic_500_and_logs_exception(app, caplog):
+        def broken():
+            raise RuntimeError("sensitive-internal-detail")
+    
+        app.config["PROPAGATE_EXCEPTIONS"] = False
+        app.add_url_rule("/_test/broken", view_func=broken)
+        with caplog.at_level(logging.ERROR, logger=app.logger.name):
+>           response = app.test_client().get("/_test/broken")
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_pages.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:860: in handle_exception
+    server_error = self.ensure_sync(handler)(server_error)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\errors.py:18: in internal_server_error
+    return render_template("errors/500.html"), 500
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:150: in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1087: in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1016: in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:975: in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\loaders.py:126: in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:66: in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <flask.templating.DispatchingJinjaLoader object at 0x00000240D268DE50>
+environment = <flask.templating.Environment object at 0x00000240D268D2E0>
+template = 'errors/500.html'
+
+    def _get_source_fast(
+        self, environment: BaseEnvironment, template: str
+    ) -> tuple[str, str | None, t.Callable[[], bool] | None]:
+        for _srcobj, loader in self._iter_loaders(template):
+            try:
+                return loader.get_source(environment, template)
+            except TemplateNotFound:
+                continue
+>       raise TemplateNotFound(template)
+E       jinja2.exceptions.TemplateNotFound: errors/500.html
+
+.venv\Lib\site-packages\flask\templating.py:100: TemplateNotFound
+------------------------------ Captured log call ------------------------------
+ERROR    app:app.py:875 Exception on /_test/broken [GET]
+Traceback (most recent call last):
+  File "F:\StudentManagementSystem\.venv\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\StudentManagementSystem\.venv\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\StudentManagementSystem\.venv\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\StudentManagementSystem\.venv\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\StudentManagementSystem\tests\test_pages.py", line 42, in broken
+    raise RuntimeError("sensitive-internal-detail")
+RuntimeError: sensitive-internal-detail
+______________________ test_local_stylesheets_are_served ______________________
+
+self = <Flask 'app'>
+
+    def full_dispatch_request(self) -> Response:
+        """Dispatches the request and on top of that performs request
+        pre and postprocessing as well as HTTP exception catching and
+        error handling.
+    
+        .. versionadded:: 0.7
+        """
+        self._got_first_request = True
+    
+        try:
+            request_started.send(self, _async_wrapper=self.ensure_sync)
+            rv = self.preprocess_request()
+            if rv is None:
+>               rv = self.dispatch_request()
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+
+.venv\Lib\site-packages\flask\app.py:917: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\flask\app.py:902: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:278: in <lambda>
+    view_func=lambda **kw: self_ref().send_static_file(**kw),  # type: ignore
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:326: in send_static_file
+    return send_from_directory(
+.venv\Lib\site-packages\flask\helpers.py:572: in send_from_directory
+    return werkzeug.utils.send_from_directory(  # type: ignore[return-value]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+directory = 'F:\\StudentManagementSystem\\app\\static', path = 'css/app.css'
+environ = {'REMOTE_ADDR': '127.0.0.1', 'HTTP_USER_AGENT': 'Werkzeug/3.1.9', 'REQUEST_METHOD': 'GET', 'SCRIPT_NAME': '', ...}
+kwargs = {'max_age': <bound method Flask.get_send_file_max_age of <Flask 'app'>>, 'use_x_sendfile': False, 'response_class': <class 'flask.wrappers.Response'>, '_root_path': 'F:\\StudentManagementSystem\\app'}
+
+    def send_from_directory(
+        directory: os.PathLike[str] | str,
+        path: os.PathLike[str] | str,
+        environ: WSGIEnvironment,
+        **kwargs: t.Any,
+    ) -> Response:
+        """Send a file from within a directory using :func:`send_file`.
+    
+        This is a secure way to serve files from a folder, such as static
+        files or uploads. Uses :func:`~werkzeug.security.safe_join` to
+        ensure the path coming from the client is not maliciously crafted to
+        point outside the specified directory.
+    
+        If the final path does not point to an existing regular file,
+        returns a 404 :exc:`~werkzeug.exceptions.NotFound` error.
+    
+        :param directory: The directory that ``path`` must be located under. This *must not*
+            be a value provided by the client, otherwise it becomes insecure.
+        :param path: The path to the file to send, relative to ``directory``. This is the
+            part of the path provided by the client, which is checked for security.
+        :param environ: The WSGI environ for the current request.
+        :param kwargs: Arguments to pass to :func:`send_file`.
+    
+        .. versionadded:: 2.0
+            Adapted from Flask's implementation.
+        """
+        path_str = safe_join(os.fspath(directory), os.fspath(path))
+    
+        if path_str is None:
+            raise NotFound()
+    
+        # Flask will pass app.root_path, allowing its send_from_directory
+        # wrapper to not have to deal with paths.
+        if "_root_path" in kwargs:
+            path_str = os.path.join(kwargs["_root_path"], path_str)
+    
+        if not os.path.isfile(path_str):
+>           raise NotFound()
+E           werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+.venv\Lib\site-packages\werkzeug\utils.py:568: NotFound
+
+During handling of the above exception, another exception occurred:
+
+client = <FlaskClient <Flask 'app'>>
+
+    def test_local_stylesheets_are_served(client):
+        for path in ("/static/css/app.css", "/static/vendor/bootstrap-5.3.3.min.css"):
+>           response = client.get(path)
+                       ^^^^^^^^^^^^^^^^
+
+tests\test_pages.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:802: in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:777: in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\errors.py:13: in not_found
+    return render_template("errors/404.html"), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:150: in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1087: in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1016: in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:975: in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\loaders.py:126: in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:66: in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <flask.templating.DispatchingJinjaLoader object at 0x00000240D3BE1100>
+environment = <flask.templating.Environment object at 0x00000240D3BE20F0>
+template = 'errors/404.html'
+
+    def _get_source_fast(
+        self, environment: BaseEnvironment, template: str
+    ) -> tuple[str, str | None, t.Callable[[], bool] | None]:
+        for _srcobj, loader in self._iter_loaders(template):
+            try:
+                return loader.get_source(environment, template)
+            except TemplateNotFound:
+                continue
+>       raise TemplateNotFound(template)
+E       jinja2.exceptions.TemplateNotFound: errors/404.html
+
+.venv\Lib\site-packages\flask\templating.py:100: TemplateNotFound
+=========================== short test summary info ===========================
+FAILED tests/test_configuration.py::test_public_pages_do_not_create_database_or_business_tables
+FAILED tests/test_configuration.py::test_business_and_debug_routes_are_not_exposed[/auth/login]
+FAILED tests/test_configuration.py::test_business_and_debug_routes_are_not_exposed[/students]
+FAILED tests/test_configuration.py::test_business_and_debug_routes_are_not_exposed[/courses]
+FAILED tests/test_configuration.py::test_business_and_debug_routes_are_not_exposed[/_test/forbidden]
+FAILED tests/test_csrf.py::test_post_with_valid_csrf_token_is_accepted - Asse...
+FAILED tests/test_pages.py::test_homepage_is_accessible_without_authentication
+FAILED tests/test_pages.py::test_missing_page_returns_custom_404 - jinja2.exc...
+FAILED tests/test_pages.py::test_forbidden_request_returns_custom_403 - jinja...
+FAILED tests/test_pages.py::test_unexpected_error_returns_generic_500_and_logs_exception
+FAILED tests/test_pages.py::test_local_stylesheets_are_served - jinja2.except...
+11 failed, 8 passed in 1.22s

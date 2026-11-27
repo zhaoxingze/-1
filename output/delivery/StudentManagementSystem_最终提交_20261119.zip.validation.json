@@ -1,0 +1,23 @@
+{
+  "stage": "9",
+  "date": "2026-11-19",
+  "file_count": 532,
+  "size_bytes": 24133561,
+  "archive_sha256": "0b0ddd327f01f0c27939c06532fae5a8ffcd65a694e4d30c8423ceffe7b51b64",
+  "crc_verified": true,
+  "extracted_sha256_verified": true,
+  "local_markdown_links": 667,
+  "uml_sources": 7,
+  "uml_png": 26,
+  "stage8_screenshots": 14,
+  "recorded_mp4": true,
+  "source_scope_unchanged_files": 190,
+  "known_synthetic_passwords_and_private_files_excluded": true,
+  "extracted_clean_sqlite_migration_and_seed_ok": true,
+  "publication_edition": {
+    "redacted_local_windows_account_paths": true,
+    "original_archive_sha256": "4c5b83ed7bf2ba065876d331cb3697c7b1c8c3b608b3249ee659de8ae5e5000f",
+    "original_test_results_preserved": true,
+    "publication_crc_and_member_sha256_verified": true
+  }
+}

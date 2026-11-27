@@ -1,0 +1,71 @@
+### Result
+{"base_url":"http://127.0.0.1:5063","roles":{"admin":{"landing":"/admin/","heading":"管理员工作台","profile":200,"forbidden_status":403,"password_reset_form":true,"after_logout":302},"teacher":{"landing":"/dashboard/teacher","heading":"教师工作台","profile":200,"forbidden_status":403,"after_logout":302},"student":{"landing":"/dashboard/student","heading":"学生工作台","profile":200,"forbidden_status":403,"own_profile":200,"other_object":403,"after_logout":302}},"page_errors":[],"unexpected_console_errors":[],"server_errors":[],"home":200,"health":{"status":200,"body":{"service":"student-management-system","status":"ok"}},"login_page":200,"mobile_no_overflow":true,"passed":true}
+### Ran Playwright code
+```js
+await (async (page) => {
+ const accounts={"admin": {"username": "browser_admin", "password": "<temporary-password-redacted>", "user_id": 1, "student_id": null}, "teacher": {"username": "browser_teacher", "password": "<temporary-password-redacted>", "user_id": 2, "student_id": null}, "student": {"username": "browser_student", "password": "<temporary-password-redacted>", "user_id": 3, "student_id": 1}};
+ const origin='http://127.0.0.1:5063';
+ const report={base_url:origin,roles:{},page_errors:[],unexpected_console_errors:[],server_errors:[]};
+ const check=(ok,message)=>{if(!ok)throw Error(message)};
+ page.on('pageerror',e=>report.page_errors.push(e.message));
+ page.on('console',m=>{if(m.type()==='error')report.unexpected_console_errors.push(m.text())});
+ page.on('response',r=>{if(r.status()>=500)report.server_errors.push({url:r.url(),status:r.status()})});
+ await page.setViewportSize({width:1440,height:1000});
+ report.home=(await page.goto(origin+'/')).status();
+ check(report.home===200,'homepage');
+ await page.screenshot({path:'F:/StudentManagementSystem/output/playwright/stage3-homepage.png',fullPage:true});
+ const health=await page.request.get(origin+'/health');report.health={status:health.status(),body:await health.json()};
+ check(report.health.status===200 && report.health.body.status==='ok','health');
+ report.login_page=(await page.goto(origin+'/login')).status();
+ await page.locator('body').ariaSnapshot();
+ check(report.login_page===200,'login page');
+ await page.screenshot({path:'F:/StudentManagementSystem/output/playwright/stage3-login.png',fullPage:true});
+ await page.setViewportSize({width:390,height:844});
+ report.mobile_no_overflow=await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth);
+ check(report.mobile_no_overflow,'mobile overflow');
+ await page.screenshot({path:'F:/StudentManagementSystem/output/playwright/stage3-login-mobile.png',fullPage:true});
+ await page.setViewportSize({width:1440,height:1000});
+ for(const role of ['admin','teacher','student']) {
+  const account=accounts[role];
+  await page.goto(origin+'/login');await page.locator('body').ariaSnapshot();
+  await page.getByLabel('用户名',{exact:true}).fill(account.username);
+  await page.getByLabel('密码',{exact:true}).fill(account.password);
+  await page.getByRole('button',{name:'登录系统',exact:true}).click();
+  const path=role==='admin'?'/admin/':'/dashboard/'+role;
+  await page.waitForURL(origin+path);
+  const heading=await page.locator('h1').innerText();
+  check(heading.includes({admin:'管理员',teacher:'教师',student:'学生'}[role]),'role heading');
+  await page.screenshot({path:'F:/StudentManagementSystem/output/playwright/stage3-'+role+'-dashboard.png',fullPage:true});
+  await page.goto(origin+'/profile');await page.locator('body').ariaSnapshot();
+  const body=await page.locator('body').innerText();check(body.includes(account.username),'own profile');
+  check(!body.includes(account.password)&&!body.includes('scrypt:')&&!body.includes('password_hash'),'credential exposure');
+  const forbidden=await page.request.get(origin+(role==='admin'?'/dashboard/teacher':'/admin/'));
+  check(forbidden.status()===403,'role denial');
+  const roleResult={landing:path,heading,profile:200,forbidden_status:forbidden.status()};
+  if(role==='student') {
+   const own=await page.request.get(origin+'/students/'+account.student_id+'/profile');
+   const other=await page.request.get(origin+'/students/999999/profile');
+   check(own.status()===200 && other.status()===403,'student object scope');
+   roleResult.own_profile=own.status();roleResult.other_object=other.status();
+  }
+  if(role==='admin') {
+   await page.goto(origin+'/admin/password-reset');await page.locator('body').ariaSnapshot();
+   await page.getByLabel('目标用户名',{exact:true}).fill(accounts.student.username);
+   await page.getByRole('button',{name:'查找并重置密码',exact:true}).click();
+   await page.waitForURL(origin+'/admin/users/'+accounts.student.user_id+'/reset-password');
+   roleResult.password_reset_form=await page.getByRole('heading',{name:'重置账号密码'}).isVisible();
+   await page.goto(origin+'/profile');await page.locator('body').ariaSnapshot();
+  }
+  await page.getByRole('button',{name:'退出登录',exact:true}).click();
+  await page.waitForURL(origin+'/login');
+  const protectedResponse=await page.request.get(origin+'/profile',{maxRedirects:0});
+  check(protectedResponse.status()===302,'logout invalidates current browser');
+  roleResult.after_logout=protectedResponse.status();report.roles[role]=roleResult;
+ }
+ check(report.page_errors.length===0&&report.server_errors.length===0&&report.unexpected_console_errors.length===0,'unexpected browser errors');
+ report.passed=true;return report;
+})(page);
+```
+### Events
+- New console entries: .playwright-cli\console-2026-11-17T10-40-37-739Z.log#L1
+

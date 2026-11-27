@@ -1,0 +1,44 @@
+{% macro select_filter(key, label, choices, selected) %}
+<div>
+  <label class="form-label" for="filter-{{ key }}">{{ label }}</label>
+  <select class="form-select" id="filter-{{ key }}" name="{{ key }}">
+    <option value="">全部</option>
+    {% for value, text in choices %}
+    <option value="{{ value }}"{% if value == selected %} selected{% endif %}>{{ text }}</option>
+    {% endfor %}
+  </select>
+</div>
+{% endmacro %}
+
+{% macro record_filters(filters, options, types=none, page=none) %}
+<form method="get" class="archive-filters" role="search">
+  {% if current_user.role.name != 'student' %}
+    {% if 'class_id' in filters %}{{ select_filter('class_id', '班级', options.classes, filters.class_id) }}{% endif %}
+    {{ select_filter('student_id', '学生', options.students, filters.student_id) }}
+    {% if 'parent_id' in filters %}{{ select_filter('parent_id', '家长', options.parents, filters.parent_id) }}{% endif %}
+  {% endif %}
+  {% if types %}{{ select_filter('record_type', '类型', types.items(), filters.record_type) }}{% endif %}
+  {% if 'category' in filters %}
+  <div><label class="form-label" for="filter-category">类别</label>
+    <input class="form-control" id="filter-category" name="category" maxlength="50" value="{{ filters.category or '' }}">
+  </div>
+  {% endif %}
+  <div><label class="form-label" for="filter-start">起始日期</label>
+    <input class="form-control" id="filter-start" type="date" name="start" value="{{ filters.start or '' }}">
+  </div>
+  <div><label class="form-label" for="filter-end">结束日期</label>
+    <input class="form-control" id="filter-end" type="date" name="end" value="{{ filters.end or '' }}">
+  </div>
+  {% if page %}
+  <div><label class="form-label" for="page-size">每页条数</label>
+    <select class="form-select" id="page-size" name="per_page">
+      {% for count in ([10, 20, 50, 100] + [page.per_page])|unique|sort %}
+      <option value="{{ count }}"{% if page.per_page == count %} selected{% endif %}>{{ count }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  {% endif %}
+  <button class="btn btn-primary" type="submit">查询</button>
+  <a class="btn btn-outline-secondary" href="{{ url_for(request.endpoint) }}">重置</a>
+</form>
+{% endmacro %}

@@ -1,0 +1,83 @@
+.......................F................................................ [ 94%]
+....                                                                     [100%]
+================================== FAILURES ===================================
+______ test_database_identity_changes_invalidate_existing_session[role] _______
+
+auth = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x000001CEED6E9940>, login=<function auth.<locals>.login at 0x000001CEED6E99E0>, password='Only-for-isolated-tests!42')
+change = 'role'
+
+    @pytest.mark.parametrize("change", ["disable", "delete", "password", "role", "binding"])
+    def test_database_identity_changes_invalidate_existing_session(auth, change):
+        from app.extensions import db
+        from app.models import User, Role
+        from sqlalchemy import text
+        from werkzeug.security import generate_password_hash
+        auth.login("auth_student")
+        with auth.app.app_context():
+            user = db.session.get(User, auth.ids["auth_student"])
+            if change == "disable": user.is_active = False
+            elif change == "delete": db.session.delete(user)
+            elif change == "password": user.password_hash = generate_password_hash("changed-only-in-tests")
+            elif change == "role":
+>               user.student = None; user.role = db.session.get(Role, 17)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_auth_session.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\sqlalchemy\orm\scoping.py:1090: in get
+    return self._proxied.get(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:3934: in get
+    return self._get_impl(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4121: in _get_impl
+    return db_load_fn(
+.venv\Lib\site-packages\sqlalchemy\orm\loading.py:702: in _load_on_pk_identity
+    session.execute(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:2555: in execute
+    return self._execute_internal(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:2418: in _execute_internal
+    ) = compile_state_cls.orm_pre_session_exec(
+.venv\Lib\site-packages\sqlalchemy\orm\context.py:597: in orm_pre_session_exec
+    session._autoflush()
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:3271: in _autoflush
+    self.flush()
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4626: in flush
+    self._flush(objects)
+<sqlalchemy generated warned() wrapper for sqlalchemy.orm.session.Session._flush>:2: in _flush
+    return target(fn, self, objects=objects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\sqlalchemy\util\deprecations.py:281: in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4662: in _flush
+    self.dispatch.before_flush(self, flush_context, objects)
+.venv\Lib\site-packages\sqlalchemy\event\attr.py:388: in __call__
+    fn(*args, **kw)
+app\models\integrity.py:165: in _validate_domain_changes
+    validate_user_profile_binding(value, session=session)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+user = <User 4>
+session = <sqlalchemy.orm.session.Session object at 0x000001CEED6B5790>
+
+    def validate_user_profile_binding(user, *, session=None) -> None:
+        """Validate a user's role by name and the corresponding real profile."""
+        from app.models import Role, Student, Teacher
+    
+        session = _session(session)
+        with session.no_autoflush:
+            role = _resolve_binding(user, "role", "role_id", Role, session)
+            student = _resolve_binding(user, "student", "student_id", Student, session)
+            teacher = _resolve_binding(user, "teacher", "teacher_id", Teacher, session)
+            if role is None:
+                raise ValueError("A user requires an existing role")
+            expected = {"admin": (False, False), "student": (True, False), "teacher": (False, True)}
+            if role.name not in expected:
+                raise ValueError("Unknown user role")
+            if (student is not None, teacher is not None) != expected[role.name]:
+>               raise ValueError("User role and student/teacher profile binding do not match")
+E               ValueError: User role and student/teacher profile binding do not match
+
+app\services\data_validation_service.py:92: ValueError
+=========================== short test summary info ===========================
+FAILED tests/test_auth_session.py::test_database_identity_changes_invalidate_existing_session[role]
+1 failed, 75 passed in 32.62s

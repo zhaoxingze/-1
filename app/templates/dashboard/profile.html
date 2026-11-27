@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}个人资料{% endblock %}
+{% block breadcrumb %}个人资料{% endblock %}
+{% block content %}
+<section class="profile-panel"><h1>个人资料</h1>
+<dl class="row mt-4">
+  <dt class="col-sm-3">用户名</dt><dd class="col-sm-9">{{ current_user.username }}</dd>
+  <dt class="col-sm-3">身份</dt><dd class="col-sm-9">{{ {'admin':'管理员','teacher':'教师','student':'学生'}[current_user.role.name] }}</dd>
+  {% if current_user.student %}
+  <dt class="col-sm-3">姓名</dt><dd class="col-sm-9">{{ current_user.student.name }}</dd>
+  <dt class="col-sm-3">学号</dt><dd class="col-sm-9">{{ current_user.student.student_no }}</dd>
+  {% elif current_user.teacher %}
+  <dt class="col-sm-3">姓名</dt><dd class="col-sm-9">{{ current_user.teacher.name }}</dd>
+  <dt class="col-sm-3">教师编号</dt><dd class="col-sm-9">{{ current_user.teacher.teacher_no }}</dd>
+  {% endif %}
+</dl>
+<a class="btn btn-primary" href="{{ url_for('auth.change_password') }}">修改本人密码</a>
+{% if current_user.role.name == 'admin' %}<a class="btn btn-outline-secondary" href="{{ url_for('admin.password_reset_lookup') }}">协助重置账号密码</a>{% endif %}
+{% if current_user.student %}<a class="btn btn-outline-secondary" href="{{ url_for('students.profile', student_id=current_user.student_id) }}">本人学生基础信息</a>{% endif %}
+</section>
+{% endblock %}

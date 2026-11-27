@@ -1,0 +1,31 @@
+.........F........................................                       [100%]
+================================== FAILURES ===================================
+________________ test_attendance_create_edit_and_date_filters _________________
+tests\test_attendance_routes.py:21: in test_attendance_create_edit_and_date_filters
+    assert page.status_code == 200 and "AUTH-S1" in page.text and "AUTH-S2" not in page.text
+E   assert (200 == 200 and 'AUTH-S1' in '<!doctype html>\n<html lang="zh-CN">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device...r class="site-footer"><span>学生综合信息管理系统</span><span>软件工程课程设计 · 2026</span></footer>\n  </div>\n</div>\n</body>\n</html>' and 'AUTH-S2' not in '<!doctype h...dy>\n</html>'
+E    +  where 200 = <WrapperTestResponse 5122 bytes [200 OK]>.status_code
+E    +  and   '<!doctype html>\n<html lang="zh-CN">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device...r class="site-footer"><span>学生综合信息管理系统</span><span>软件工程课程设计 · 2026</span></footer>\n  </div>\n</div>\n</body>\n</html>' = <WrapperTestResponse 5122 bytes [200 OK]>.text
+E     
+E     'AUTH-S2' is contained here:
+E       value="2">AUTH-S2 · 虚构学生2</option>
+E     ?           +++++++
+E           
+E           <option value="3">SCOPE-OTHER · 范围外学生</option>
+E           ...
+E     
+E     ...Full output truncated, use '-vv' to show)
+============================== warnings summary ===============================
+tests/test_attendance_routes.py: 4 warnings
+tests/test_reward_service.py: 4 warnings
+tests/test_parent_contact_service.py: 4 warnings
+tests/test_stage6_permissions.py: 20 warnings
+tests/test_stage6_audit.py: 12 warnings
+tests/test_stage6_notifications.py: 3 warnings
+  F:\StudentManagementSystem\.venv\Lib\site-packages\wtforms\fields\core.py:427: DeprecationWarning: Passing SelectField choices as tuples is deprecated and will be removed in wtforms 3.4. Please use SelectChoice instead.
+    return self.field_class(*self.args, **kw)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_attendance_routes.py::test_attendance_create_edit_and_date_filters
+1 failed, 49 passed, 47 warnings in 31.25s

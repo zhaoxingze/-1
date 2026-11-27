@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% from 'admin/_macros.html' import pagination with context %}
+{% block title %}学生详情{% endblock %}
+{% block breadcrumb %}学生详情{% endblock %}
+{% block content %}
+<div class="archive-heading"><div><span class="eyebrow text-success">STUDENT PROFILE</span><h1>{{ student.name }}</h1><p>{{ student.student_no }} · {{ status_labels[student.status] }} · {{ '已归档' if student.is_archived else '未归档' }}</p></div><a class="btn btn-outline-secondary" href="{{ url_for('admin.students_list') }}">学生列表</a></div>
+<section class="archive-panel"><div class="archive-actions">
+<a class="btn btn-primary" href="{{ url_for('admin.student_edit',student_id=student.student_id) }}">编辑资料</a>
+{% if student.status in ['enrolled','suspended'] %}<a class="btn btn-outline-secondary" href="{{ url_for('admin.student_status',student_id=student.student_id) }}">变更学籍</a>{% endif %}
+<a class="btn btn-outline-secondary" href="{{ url_for('admin.student_restore' if student.is_archived else 'admin.student_archive',student_id=student.student_id) }}">{{ '恢复档案' if student.is_archived else '归档档案' }}</a>
+<a class="btn btn-outline-secondary" href="{{ url_for('academics.enrollments', student_id=student.student_id) }}">选课记录</a>
+<a class="btn btn-outline-secondary" href="{{ url_for('academics.grades', student_id=student.student_id) }}">成绩记录</a>
+</div>
+<dl class="archive-facts">{% for label,value in [('学号',student.student_no),('姓名',student.name),('性别',student.gender),('出生日期',student.birth_date or '—'),('年龄',age if age is not none else '—'),('班级',student.school_class.class_name if student.school_class else '未分班'),('联系电话',student.phone or '—'),('家庭住址',student.address or '—'),('入学日期',student.enrollment_date)] %}<dt>{{ label }}</dt><dd>{{ value }}</dd>{% endfor %}</dl></section>
+<section class="archive-panel mt-4"><div class="archive-heading"><h2>家长联系方式</h2><div class="d-flex gap-2"><a class="btn btn-primary" href="{{ url_for('admin.parent_new',student_id=student.student_id) }}">新增家长</a><a class="btn btn-outline-secondary" href="{{ url_for('admin.student_parents',student_id=student.student_id) }}">家长列表</a></div></div>
+<div class="table-responsive"><table class="table"><thead><tr><th>家长</th><th>电话</th><th>邮箱</th><th>主要联系人</th><th>操作</th></tr></thead><tbody>{% for p in parents.items %}<tr><td>{{ p.name }}</td><td>{{ p.phone }}</td><td>{{ p.email or '—' }}</td><td>{{ '是' if p.is_primary else '否' }}</td><td><a href="{{ url_for('admin.parent_detail',student_id=student.student_id,parent_id=p.parent_id) }}">详情</a></td></tr>{% else %}<tr><td colspan="5" class="empty-state">暂无家长档案。</td></tr>{% endfor %}</tbody></table></div>
+{{ pagination(parents,'parents_page') }}</section>
+{% endblock %}

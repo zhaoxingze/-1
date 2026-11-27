@@ -1,0 +1,137 @@
+@startuml
+left to right direction
+skinparam defaultFontName Microsoft YaHei
+skinparam shadowing false
+title UC-02 新增学生通信图（阶段4A已实现）
+object "admin : 管理员" as Admin
+object "ui : admin/form.html" as UI
+object "controller : admin.student_new / editor" as Ctrl
+object "service : student_service" as Svc
+object "audit : audit_service" as Audit
+object "orm : SQLAlchemy Session" as ORM
+object "db : SQLite" as DB
+Admin --> UI : 1. 填写并保存
+UI --> Ctrl : 2. POST + CSRF
+Ctrl --> Svc : 3. create_student(current_user, allowed_data)
+Svc --> DB : 3.1 BEGIN IMMEDIATE（复用已有事务）
+Svc --> ORM : 4. 字段校验后查询班级/唯一学号
+ORM --> DB : 5. SELECT
+DB --> ORM : 6. 当前数据
+ORM --> Svc : 6.1 查询结果
+Svc --> ORM : 7. add Student / flush
+ORM --> DB : 7.1 INSERT Student（未提交）
+Svc --> Audit : 8. record_audit(create, actor, snapshot)
+Audit --> ORM : 8.1 add AuditLog，无commit
+Svc --> Ctrl : 9. 返回未提交Student
+Ctrl --> ORM : 9.1 commit / flush审计
+ORM --> DB : 9.2 INSERT AuditLog / COMMIT
+Ctrl --> UI : 10. 成功303学生详情
+note bottom of Ctrl
+  2.1 登录/角色/CSRF/表单检查；2.2 失败返回302/403/400/200。
+  A1校验异常→A2路由rollback→A3字段反馈200。
+  E1数据库/审计异常→E2路由rollback全部→E3固定409/503反馈。
+end note
+legend bottom
+  编号、参与者、事务拥有者及失败分支与顺序图一致。
+  服务只flush/add；写入与审计由路由统一提交或回滚。
+  不新增Repository层；class_id可空，非空必须存在。
+endlegend
+@enduml
+
+@startuml teacher_contact_communication
+left to right direction
+skinparam defaultFontName Microsoft YaHei
+title 阶段4B 教师联系方式编辑通信
+object "班主任" as Actor
+object "联系表单" as Form
+object "dashboard.teacher_edit_contact" as Route
+object "teacher_student_service" as Service
+object "permission_service" as Policy
+object "SQLite / SQLAlchemy" as DB
+Actor --> Form : 1. 填写电话和住址
+Form --> Route : 2. POST + CSRF
+Route --> Policy : 3. 教师角色和当前本班目标
+Route --> Service : 4. update_student_contact(current_user, id, fields)
+Service --> DB : 5. BEGIN IMMEDIATE或复用事务
+Service --> Policy : 6. 锁内当前范围再检查
+Policy --> DB : 6.1 查询User绑定与Student当前班级
+Service --> DB : 7. 刷新目标并flush允许字段
+Service --> DB : 8. audit_service add日志
+Route --> DB : 9. 统一commit或9.1回滚
+Route --> Form : 10. 成功303；范围失效403
+legend bottom
+  编号对应teacher_contact_sequence。审计前后仅电话、住址。
+  任课教师名单仅学号、姓名，不进入本写入流程。
+endlegend
+@enduml
+
+@startuml
+!pragma layout smetana
+skinparam defaultFontName Microsoft YaHei
+title 阶段5 UC-05 成绩录入通信
+object "管理员或授课教师" as Actor
+object "grade_routes / editor" as Route
+object "GradeService" as Service
+object "PermissionService / AcademicScope" as Permissions
+object "审计服务" as Audit
+object "SQLite" as DB
+Actor --> Route : 1. 提交选课 ID、两项分数、CSRF
+Route --> Permissions : 2. 确认登录角色与授权对象
+Route --> Service : 3. save_grades(actor, id, usual, exam)
+Service --> Service : 4. 校验两项分数\n5. Decimal 计算总评
+Service --> DB : 6. BEGIN IMMEDIATE\n8. 写入三项成绩
+Service --> Permissions : 7. 锁内重新授权，刷新目标
+Service --> Audit : 9. 追加成绩和操作者快照
+Audit ..> DB : 同一 session 中待提交
+Route --> DB : 10. 同一事务提交
+Route --> Actor : 11. 成功后 303 回成绩列表
+note bottom of Route
+  2A 表单保护失败 400，2B 越权 403 或对象不存在 404。
+  4A 非法分数或缺分回表单；7A 锁内越权回滚。
+  10A 写入或审计提交失败时整体回滚。
+end note
+@enduml
+
+@startuml stage6_records_communication
+!pragma layout smetana
+skinparam defaultFontName Microsoft YaHei
+title 阶段6 考勤、奖惩、家长联系和模拟通知通信
+object "授权操作者" as Actor
+object "attendance / records 路由及 editor" as Route
+object "考勤 / 奖惩 / 联系服务" as Service
+object "StudentRecordService" as Common
+object "权限服务与 TeacherScope" as Scope
+object "NotificationService" as Notice
+object "SQLite" as DB
+Actor --> Route : 1. 选学生或目标记录，提交表单
+Route --> Service : 2. 校验 CSRF、角色、字段后调用
+Service --> Common : 3. 锁内解析授权对象
+Common --> DB : 3.1 取得写锁
+Common --> Scope : 3.2 校验当前班主任和学生关系
+Service --> Service : 4. 分业务校验字段、日期、唯一性或家长归属
+Service --> Notice : 4.1 仅显式模拟时创建通知快照
+Service --> Common : 5. flush 记录并追加审计
+Common --> DB : 5.1 使用同一 session 暂存业务和审计
+Route --> DB : 6. 提交或整体回滚
+Route --> Actor : 7. 详情重定向或验证 / 权限 / 存储错误
+@enduml
+
+@startuml stage7_workbench_communication
+!pragma layout smetana
+skinparam defaultFontName Microsoft YaHei
+title 阶段7 UC-14 工作台聚合通信
+object "登录用户" as Actor
+object "dashboard / admin Blueprint" as Route
+object "DashboardStatisticsService" as Service
+object "PermissionService 与 TeacherScope" as Scope
+object "AttendanceService" as Attendance
+object "SQLite" as DB
+Actor --> Route : 1. 打开所属角色工作台并选筛选条件
+Route --> Service : 2. 校验角色和查询参数
+Service --> Scope : 3. 构造全局、本班、课程或本人条件
+Service --> DB : 4. 计数、分页、选定学期完整成绩均值
+Service --> Attendance : 5. 当前范围，含起止日 UTC 30 天
+Attendance --> DB : 5.1 按考勤状态分组
+Service --> Route : 6. 数字或空数据，标注学期和日期
+Route --> Actor : 7. 可读统计页面，非法或越权返回 400/403
+@enduml

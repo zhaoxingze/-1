@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% block title %}课程详情{% endblock %}
+{% block breadcrumb %}课程详情{% endblock %}
+{% block content %}
+{% set role = current_user.role.name %}
+<div class="archive-heading"><h1>{{ course.course_name }}</h1><a class="btn btn-outline-secondary" href="{{ url_for('academics.courses') }}">返回课程列表</a></div>
+<section class="archive-panel">
+  <dl class="row">
+    <dt class="col-sm-3">课程编号</dt><dd class="col-sm-9">{{ course.course_code }}</dd>
+    <dt class="col-sm-3">学分</dt><dd class="col-sm-9">{{ course.credit }}</dd>
+    <dt class="col-sm-3">授课教师</dt><dd class="col-sm-9">{{ course.teacher.name if course.teacher else '未指定' }}</dd>
+    <dt class="col-sm-3">课程说明</dt><dd class="col-sm-9 text-break">{{ course.description or '—' }}</dd>
+  </dl>
+  <form method="get" class="archive-filters">
+    <div><label class="form-label" for="semester">学期</label>
+      <select class="form-select" id="semester" name="semester">
+        {% for option in terms %}<option{% if option == term %} selected{% endif %}>{{ option }}</option>{% endfor %}
+      </select>
+    </div>
+    <button class="btn btn-primary" type="submit">查询</button>
+  </form>
+  {% if role == 'student' %}<p>本人选课状态：{{ '已选' if count else '未选' }}</p>
+  {% else %}<p>选课人数：{{ count }}</p>{% endif %}
+  <div class="d-flex flex-wrap gap-2">
+    <a class="btn btn-outline-secondary" href="{{ url_for('academics.enrollments', course_id=course.course_id, semester=term) }}">查看选课</a>
+    {% if role != 'teacher' or term == config.ACTIVE_SEMESTER %}
+    <a class="btn btn-outline-secondary" href="{{ url_for('academics.grades', course_id=course.course_id, semester=term) }}">查看成绩</a>
+    {% if role != 'student' %}<a class="btn btn-outline-primary" href="{{ url_for('academics.enrollment_new', course_id=course.course_id, semester=term) }}">新增选课</a>{% endif %}
+    {% endif %}
+    {% if role == 'admin' %}<a class="btn btn-primary" href="{{ url_for('academics.course_edit', course_id=course.course_id) }}">编辑课程</a>{% endif %}
+  </div>
+</section>
+{% endblock %}

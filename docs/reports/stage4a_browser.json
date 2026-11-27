@@ -1,0 +1,42 @@
+{
+  "checks": {
+    "anonymous_management_redirect": true,
+    "teacher_create": true,
+    "class_head_teacher": true,
+    "required_field_failure": true,
+    "student_create_and_class": true,
+    "duplicate_student_failure": true,
+    "legal_state_transition": true,
+    "archive": true,
+    "archived_search": true,
+    "restore": true,
+    "primary_switch": true,
+    "parent_filter_retained": true,
+    "student_search": true,
+    "pagination": true,
+    "class_student_list": true,
+    "mobile_list_no_overflow": true,
+    "mobile_form_no_overflow": true,
+    "teacher_management_denied": true,
+    "student_management_denied": true,
+    "student_own_minimal": true,
+    "student_other_minimal_denied": true,
+    "health": true,
+    "no_unexpected_errors": true
+  },
+  "ids": {
+    "teacher_id": 2,
+    "class_id": 1,
+    "student_id": 3,
+    "parent_ids": [
+      1,
+      2
+    ]
+  },
+  "page_errors": [],
+  "unexpected_console_errors": [],
+  "expected_denial_console": [],
+  "server_errors": [],
+  "passed": true,
+  "final_detail_screenshots_refreshed": true
+}

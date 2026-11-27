@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+{% block title %}审计详情{% endblock %}
+{% block breadcrumb %}审计详情{% endblock %}
+{% block content %}
+<div class="archive-heading"><h1>审计详情 #{{ row.audit_id }}</h1><a class="btn btn-outline-secondary" href="{{ url_for('admin.audit_list') }}">返回审计日志</a></div>
+<section class="archive-panel">
+  <dl class="archive-facts">
+    <dt>时间（UTC）</dt><dd>{{ row.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</dd>
+    <dt>操作者</dt><dd>{{ row.actor.username if row.actor else '系统' }}</dd>
+    <dt>实体</dt><dd>{{ row.entity_type }} #{{ row.entity_id }}</dd>
+    <dt>操作</dt><dd>{{ actions[row.action] }}</dd>
+  </dl>
+  <a class="btn btn-outline-secondary mb-4" href="{{ url_for('admin.audit_list', entity_type=row.entity_type, entity_id=row.entity_id) }}">相关记录</a>
+  <div class="row g-4">
+    {% for label, fields in [('操作前', before), ('操作后', after)] %}
+    <div class="col-12 col-md-6"><h2 class="h5">{{ label }}</h2>
+      {% if fields %}<dl class="archive-facts">{% for key, value in fields.items() %}
+        <dt>{{ key }}</dt><dd>{{ '是' if value is sameas true else '否' if value is sameas false else '—' if value is none else value }}</dd>
+      {% endfor %}</dl>{% else %}<p class="text-secondary">暂无可展示字段。</p>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

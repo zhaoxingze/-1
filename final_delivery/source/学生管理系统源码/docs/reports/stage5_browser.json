@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "checks": {
+    "anonymous_redirect": true,
+    "admin_course_saved": true,
+    "admin_course_search": true,
+    "admin_duplicate_course_rejected": true,
+    "teacher_own_courses_only": true,
+    "teacher_term_read_only": true,
+    "teacher_homeroom_candidates_only": true,
+    "teacher_enrollment_saved": true,
+    "pending_grade_distinct": true,
+    "invalid_grade_rejected": true,
+    "teacher_total_saved": true,
+    "teacher_other_course_denied": true,
+    "teacher_other_grade_denied": true,
+    "teacher_history_write_denied": true,
+    "teacher_history_read_denied": true,
+    "teacher_course_update_denied": true,
+    "mobile_form_fit": true,
+    "student_own_multiple_terms": true,
+    "student_no_edit_controls": true,
+    "student_other_record_denied": true,
+    "student_enrollment_create_denied": true,
+    "no_browser_script_errors": true
+  },
+  "scriptErrors": [],
+  "courseId": 3,
+  "database_audit_verified": true
+}

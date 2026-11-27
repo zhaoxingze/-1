@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block title %}学生基础信息{% endblock %}
+{% block breadcrumb %}学生基础信息{% endblock %}
+{% block content %}
+<section class="profile-panel"><h1>学生基础信息</h1><dl class="row mt-4">
+<dt class="col-sm-3">姓名</dt><dd class="col-sm-9">{{ student.name }}</dd>
+<dt class="col-sm-3">学号</dt><dd class="col-sm-9">{{ student.student_no }}</dd>
+<dt class="col-sm-3">学籍</dt><dd class="col-sm-9">{{ {'enrolled':'在读','suspended':'休学','graduated':'毕业','withdrawn':'退学'}[student.status] }}</dd>
+<dt class="col-sm-3">档案归档</dt><dd class="col-sm-9">{{ '已归档' if student.is_archived else '未归档' }}</dd>
+</dl></section>
+{% endblock %}

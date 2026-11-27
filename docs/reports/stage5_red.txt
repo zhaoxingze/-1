@@ -1,0 +1,23 @@
+FF
+================================== FAILURES ===================================
+___________________ test_admin_creates_and_searches_courses ___________________
+tests\test_course_crud.py:15: in test_admin_creates_and_searches_courses
+    response = submit(auth, "/academics/courses/new", {**COURSE_DATA, "teacher_id": str(academic.ids.teacher)})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\archive_support.py:12: in submit
+    return auth.client.post(path,data={"csrf_token":auth.token(path),**data})
+                                                    ^^^^^^^^^^^^^^^^
+tests\conftest.py:86: in token
+    assert page.status_code == 200, f"CSRF form unavailable: {path}: {page.status_code}"
+E   AssertionError: CSRF form unavailable: /academics/courses/new: 404
+E   assert 404 == 200
+E    +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+________________ test_total_uses_decimal_half_up[80-90-87.00] _________________
+tests\test_grade_service.py:14: in test_total_uses_decimal_half_up
+    from app.services.grade_service import calculate_total
+E   ModuleNotFoundError: No module named 'app.services.grade_service'
+=========================== short test summary info ===========================
+FAILED tests/test_course_crud.py::test_admin_creates_and_searches_courses - A...
+FAILED tests/test_grade_service.py::test_total_uses_decimal_half_up[80-90-87.00]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 2 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+2 failed in 1.77s

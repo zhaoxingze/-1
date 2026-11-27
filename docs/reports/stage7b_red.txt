@@ -1,0 +1,14 @@
+EE                                                                       [100%]
+=================================== ERRORS ====================================
+_ ERROR at setup of test_admin_counts_all_profiles_but_active_enrolled_matches_both_flags _
+tests\stage7_support.py:44: in dashboard_data
+    from app.services import dashboard_statistics_service
+E   ImportError: cannot import name 'dashboard_statistics_service' from 'app.services' (F:\StudentManagementSystem\app\services\__init__.py)
+__ ERROR at setup of test_student_stats_come_only_from_authenticated_student __
+tests\stage7_support.py:44: in dashboard_data
+    from app.services import dashboard_statistics_service
+E   ImportError: cannot import name 'dashboard_statistics_service' from 'app.services' (F:\StudentManagementSystem\app\services\__init__.py)
+=========================== short test summary info ===========================
+ERROR tests/test_stage7_dashboard_statistics.py::test_admin_counts_all_profiles_but_active_enrolled_matches_both_flags
+ERROR tests/test_stage7_dashboard_permissions.py::test_student_stats_come_only_from_authenticated_student
+2 errors in 2.17s

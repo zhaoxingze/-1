@@ -1,0 +1,9 @@
+{
+  "homepage_status": 200,
+  "health_status": 200,
+  "health": {
+    "service": "student-management-system",
+    "status": "ok"
+  },
+  "current_stage_text_present": true
+}

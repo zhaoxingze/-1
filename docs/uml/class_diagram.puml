@@ -1,0 +1,377 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName Microsoft YaHei
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+title 学生综合信息管理系统 阶段 7 领域与各模块服务类图
+class Role <<roles>> {
+  {field} role_id : INTEGER <<PK>>
+  {field} name : VARCHAR(30) <<NN,UQ>>
+  {field} description : VARCHAR(200) <<NULL>>
+}
+class Teacher <<teachers>> {
+  {field} teacher_id : INTEGER <<PK>>
+  {field} teacher_no : VARCHAR(30) <<NN,UQ>>
+  {field} name : VARCHAR(50) <<NN>>
+  {field} phone : VARCHAR(30) <<NULL>>
+  {field} email : VARCHAR(100) <<NULL>>
+}
+class SchoolClass <<school_classes>> {
+  {field} class_id : INTEGER <<PK>>
+  {field} class_name : VARCHAR(50) <<NN>>
+  {field} grade : VARCHAR(30) <<NN>>
+  {field} homeroom_teacher_id : INTEGER <<NULL,FK>>
+}
+class Student <<students>> {
+  {field} student_id : INTEGER <<PK>>
+  {field} student_no : VARCHAR(30) <<NN,UQ>>
+  {field} name : VARCHAR(50) <<NN>>
+  {field} gender : VARCHAR(10) <<NN>>
+  {field} birth_date : DATE <<NULL>>
+  {field} phone : VARCHAR(30) <<NULL>>
+  {field} address : VARCHAR(255) <<NULL>>
+  {field} class_id : INTEGER <<NULL,FK>>
+  {field} enrollment_date : DATE <<NN>>
+  {field} status : VARCHAR(20) <<NN>>
+  {field} is_archived : BOOLEAN <<NN ,S2>>
+}
+class User <<users>> {
+  +get_id() : str
+  {field} user_id : INTEGER <<PK>>
+  {field} username : VARCHAR(50) <<NN,UQ>>
+  {field} password_hash : VARCHAR(255) <<NN>>
+  {field} role_id : INTEGER <<NN,FK>>
+  {field} student_id : INTEGER <<NULL,UQ,FK>>
+  {field} teacher_id : INTEGER <<NULL,UQ,FK>>
+  {field} is_active : BOOLEAN <<NN>>
+  {field} created_at : DATETIME <<NN>>
+}
+class Course <<courses>> {
+  {field} course_id : INTEGER <<PK>>
+  {field} course_code : VARCHAR(30) <<NN,UQ>>
+  {field} course_name : VARCHAR(100) <<NN>>
+  {field} credit : FLOAT <<NN>>
+  {field} teacher_id : INTEGER <<NULL,FK>>
+  {field} description : TEXT <<NULL>>
+}
+class Enrollment <<enrollments>> {
+  {field} enrollment_id : INTEGER <<PK>>
+  {field} student_id : INTEGER <<NN,FK>>
+  {field} course_id : INTEGER <<NN,FK>>
+  {field} semester : VARCHAR(30) <<NN>>
+  {field} usual_score : FLOAT <<NULL>>
+  {field} exam_score : FLOAT <<NULL>>
+  {field} total_score : FLOAT <<NULL>>
+  {field} created_at : DATETIME <<NN>>
+}
+class AttendanceRecord <<attendance_records>> {
+  {field} attendance_id : INTEGER <<PK>>
+  {field} student_id : INTEGER <<NN,FK>>
+  {field} attendance_date : DATE <<NN>>
+  {field} period : VARCHAR(30) <<NN>>
+  {field} status : VARCHAR(20) <<NN>>
+  {field} note : VARCHAR(255) <<NULL>>
+  {field} recorded_by : INTEGER <<NN,FK>>
+}
+class RewardRecord <<reward_records>> {
+  {field} record_id : INTEGER <<PK>>
+  {field} student_id : INTEGER <<NN,FK>>
+  {field} record_type : VARCHAR(20) <<NN>>
+  {field} category : VARCHAR(50) <<NN>>
+  {field} description : TEXT <<NN>>
+  {field} occurred_on : DATE <<NN>>
+  {field} created_by : INTEGER <<NN,FK>>
+}
+class Parent <<parents>> {
+  {field} parent_id : INTEGER <<PK>>
+  {field} student_id : INTEGER <<NN,FK>>
+  {field} name : VARCHAR(50) <<NN>>
+  {field} relationship : VARCHAR(20) <<NN>>
+  {field} phone : VARCHAR(30) <<NN>>
+  {field} email : VARCHAR(100) <<NULL>>
+  {field} is_primary : BOOLEAN <<NN>>
+}
+class ParentContactLog <<parent_contact_logs>> {
+  {field} contact_id : INTEGER <<PK>>
+  {field} student_id : INTEGER <<NN,FK>>
+  {field} parent_id : INTEGER <<NULL,FK>>
+  {field} method : VARCHAR(20) <<NN>>
+  {field} content : TEXT <<NN>>
+  {field} result : TEXT <<NULL>>
+  {field} contacted_at : DATETIME <<NN>>
+  {field} created_by : INTEGER <<NN,FK>>
+  {field} contact_person_name : VARCHAR(50) <<NULL ,S2>>
+  {field} contact_person_phone : VARCHAR(30) <<NULL ,S2>>
+}
+class AuditLog <<audit_logs>> {
+  {field} audit_id : INTEGER <<PK ,S2>>
+  {field} actor_user_id : INTEGER <<NULL,FK ,S2>>
+  {field} entity_type : VARCHAR(80) <<NN ,S2>>
+  {field} entity_id : INTEGER <<NN ,S2>>
+  {field} action : VARCHAR(30) <<NN ,S2>>
+  {field} before_data : JSON <<NULL ,S2>>
+  {field} after_data : JSON <<NULL ,S2>>
+  {field} created_at : DATETIME <<NN ,S2>>
+  {field} request_id : VARCHAR(100) <<NULL ,S2>>
+}
+class NotificationLog <<notification_logs>> {
+  {field} notification_id : INTEGER <<PK ,S2>>
+  {field} student_id : INTEGER <<NN,FK ,S2>>
+  {field} parent_id : INTEGER <<NULL,FK ,S2>>
+  {field} channel : VARCHAR(20) <<NN ,S2>>
+  {field} recipient_snapshot : JSON <<NN ,S2>>
+  {field} content : TEXT <<NN ,S2>>
+  {field} status : VARCHAR(20) <<NN ,S2>>
+  {field} created_by : INTEGER <<NN,FK ,S2>>
+  {field} created_at : DATETIME <<NN ,S2>>
+}
+Teacher "0..1" -- "0..*" SchoolClass : homeroom_teacher_id
+SchoolClass "0..1" -- "0..*" Student : class_id
+Role "1" -- "0..*" User : role_id
+Student "0..1" -- "0..1" User : student_id
+Teacher "0..1" -- "0..1" User : teacher_id
+Teacher "0..1" -- "0..*" Course : teacher_id
+Student "1" -- "0..*" Enrollment : student_id
+Course "1" -- "0..*" Enrollment : course_id
+Student "1" -- "0..*" AttendanceRecord : student_id
+User "1" -- "0..*" AttendanceRecord : recorded_by
+Student "1" -- "0..*" RewardRecord : student_id
+User "1" -- "0..*" RewardRecord : created_by
+Student "1" -- "0..*" Parent : student_id
+Student "1" -- "0..*" ParentContactLog : student_id
+Parent "0..1" -- "0..*" ParentContactLog : parent_id
+User "1" -- "0..*" ParentContactLog : created_by
+User "0..1" -- "0..*" AuditLog : actor_user_id
+Student "1" -- "0..*" NotificationLog : student_id
+Parent "0..1" -- "0..*" NotificationLog : parent_id
+User "1" -- "0..*" NotificationLog : created_by
+class UserMixin <<framework>> {
+  +is_authenticated : property
+  +is_anonymous : property
+}
+class AuthSession <<service>> {
+  +configure_auth(app)
+  +account_is_usable(user) : bool
+  +credential_version(user) : str
+  +safe_next(target) : str
+}
+class PermissionService <<service>> {
+  +academic_access(actor, action) : AcademicScope
+  +require_current_admin(actor)
+  +student_record_access(actor, action) : StudentRecordScope
+  +role_required(*roles)
+  +has_role(user, *roles) : bool
+  +can_access_student_resource(user, student_id, action) : bool
+  +require_student_access(user, student_id, action)
+  +get_teacher_scope(user) : TeacherScope
+  +can_view_student(user, student_id, course_id)
+  +can_edit_student_contact(user, student_id)
+  +can_view_parent_contact(user, student_id)
+  +require_teacher_student_access(user, student_id, action, course_id)
+}
+class PasswordService <<service>> {
+  +change_own_password(actor, current_password, new_password)
+  +reset_user_password(actor, target_user_id, actor_password, new_password)
+}
+class AuditService <<service>> {
+  +record_update(entity_type, entity_id, actor_user_id, after_data)
+}
+UserMixin <|-- User
+AuthSession ..> User : 每请求加载及检查
+PermissionService ..> AuthSession : 有效账号与绑定
+PermissionService ..> Student : 对象读取范围
+PasswordService ..> PermissionService : 再校验调用者
+PasswordService ..> User : 只改哈希
+PasswordService ..> AuditService : 同事务add，无commit
+AuditService ..> AuditLog
+class StudentService <<module>> {
+ +create_student(actor, data)
+ +update_student(actor, id, data)
+ +change_student_status(actor, id, target)
+ +set_student_archived(actor, id, archived)
+ +list_students(actor, filters)
+}
+class TeacherService <<module>> {
+ +create_teacher(actor, data)
+ +update_teacher(actor, id, data)
+ +list_teachers(actor, filters)
+}
+class ClassService <<module>> {
+ +create_class(actor, data)
+ +update_class(actor, id, data)
+ +student_counts(actor, class_ids)
+}
+class ParentService <<module>> {
+ +create_parent(actor, student_id, data)
+ +update_parent(actor, student_id, parent_id, data)
+ +set_primary_parent(actor, student_id, parent_id)
+}
+class ArchivePolicy <<module>> {
+ +archive_write(operation)
+ +require_admin(actor)
+ +get_record(model, id, fresh)
+ +audit(actor, row, fields, action)
+}
+StudentService ..> Student
+TeacherService ..> Teacher
+ClassService ..> SchoolClass
+ParentService ..> Parent
+ParentService ..> Student : 校验归属
+StudentService ..> ArchivePolicy
+TeacherService ..> ArchivePolicy
+ClassService ..> ArchivePolicy
+ParentService ..> ArchivePolicy
+ArchivePolicy ..> PermissionService
+ArchivePolicy ..> AuditService : 同事务add
+class TeacherScope <<policy value>> {
+ +user_id : int
+ +teacher_id : int
+ +class_ids : Select
+ +course_ids : Select
+ +student_filter(action, course_id)
+}
+class TeacherStudentService <<module>> {
+ +list_owned_classes(actor)
+ +list_class_students(actor, class_id)
+ +get_homeroom_student(actor, student_id, action)
+ +update_student_contact(actor, student_id, data)
+ +list_parent_contacts(actor, student_id)
+ +list_owned_courses(actor)
+ +list_course_students(actor, course_id)
+}
+PermissionService ..> TeacherScope
+TeacherScope ..> User : 当前有效绑定
+TeacherScope ..> SchoolClass : 班主任
+TeacherScope ..> Course : 任课关系
+TeacherScope ..> Enrollment : 已有选课
+TeacherStudentService ..> PermissionService
+TeacherStudentService ..> Student : 基础资料与限字段更新
+TeacherStudentService ..> Parent : 联系信息只读
+TeacherStudentService ..> ArchivePolicy : 写锁及审计
+class AcademicScope <<policy value>> {
+  +action : str
+  +role : str
+  +active_semester : str
+  +teacher : TeacherScope
+  +student_id : int
+  +courses() : SQL condition
+  +enrollments() : SQL condition
+  +enrollment_candidates() : SQL condition
+}
+class CourseService <<module>> {
+  +list_courses(actor, filters)
+  +get_course(actor, course_id)
+  +count_course_enrollments(actor, course_id, semester)
+  +create_course(actor, data)
+  +update_course(actor, course_id, data)
+}
+class EnrollmentService <<module>> {
+  +list_enrollments(actor, filters)
+  +create_enrollment(actor, student_id, course_id, semester)
+}
+class GradeService <<module>> {
+  +calculate_total(usual_score, exam_score) : Decimal
+  +get_grade_for_edit(actor, enrollment_id)
+  +save_grades(actor, enrollment_id, usual_score, exam_score)
+}
+PermissionService ..> AcademicScope : 按动作决策
+AcademicScope ..> TeacherScope : 当前授课及班主任范围
+CourseService ..> AcademicScope : 课程与计数
+CourseService ..> Course
+EnrollmentService ..> AcademicScope : 选课与候选
+EnrollmentService ..> Enrollment
+GradeService ..> AcademicScope : 课程及学期
+GradeService ..> Enrollment
+CourseService ..> ArchivePolicy : 写锁与审计
+EnrollmentService ..> ArchivePolicy : 写锁与审计
+GradeService ..> ArchivePolicy : 写锁与审计
+class StudentRecordScope <<policy value>> {
+  +role : str
+  +teacher : TeacherScope
+  +student_id : int
+  +students() : SQL condition
+  +classes() : SQL condition
+}
+class StudentRecordService <<module>> {
+  +begin_record_write(actor, action)
+  +scoped_record(scope, model, record_id, fresh)
+  +save_record(actor, row, values, visible_fields)
+}
+class AttendanceService <<module>> {
+  +list_attendance(actor, filters)
+  +attendance_statistics(actor, filters)
+  +create_attendance(actor, student_id, data)
+  +update_attendance(actor, attendance_id, data)
+}
+class RewardService <<module>> {
+  +list_rewards(actor, filters)
+  +create_reward(actor, student_id, data)
+  +update_reward(actor, record_id, data)
+}
+class ParentContactService <<module>> {
+  +list_contacts(actor, filters)
+  +create_contact(actor, student_id, data)
+  +update_contact(actor, contact_id, data)
+  +simulate_notification(actor, student_id, data)
+  +list_notifications(actor, filters)
+}
+class NotificationService <<module>> {
+  +create_simulated_notification(student_id, channel, content, created_by, parent_id, recipient_snapshot)
+}
+PermissionService ..> StudentRecordScope
+StudentRecordScope ..> TeacherScope : 当前班主任范围
+StudentRecordService ..> StudentRecordScope
+StudentRecordService ..> AuditService : 白名单审计
+AttendanceService ..> StudentRecordService : 范围、写锁、审计
+AttendanceService ..> AttendanceRecord
+RewardService ..> StudentRecordService
+RewardService ..> RewardRecord
+ParentContactService ..> StudentRecordService
+ParentContactService ..> ParentContactLog
+ParentContactService ..> NotificationService : 显式模拟
+NotificationService ..> NotificationLog
+class UserManagementService <<module>> {
+  +list_users(actor, filters)
+  +create_user(actor, data)
+  +update_user(actor, user_id, data)
+  +set_user_active(actor, user_id, enabled)
+}
+class AuditQueryService <<module>> {
+  +list_audit(actor, filters)
+  +audit_detail(actor, audit_id)
+}
+class DashboardStatisticsService <<module>> {
+  +admin_statistics(actor, semester, class_id, course_page)
+  +teacher_statistics(actor, semester, class_id, course_page)
+  +student_statistics(actor)
+}
+UserManagementService ..> User
+UserManagementService ..> Role : 既有字典
+UserManagementService ..> PermissionService : BEGIN IMMEDIATE 锁内复核
+UserManagementService ..> AuditService : 同事务追加
+AuthSession ..> AuditLog : 身份及启停变更版本
+AuditQueryService ..> AuditLog : 只读
+AuditQueryService ..> PermissionService
+DashboardStatisticsService ..> TeacherScope : 区分班级及课程
+DashboardStatisticsService ..> Enrollment : 指定学期完整成绩
+DashboardStatisticsService ..> AttendanceService : 受限汇总
+legend left
+  13 持久化领域类 / 94 字段 / 20 FK；另计 Alembic 版本表。
+  保留原 11 表 / 73 原字段 / 16 原 FK；S2 为阶段2新增字段。
+  全部外键 RESTRICT；无删除级联或强组合关系。
+  Student.is_archived 与学籍、User.is_active 独立。
+  UQ Enrollment(student_id, course_id, semester)
+  UQ AttendanceRecord(student_id, attendance_date, period)
+  部分 UQ Parent(student_id) WHERE is_primary=1
+  User 档案互斥及角色匹配经 Service / ORM 校验。
+  联系/通知家长归属经校验及触发器保护。
+  审计追加且快照去凭证；通知模拟且保留快照。
+  所有 DATETIME 均 UTC naive。成绩权重和教师范围由阶段5服务实现。
+  framework/service类无数据表，依赖线不算FK。
+  User.is_active仍为数据库字段，不被UserMixin默认值覆盖。
+  认证、管理员四类档案和阶段4B教师有限读写已实现。
+  module是Python服务模块职责，不新增表。
+  写操作BEGIN IMMEDIATE并刷新目标，外层一次commit。
+  课程、选课、成绩使用原有 Course 和 Enrollment。
+endlegend
+@enduml

@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+{% from 'records/_filters.html' import record_filters with context %}
+{% block title %}考勤统计{% endblock %}
+{% block breadcrumb %}考勤统计{% endblock %}
+{% block content %}
+<div class="archive-heading">
+  <h1>考勤统计</h1>
+  <a class="btn btn-outline-secondary" href="{{ back_url }}">返回考勤记录</a>
+</div>
+<section class="archive-panel">
+  {{ record_filters(filters, options) }}
+  <dl class="row g-3">
+    {% for status, count in entries %}
+    <div class="col-6 col-md-3"><dt>{{ status }}</dt><dd class="fs-3 mb-0">{{ count }}</dd></div>
+    {% endfor %}
+  </dl>
+  <p class="fs-5"><strong>出勤率</strong> · {% if rate is none %}无可统计数据{% else %}{{ rate }}%{% endif %}</p>
+  <p class="text-secondary mb-0">按实际登记统计。出勤率为出勤与迟到次数之和除以出勤、迟到与缺勤次数之和。请假单列。</p>
+</section>
+{% endblock %}

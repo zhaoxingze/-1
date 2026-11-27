@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "errors": [],
+  "metadata": {
+    "tables": 13,
+    "fields": 94,
+    "foreign_keys": 20
+  },
+  "stage2_field_dictionary_matches": true,
+  "immutable_files": {
+    "tests/test_app.py": true,
+    "tests/test_audit_append_only_replace.py": true,
+    "tests/test_audit_service.py": true,
+    "tests/test_configuration.py": true,
+    "tests/test_csrf.py": true,
+    "tests/test_database_cli.py": true,
+    "tests/test_database_constraints.py": true,
+    "tests/test_database_migrations.py": true,
+    "tests/test_data_validation_service.py": true,
+    "tests/test_models.py": true,
+    "tests/test_notification_service.py": true,
+    "tests/test_pages.py": true,
+    "migrations/env.py": true,
+    "migrations/versions/fab16ef0dd6f_initial_thirteen_domain_tables.py": true,
+    "instance/student_management.db": true,
+    "docs/specs/source/学生管理系统_前期设计方案与Codex分阶段提示词.docx": true,
+    "docs/reports/stage1_report.md": true,
+    "docs/reports/stage2_report.md": true
+  },
+  "original_test_modules_unchanged": true,
+  "development_database_sha256": "89428de8f37a14ce68c027a1704427926db8b5bcf64a6e65260b1412c7664f76",
+  "original_word_sha256": "d4520374dac8021cd2d7cdbf098c17c7c48bccb76616a2c82ef587bd0c033c58",
+  "revision": "fab16ef0dd6f",
+  "foreign_keys_enabled": 1,
+  "recursive_triggers_enabled": 1,
+  "foreign_key_check": [],
+  "triggers": [
+    "audit_logs_no_delete",
+    "audit_logs_no_update",
+    "notifications_parent_insert",
+    "notifications_parent_update",
+    "parent_contacts_parent_insert",
+    "parent_contacts_parent_update",
+    "parents_preserve_history_owner"
+  ],
+  "development_row_counts": {
+    "roles": 3,
+    "teachers": 0,
+    "school_classes": 0,
+    "students": 0,
+    "users": 0,
+    "courses": 0,
+    "enrollments": 0,
+    "attendance_records": 0,
+    "reward_records": 0,
+    "parents": 0,
+    "parent_contact_logs": 0,
+    "audit_logs": 3,
+    "notification_logs": 0
+  },
+  "local_links_checked": 146,
+  "browser_passed": true,
+  "server_unhandled_errors": false,
+  "tests": {
+    "baseline_passed": 156,
+    "new_passed": 95,
+    "total_passed": 251,
+    "duration_seconds": 71.85
+  },
+  "uml": {
+    "source_files": 7,
+    "diagrams": 9,
+    "syntax_exit_code": 0,
+    "render_exit_code": 0,
+    "visually_checked": [
+      "auth_sequence",
+      "auth_activity",
+      "class_diagram"
+    ]
+  }
+}

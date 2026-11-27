@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>{% block title %}系统首页{% endblock %} · 学生综合信息管理系统</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='brand.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap-5.3.3.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+{% from 'dashboard/_nav.html' import navigation with context %}
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+<div class="app-shell">
+  <aside class="sidebar" aria-label="系统菜单">
+    <a class="brand" href="{{ url_for('dashboard.index') }}" aria-label="学生综合信息管理系统首页">
+      <img src="{{ url_for('static', filename='brand.svg') }}" width="40" height="40" alt="">
+      <span>学生信息管理<small>STUDENT MANAGEMENT</small></span>
+    </a>
+    <div class="navigation-desktop">{{ navigation('primary-navigation') }}</div>
+    <details class="navigation-mobile"><summary>功能菜单</summary>{{ navigation('mobile-navigation') }}</details>
+  </aside>
+  <div class="workspace">
+    <header class="topbar">
+      <nav class="breadcrumb-label" aria-label="页面路径">
+        {% if current_user.is_authenticated %}<a href="{{ url_for('dashboard.workbench') }}">工作台</a>
+        {% else %}<a href="{{ url_for('dashboard.index') }}">首页</a>{% endif %}
+        <span aria-hidden="true">/</span><strong aria-current="page">{% block breadcrumb %}系统首页{% endblock %}</strong>
+      </nav>
+      <div class="account-nav">
+      {% if current_user.is_authenticated %}
+      <span>{{ current_user.username }}</span>
+      <form method="post" action="{{ url_for('auth.logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn btn-sm btn-outline-secondary" type="submit">退出登录</button></form>
+      {% else %}<a class="btn btn-sm btn-outline-secondary" href="{{ url_for('auth.login') }}">登录</a>{% endif %}
+      </div>
+    </header>
+    <main id="main-content" class="main-content" tabindex="-1">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+      <div class="alert alert-{{ category if category in ['success', 'warning', 'danger', 'info'] else 'info' }}" role="{{ 'alert' if category == 'danger' else 'status' }}">{{ message }}</div>
+      {% endfor %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer"><span>学生综合信息管理系统</span><span>软件工程课程设计 · 2026</span></footer>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block title %}账号详情{% endblock %}
+{% block breadcrumb %}账号详情{% endblock %}
+{% block content %}
+<div class="archive-heading"><h1 class="text-break">{{ account.username }}</h1><a class="btn btn-outline-secondary" href="{{ url_for('admin.users') }}">返回用户列表</a></div>
+<section class="archive-panel">
+  <dl class="archive-facts">
+    <dt>账号 ID</dt><dd>{{ account.user_id }}</dd>
+    <dt>角色</dt><dd>{{ roles[account.role.name] }}</dd>
+    <dt>绑定档案</dt><dd>{% if account.teacher %}{{ account.teacher.teacher_no }} · {{ account.teacher.name }}{% elif account.student %}{{ account.student.student_no }} · {{ account.student.name }}{% else %}—{% endif %}</dd>
+    <dt>账号状态</dt><dd>{{ '已启用' if account.is_active else '已停用' }}</dd>
+    <dt>创建时间（UTC）</dt><dd>{{ account.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</dd>
+  </dl>
+  <div class="d-flex flex-wrap gap-2">
+    <a class="btn btn-primary" href="{{ url_for('admin.user_edit', user_id=account.user_id) }}">编辑账号</a>
+    {% if account.user_id != current_user.user_id %}
+    <a class="btn btn-outline-secondary" href="{{ url_for('admin.user_deactivate' if account.is_active else 'admin.user_activate', user_id=account.user_id) }}">{{ '停用账号' if account.is_active else '启用账号' }}</a>
+    {% endif %}
+    <a class="btn btn-outline-primary" href="{{ url_for('admin.reset_password', user_id=account.user_id) }}">重置密码</a>
+    <a class="btn btn-outline-secondary" href="{{ url_for('admin.audit_list', entity_type='User', entity_id=account.user_id) }}">相关审计</a>
+  </div>
+</section>
+{% endblock %}

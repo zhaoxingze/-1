@@ -1,0 +1,2 @@
+Command: java -Djava.awt.headless=true -DPLANTUML_LIMIT_SIZE=8192 -jar C:\Users\LOCAL_USER\AppData\Local\Temp\sms-phase0-review-20261116\plantuml-1.2025.10.jar --format png --output-dir C:\Users\LOCAL_USER\AppData\Local\Temp\sms-phase3-20261117\uml-rendered -charset UTF-8 docs/uml/sequence_diagram.puml docs/uml/activity_diagram.puml docs/uml/class_diagram.puml
+Exit code: 0

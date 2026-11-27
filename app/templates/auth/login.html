@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block title %}用户登录{% endblock %}
+{% block breadcrumb %}用户登录{% endblock %}
+{% block content %}
+<section class="auth-panel" aria-labelledby="login-title">
+  <span class="eyebrow text-success">STUDENT INFORMATION CENTER</span>
+  <h1 id="login-title">登录学生综合信息管理系统</h1>
+  <p class="text-secondary">使用已开通的账号，进入你的工作空间。</p>
+  {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
+  <form method="post">
+    {{ form.hidden_tag() }}
+    {% for field in [form.username, form.password] %}
+    <div class="mb-3">
+      {{ field.label(class="form-label") }}
+      {{ field(class="form-control", autocomplete='username' if field.name == 'username' else 'current-password', maxlength=50 if field.name == 'username' else 1024, **{'aria-invalid':'true' if field.errors else 'false'}) }}
+      {% for error in field.errors %}<p class="text-danger small mt-1">{{ error }}</p>{% endfor %}
+    </div>
+    {% endfor %}
+    {{ form.submit(class="btn btn-primary w-100") }}
+  </form>
+</section>
+{% endblock %}

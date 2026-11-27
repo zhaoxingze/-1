@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+{% from 'admin/_macros.html' import pagination with context %}
+{% block title %}{{ title }}{% endblock %}
+{% block breadcrumb %}{{ title }}{% endblock %}
+{% block content %}
+<div class="archive-heading">
+  <h1>{{ title }}</h1>
+  <a class="btn btn-outline-secondary" href="{{ back_url }}">返回</a>
+</div>
+<section class="archive-panel">
+  {% if note %}<p class="text-secondary">{{ note }}</p>{% endif %}
+  {% if search %}
+  <form class="archive-filters" method="get" role="search">
+    <div>
+      <label class="form-label" for="roster-search">按学号或姓名搜索</label>
+      <input class="form-control" id="roster-search" name="q" maxlength="100" value="{{ request.args.get('q', '') }}">
+    </div>
+    <button class="btn btn-primary" type="submit">查询</button>
+  </form>
+  {% endif %}
+  {% set has_links = rows | selectattr('1') | list | length > 0 %}
+  <div class="table-responsive">
+    <table class="table align-middle archive-table">
+      <thead><tr>
+        {% for header in headers %}<th scope="col">{{ header }}</th>{% endfor %}
+        {% if has_links %}<th scope="col">查看</th>{% endif %}
+      </tr></thead>
+      <tbody>
+        {% for cells, link in rows %}
+        <tr>
+          {% for cell in cells %}<td>{{ cell }}</td>{% endfor %}
+          {% if has_links %}<td>{% if link %}<a href="{{ link }}" aria-label="查看 {{ cells[0] }}">查看</a>{% endif %}</td>{% endif %}
+        </tr>
+        {% else %}
+        <tr><td class="empty-state" colspan="{{ headers | length }}">暂无符合条件的记录。</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {{ pagination(page) }}
+</section>
+{% endblock %}

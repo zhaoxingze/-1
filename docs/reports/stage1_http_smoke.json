@@ -1,0 +1,16 @@
+{
+  "base_url": "http://127.0.0.1:5000",
+  "homepage_status": 200,
+  "homepage_content_type": [
+    "text/html; charset=utf-8"
+  ],
+  "health_status": 200,
+  "health_body": {
+    "service": "student-management-system",
+    "status": "ok"
+  },
+  "instance_files": [
+    ".gitkeep"
+  ],
+  "verification_server_stopped": true
+}

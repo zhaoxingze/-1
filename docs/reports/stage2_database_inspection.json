@@ -1,0 +1,76 @@
+{
+  "database": "sqlite:///F%3A%5CStudentManagementSystem%5Cinstance%5Cstudent_management.db",
+  "revision": "fab16ef0dd6f",
+  "tables": {
+    "alembic_version": {
+      "field_count": 1,
+      "row_count": 1
+    },
+    "attendance_records": {
+      "field_count": 7,
+      "row_count": 0
+    },
+    "audit_logs": {
+      "field_count": 9,
+      "row_count": 3
+    },
+    "courses": {
+      "field_count": 6,
+      "row_count": 0
+    },
+    "enrollments": {
+      "field_count": 8,
+      "row_count": 0
+    },
+    "notification_logs": {
+      "field_count": 9,
+      "row_count": 0
+    },
+    "parent_contact_logs": {
+      "field_count": 10,
+      "row_count": 0
+    },
+    "parents": {
+      "field_count": 7,
+      "row_count": 0
+    },
+    "reward_records": {
+      "field_count": 7,
+      "row_count": 0
+    },
+    "roles": {
+      "field_count": 3,
+      "row_count": 3
+    },
+    "school_classes": {
+      "field_count": 4,
+      "row_count": 0
+    },
+    "students": {
+      "field_count": 11,
+      "row_count": 0
+    },
+    "teachers": {
+      "field_count": 5,
+      "row_count": 0
+    },
+    "users": {
+      "field_count": 8,
+      "row_count": 0
+    }
+  },
+  "domain_table_count": 13,
+  "domain_field_count": 94,
+  "foreign_key_count": 20,
+  "foreign_keys_enabled": 1,
+  "foreign_key_check": [],
+  "triggers": [
+    "audit_logs_no_delete",
+    "audit_logs_no_update",
+    "notifications_parent_insert",
+    "notifications_parent_update",
+    "parent_contacts_parent_insert",
+    "parent_contacts_parent_update",
+    "parents_preserve_history_owner"
+  ]
+}

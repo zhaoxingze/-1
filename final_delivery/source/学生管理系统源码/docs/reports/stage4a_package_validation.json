@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "archive": "output/delivery/StudentManagementSystem_阶段4A_源码交付_20261119.zip",
+  "archive_sha256_file": "output/delivery/StudentManagementSystem_阶段4A_源码交付_20261119.zip.sha256",
+  "file_count": 236,
+  "crc_check": true,
+  "extraction_hash_check": true,
+  "portable_markdown_links_valid": true,
+  "runtime_sources_match_independently_tested_extract": true,
+  "extracted_test_result": "335 passed in 202.51s (0:03:22)",
+  "private_credentials_found": false,
+  "runtime_databases_found": false,
+  "venv_or_cache_found": false,
+  "source_code_included": true
+}

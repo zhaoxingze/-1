@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% from 'admin/_macros.html' import pagination with context %}
+{% from 'records/_filters.html' import record_filters with context %}
+{% block title %}{{ title }}{% endblock %}
+{% block breadcrumb %}{{ title }}{% endblock %}
+{% block content %}
+<div class="archive-heading">
+  <h1>{{ title }}</h1>
+  <div class="d-flex flex-wrap gap-2">
+    {% for label, href in links %}<a class="btn btn-outline-secondary" href="{{ href }}">{{ label }}</a>{% endfor %}
+    {% if new_url %}<a class="btn btn-primary" href="{{ new_url }}">新增记录</a>{% endif %}
+  </div>
+</div>
+{% if note %}<p class="alert alert-info">{{ note }}</p>{% endif %}
+<section class="archive-panel">
+  {{ record_filters(filters, options, types, page) }}
+  <div class="table-responsive">
+    <table class="table align-middle archive-table">
+      <thead><tr>{% for header in headers %}<th scope="col">{{ header }}</th>{% endfor %}<th scope="col">操作</th></tr></thead>
+      <tbody>
+      {% for cells, href in rows %}
+        <tr>{% for cell in cells %}<td>{{ cell }}</td>{% endfor %}<td><a href="{{ href }}">详情</a></td></tr>
+      {% else %}<tr><td colspan="{{ headers|length + 1 }}" class="empty-state">暂无符合条件的记录。</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {{ pagination(page) }}
+</section>
+{% endblock %}

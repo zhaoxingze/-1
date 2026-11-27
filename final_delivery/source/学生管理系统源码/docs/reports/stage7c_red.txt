@@ -1,0 +1,26 @@
+FFF.F                                                                    [100%]
+================================== FAILURES ===================================
+_ test_workbench_and_shared_navigation_render_only_available_actions[auth_admin-/admin/] _
+tests\test_stage7_routes.py:16: in test_workbench_and_shared_navigation_render_only_available_actions
+    assert 'id="primary-navigation"' in html and "功能菜单" in html
+E   assert ('id="primary-navigation"' in '<!doctype html>\n<html lang="zh-CN">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device...r class="site-footer"><span>学生综合信息管理系统</span><span>软件工程课程设计 · 2026</span></footer>\n  </div>\n</div>\n</body>\n</html>')
+_ test_workbench_and_shared_navigation_render_only_available_actions[auth_teacher-/dashboard/teacher] _
+tests\test_stage7_routes.py:16: in test_workbench_and_shared_navigation_render_only_available_actions
+    assert 'id="primary-navigation"' in html and "功能菜单" in html
+E   assert ('id="primary-navigation"' in '<!doctype html>\n<html lang="zh-CN">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device...r class="site-footer"><span>学生综合信息管理系统</span><span>软件工程课程设计 · 2026</span></footer>\n  </div>\n</div>\n</body>\n</html>')
+_ test_workbench_and_shared_navigation_render_only_available_actions[auth_student-/dashboard/student] _
+tests\test_stage7_routes.py:16: in test_workbench_and_shared_navigation_render_only_available_actions
+    assert 'id="primary-navigation"' in html and "功能菜单" in html
+E   assert ('id="primary-navigation"' in '<!doctype html>\n<html lang="zh-CN">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device...r class="site-footer"><span>学生综合信息管理系统</span><span>软件工程课程设计 · 2026</span></footer>\n  </div>\n</div>\n</body>\n</html>')
+________ test_account_form_requires_explicit_role_and_success_feedback ________
+tests\test_stage7_routes.py:41: in test_account_form_requires_explicit_role_and_success_feedback
+    assert page.status_code == 200 and "请选择角色" in page.text
+E   assert (200 == 200 and '请选择角色' in '<!doctype html>\n<html lang="zh-CN">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device...r class="site-footer"><span>学生综合信息管理系统</span><span>软件工程课程设计 · 2026</span></footer>\n  </div>\n</div>\n</body>\n</html>')
+E    +  where 200 = <WrapperTestResponse 4794 bytes [200 OK]>.status_code
+E    +  and   '<!doctype html>\n<html lang="zh-CN">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device...r class="site-footer"><span>学生综合信息管理系统</span><span>软件工程课程设计 · 2026</span></footer>\n  </div>\n</div>\n</body>\n</html>' = <WrapperTestResponse 4794 bytes [200 OK]>.text
+=========================== short test summary info ===========================
+FAILED tests/test_stage7_routes.py::test_workbench_and_shared_navigation_render_only_available_actions[auth_admin-/admin/]
+FAILED tests/test_stage7_routes.py::test_workbench_and_shared_navigation_render_only_available_actions[auth_teacher-/dashboard/teacher]
+FAILED tests/test_stage7_routes.py::test_workbench_and_shared_navigation_render_only_available_actions[auth_student-/dashboard/student]
+FAILED tests/test_stage7_routes.py::test_account_form_requires_explicit_role_and_success_feedback
+4 failed, 1 passed in 3.79s

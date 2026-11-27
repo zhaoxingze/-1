@@ -1,0 +1,118 @@
+F....F                                                                   [100%]
+================================== FAILURES ===================================
+___ test_invalid_credential_version_is_rejected_without_error[\u975eASCII] ____
+
+auth = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x0000014BAF7B7F60>, login=<function auth.<locals>.login at 0x0000014BAF7B7C40>, password='Only-for-isolated-tests!42')
+version = '��ASCII'
+
+    @pytest.mark.parametrize("version", ["��ASCII", "", None, 123, "x"*65])
+    def test_invalid_credential_version_is_rejected_without_error(auth, version):
+        auth.login()
+        with auth.client.session_transaction() as session:
+            session["_auth_version"] = version
+>       assert auth.client.get("/profile").status_code == 302
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_auth_session.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:917: in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:902: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask_login\utils.py:284: in decorated_view
+    elif not current_user.is_authenticated:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\local.py:318: in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\local.py:526: in _get_current_object
+    return get_name(local())
+                    ^^^^^^^
+.venv\Lib\site-packages\flask_login\utils.py:25: in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+                                      ^^^^^^^^^^^
+.venv\Lib\site-packages\flask_login\utils.py:370: in _get_user
+    current_app.login_manager._load_user()
+.venv\Lib\site-packages\flask_login\login_manager.py:364: in _load_user
+    user = self._user_callback(user_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+identity = '1'
+
+    @login_manager.user_loader
+    def load_user(identity):
+        issued_at = session.get("_auth_issued_at")
+        version = session.get("_auth_version")
+        now = time.time()
+        valid_identity = (isinstance(identity, str) and identity.isascii()
+                          and identity.isdecimal() and 0 < len(identity) <= 19
+                          and 0 < int(identity) <= 9223372036854775807)
+        valid_time = (isinstance(issued_at, (int, float)) and not isinstance(issued_at, bool)
+                      and math.isfinite(issued_at) and 0 <= now - issued_at
+                      < current_app.permanent_session_lifetime.total_seconds())
+        if (not valid_identity or not valid_time or not isinstance(version, str)
+                or session.get("_fresh") is not True):
+            session.clear()
+            return None
+        with db.session.no_autoflush:
+            user = db.session.get(User, int(identity))
+>           if not account_is_usable(user) or not hmac.compare_digest(version, credential_version(user)):
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: comparing strings with non-ASCII characters is not supported
+
+app\auth\session.py:85: TypeError
+__________ test_admin_has_usable_username_lookup_for_password_reset ___________
+
+auth = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x0000014BAF7B7A60>, login=<function auth.<locals>.login at 0x0000014BAD3D6160>, password='Only-for-isolated-tests!42')
+
+    def test_admin_has_usable_username_lookup_for_password_reset(auth):
+        auth.login()
+>       response=auth.client.post("/admin/password-reset", data={"csrf_token":auth.token("/admin/password-reset"), "username":"auth_student"})
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_auth_passwords.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+path = '/admin/password-reset'
+
+    def token(path="/login"):
+        page = client.get(path)
+>       assert page.status_code == 200, f"CSRF form unavailable: {path}: {page.status_code}"
+E       AssertionError: CSRF form unavailable: /admin/password-reset: 404
+E       assert 404 == 200
+E        +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests\conftest.py:86: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_auth_session.py::test_invalid_credential_version_is_rejected_without_error[\u975eASCII]
+FAILED tests/test_auth_passwords.py::test_admin_has_usable_username_lookup_for_password_reset
+2 failed, 4 passed in 2.63s

@@ -1,0 +1,147 @@
+StudentManagementSystem/
+├── app/
+│   ├── academics/
+│   │   └── __init__.py
+│   ├── admin/
+│   │   └── __init__.py
+│   ├── attendance/
+│   │   └── __init__.py
+│   ├── auth/
+│   │   └── __init__.py
+│   ├── dashboard/
+│   │   ├── __init__.py
+│   │   └── routes.py
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── attendance.py
+│   │   ├── audit_log.py
+│   │   ├── course.py
+│   │   ├── enrollment.py
+│   │   ├── integrity.py
+│   │   ├── notification_log.py
+│   │   ├── parent.py
+│   │   ├── parent_contact.py
+│   │   ├── reward.py
+│   │   ├── role.py
+│   │   ├── school_class.py
+│   │   ├── security.py
+│   │   ├── student.py
+│   │   ├── teacher.py
+│   │   ├── types.py
+│   │   └── user.py
+│   ├── records/
+│   │   └── __init__.py
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── audit_service.py
+│   │   ├── data_validation_service.py
+│   │   └── notification_service.py
+│   ├── static/
+│   │   ├── css/
+│   │   │   └── app.css
+│   │   ├── vendor/
+│   │   │   └── bootstrap-5.3.3.min.css
+│   │   └── brand.svg
+│   ├── students/
+│   │   └── __init__.py
+│   ├── templates/
+│   │   ├── dashboard/
+│   │   │   └── index.html
+│   │   ├── errors/
+│   │   │   ├── 403.html
+│   │   │   ├── 404.html
+│   │   │   ├── 500.html
+│   │   │   └── base.html
+│   │   └── layout.html
+│   ├── __init__.py
+│   ├── cli.py
+│   ├── errors.py
+│   ├── extensions.py
+│   └── logging_config.py
+├── docs/
+│   ├── reports/
+│   │   ├── stage1_browser.txt
+│   │   ├── stage1_environment.json
+│   │   ├── stage1_final_validation.json
+│   │   ├── stage1_http_smoke.json
+│   │   ├── stage1_pip_check.txt
+│   │   ├── stage1_project_tree.txt
+│   │   ├── stage1_pytest.txt
+│   │   ├── stage1_pytest_before_pages.txt
+│   │   ├── stage1_pytest_red.txt
+│   │   ├── stage1_report.md
+│   │   ├── stage1_source_migration.json
+│   │   ├── stage2_audit_replace_red.txt
+│   │   ├── stage2_database_inspection.json
+│   │   ├── stage2_final_validation.json
+│   │   ├── stage2_http_smoke.json
+│   │   ├── stage2_integration_first.txt
+│   │   ├── stage2_migration_check.txt
+│   │   ├── stage2_migration_logging_red.txt
+│   │   ├── stage2_migration_red.txt
+│   │   ├── stage2_pip_check.txt
+│   │   ├── stage2_project_tree.txt
+│   │   ├── stage2_pytest.txt
+│   │   ├── stage2_report.md
+│   │   ├── stage2_schema.json
+│   │   ├── stage2_stage1_regression.txt
+│   │   └── stage2_upgrade.txt
+│   ├── specs/
+│   │   ├── source/
+│   │   │   └── 学生管理系统_前期设计方案与Codex分阶段提示词.docx
+│   │   ├── architecture.md
+│   │   ├── assumptions.md
+│   │   ├── database_design.md
+│   │   ├── design_review_report.md
+│   │   ├── requirements.md
+│   │   └── stage2_decisions.md
+│   ├── superpowers/
+│   │   └── plans/
+│   │       ├── 2026-11-16-phase1-flask-scaffold.md
+│   │       └── 2026-11-16-phase2-database.md
+│   └── uml/
+│       ├── activity_diagram.puml
+│       ├── class_diagram.puml
+│       ├── communication_diagram.puml
+│       ├── er_diagram.puml
+│       ├── README.md
+│       ├── sequence_diagram.puml
+│       ├── state_diagram.puml
+│       └── usecase.puml
+├── instance/
+│   ├── .gitkeep
+│   └── student_management.db
+├── migrations/
+│   ├── versions/
+│   │   └── fab16ef0dd6f_initial_thirteen_domain_tables.py
+│   ├── alembic.ini
+│   ├── env.py
+│   ├── README
+│   └── script.py.mako
+├── output/
+│   └── playwright/
+│       ├── homepage-mobile.png
+│       ├── homepage.png
+│       └── stage2-homepage.png
+├── tests/
+│   ├── conftest.py
+│   ├── test_app.py
+│   ├── test_audit_append_only_replace.py
+│   ├── test_audit_service.py
+│   ├── test_configuration.py
+│   ├── test_csrf.py
+│   ├── test_data_validation_service.py
+│   ├── test_database_cli.py
+│   ├── test_database_constraints.py
+│   ├── test_database_migrations.py
+│   ├── test_models.py
+│   ├── test_notification_service.py
+│   └── test_pages.py
+├── .gitignore
+├── config.py
+├── pytest.ini
+├── README.md
+├── requirements.txt
+└── run.py
+
+.venv/ 与缓存未展开；instance/student_management.db 是本机运行数据，不应加入源码包。

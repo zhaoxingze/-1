@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block breadcrumb %}{{ title }}{% endblock %}
+{% block content %}
+<div class="archive-heading">
+  <h1>{{ title }}</h1>
+  <a class="btn btn-outline-secondary" href="{{ back_url }}">返回列表</a>
+</div>
+{% if note %}<p class="alert alert-info">{{ note }}</p>{% endif %}
+<section class="archive-panel">
+  <dl class="archive-facts">
+    {% for label, value in facts %}
+    <dt>{{ label }}</dt><dd class="text-break record-text">{{ value if value is not none else '—' }}</dd>
+    {% endfor %}
+  </dl>
+  {% if edit_url %}<a class="btn btn-primary" href="{{ edit_url }}">编辑记录</a>{% endif %}
+</section>
+{% endblock %}

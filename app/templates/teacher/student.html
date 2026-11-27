@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block title %}本班学生资料{% endblock %}
+{% block breadcrumb %}本班学生资料{% endblock %}
+{% block content %}
+<div class="archive-heading">
+  <div><h1>{{ student.name }}</h1><p>{{ student.student_no }} · {{ student.class_name }}</p></div>
+  <a class="btn btn-outline-secondary" href="{{ url_for('dashboard.teacher_classes') }}">负责班级</a>
+</div>
+<section class="archive-panel">
+  <div class="archive-actions">
+    <a class="btn btn-primary" href="{{ url_for('dashboard.teacher_edit_contact', student_id=student.student_id) }}">编辑电话和住址</a>
+    <a class="btn btn-outline-secondary" href="{{ url_for('dashboard.teacher_parents', student_id=student.student_id) }}">家长联系方式</a>
+  </div>
+  <dl class="archive-facts">
+    <dt>学号</dt><dd>{{ student.student_no }}</dd>
+    <dt>姓名</dt><dd>{{ student.name }}</dd>
+    <dt>班级</dt><dd>{{ student.class_name }}</dd>
+    <dt>联系电话</dt><dd>{{ student.phone or '—' }}</dd>
+    <dt>家庭住址</dt><dd>{{ student.address or '—' }}</dd>
+  </dl>
+</section>
+{% endblock %}

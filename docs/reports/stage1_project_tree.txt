@@ -1,0 +1,94 @@
+StudentManagementSystem/
+├── app/
+│   ├── academics/
+│   │   └── __init__.py
+│   ├── admin/
+│   │   └── __init__.py
+│   ├── attendance/
+│   │   └── __init__.py
+│   ├── auth/
+│   │   └── __init__.py
+│   ├── dashboard/
+│   │   ├── __init__.py
+│   │   └── routes.py
+│   ├── models/
+│   │   └── __init__.py
+│   ├── records/
+│   │   └── __init__.py
+│   ├── services/
+│   │   └── __init__.py
+│   ├── static/
+│   │   ├── css/
+│   │   │   └── app.css
+│   │   ├── vendor/
+│   │   │   └── bootstrap-5.3.3.min.css
+│   │   └── brand.svg
+│   ├── students/
+│   │   └── __init__.py
+│   ├── templates/
+│   │   ├── dashboard/
+│   │   │   └── index.html
+│   │   ├── errors/
+│   │   │   ├── 403.html
+│   │   │   ├── 404.html
+│   │   │   ├── 500.html
+│   │   │   └── base.html
+│   │   └── layout.html
+│   ├── __init__.py
+│   ├── errors.py
+│   ├── extensions.py
+│   └── logging_config.py
+├── docs/
+│   ├── reports/
+│   │   ├── stage1_browser.txt
+│   │   ├── stage1_environment.json
+│   │   ├── stage1_final_validation.json
+│   │   ├── stage1_http_smoke.json
+│   │   ├── stage1_pip_check.txt
+│   │   ├── stage1_project_tree.txt
+│   │   ├── stage1_pytest.txt
+│   │   ├── stage1_pytest_before_pages.txt
+│   │   ├── stage1_pytest_red.txt
+│   │   ├── stage1_report.md
+│   │   └── stage1_source_migration.json
+│   ├── specs/
+│   │   ├── source/
+│   │   │   └── 学生管理系统_前期设计方案与Codex分阶段提示词.docx
+│   │   ├── architecture.md
+│   │   ├── assumptions.md
+│   │   ├── database_design.md
+│   │   ├── design_review_report.md
+│   │   └── requirements.md
+│   ├── superpowers/
+│   │   └── plans/
+│   │       └── 2026-11-16-phase1-flask-scaffold.md
+│   └── uml/
+│       ├── activity_diagram.puml
+│       ├── class_diagram.puml
+│       ├── communication_diagram.puml
+│       ├── er_diagram.puml
+│       ├── README.md
+│       ├── sequence_diagram.puml
+│       ├── state_diagram.puml
+│       └── usecase.puml
+├── instance/
+│   └── .gitkeep
+├── output/
+│   └── playwright/
+│       ├── homepage-mobile.png
+│       └── homepage.png
+├── tests/
+│   ├── conftest.py
+│   ├── test_app.py
+│   ├── test_configuration.py
+│   ├── test_csrf.py
+│   └── test_pages.py
+├── .gitignore
+├── config.py
+├── pytest.ini
+├── README.md
+├── requirements.txt
+└── run.py
+
+.venv/  [Python 3.12.10 独立环境，第三方包文件不展开]
+__pycache__/、.pytest_cache/、.playwright-cli/ 为运行缓存，不纳入项目源码树。

@@ -1,0 +1,1 @@
+PlantUML syntax exit code: 0 for 7 files and 26 diagram blocks

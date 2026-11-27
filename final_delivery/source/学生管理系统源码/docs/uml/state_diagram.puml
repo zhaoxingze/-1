@@ -1,0 +1,46 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName Microsoft YaHei
+title Student.status 学籍状态图（阶段4A已实现）
+state "在读 / enrolled" as Studying
+state "休学 / suspended" as Suspended
+state "毕业 / graduated" as Graduated
+state "退学 / withdrawn" as Withdrawn
+
+[*] --> Studying : 建立学籍
+Studying --> Suspended : 办理休学 [管理员]
+Suspended --> Studying : 办理复学 [管理员]
+Studying --> Graduated : 完成学业 [管理员]
+Studying --> Withdrawn : 办理退学 [管理员]
+Suspended --> Withdrawn : 办理退学 [管理员]
+Graduated --> [*] : 结束常规学籍流转
+Withdrawn --> [*] : 结束常规学籍流转
+
+note bottom of Studying
+  四种状态及迁移来自原案图 5-5。
+  数据库存储值由阶段2冻结；阶段4A按这五条迁移实施。
+  新建档案固定enrolled；历史状态导入与例外纠错见 A-20。
+end note
+legend bottom
+  结束流转不等于物理删除，所有历史业务记录保留。
+  不新增“停用”学籍状态；User.is_active 是独立账号状态（A-07）。
+  不擅自增加休学→毕业、毕业/退学→在读或审批流程。
+  例外纠错及恢复待 A-20；具体办理资格未给出，不发明审批门槛。
+endlegend
+@enduml
+
+@startuml archive_state
+skinparam defaultFontName Microsoft YaHei
+skinparam shadowing false
+title Student.is_archived 独立档案状态（阶段4A）
+state "未归档 / false" as Active
+state "已归档 / true" as Archived
+[*] --> Active : 新建档案
+Active --> Archived : 管理员确认 + POST + CSRF / archive审计
+Archived --> Active : 管理员确认 + POST + CSRF / restore审计
+note bottom of Archived
+  仅改变is_archived。学籍status和User.is_active不变。
+  历史成绩、考勤、奖惩、家长联系及通知均保留。
+  不存在物理删除迁移；恢复归档不代表学籍复学。
+end note
+@enduml

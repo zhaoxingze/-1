@@ -1,0 +1,9 @@
+{
+  "backup": "F:\\StudentManagementSystem_backups\\stage3_before4a_20261118_152204.zip",
+  "sha256": "b07b24d73cc4d6762fccb1478f97fa3cbda7f19c235dd022c4e2e18083d3bed1",
+  "files": 167,
+  "development_database_sha256": "89428de8f37a14ce68c027a1704427926db8b5bcf64a6e65260b1412c7664f76",
+  "git_repository": false,
+  "backup_contains_private_runtime_database": true,
+  "excluded_from_source_delivery": true
+}

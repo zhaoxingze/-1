@@ -1,0 +1,8 @@
+{% macro pagination(result, page_name='page') %}
+<nav class="pagination-bar" aria-label="分页">
+<span>共 {{ result.total }} 条 · 第 {{ result.page }} / {{ result.pages or 1 }} 页</span>
+<div class="d-flex gap-2">
+{% if result.has_prev %}<a class="btn btn-sm btn-outline-secondary" href="{{ page_url(result.prev_num,page_name) }}">上一页</a>{% endif %}
+{% if result.has_next %}<a class="btn btn-sm btn-outline-secondary" href="{{ page_url(result.next_num,page_name) }}">下一页</a>{% endif %}
+</div></nav>
+{% endmacro %}

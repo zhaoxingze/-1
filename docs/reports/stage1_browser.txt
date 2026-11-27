@@ -1,0 +1,33 @@
+### Ran Playwright code
+```js
+await page.setViewportSize({ width: 1440, height: 1000 });
+```
+### Result
+{
+  "viewport": 1440,
+  "scrollWidth": 1440,
+  "title": "系统首页 · 学生综合信息管理系统"
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => (({viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth, title: document.title}))');
+```
+### Result
+Total messages: 0 (Errors: 0, Warnings: 0)
+
+### Ran Playwright code
+```js
+await page.setViewportSize({ width: 390, height: 844 });
+```
+### Result
+{
+  "viewport": 390,
+  "scrollWidth": 390
+}
+### Ran Playwright code
+```js
+await page.evaluate('() => (({viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth}))');
+```
+### Result
+Total messages: 0 (Errors: 0, Warnings: 0)
+

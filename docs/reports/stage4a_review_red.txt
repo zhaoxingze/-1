@@ -1,0 +1,148 @@
+FFF.FFF                                                                  [100%]
+================================== FAILURES ===================================
+____ test_stale_independent_session_cannot_reverse_terminal_student_state _____
+
+auth = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x000002A0D1B194E0>, login=<function auth.<locals>.login at 0x000002A0CF7A8FE0>, password='Only-for-isolated-tests!42')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002A0D1B73080>
+
+    def test_stale_independent_session_cannot_reverse_terminal_student_state(auth,monkeypatch):
+        from sqlalchemy.orm import Session
+        from app.extensions import db
+        from app.models import Student,User,AuditLog
+        from app.services.student_service import change_student_status
+        with auth.app.app_context():
+            with Session(db.engine) as a,Session(db.engine) as b:
+                admin_a=a.get(User,auth.ids['auth_admin']);student_a=a.get(Student,auth.student_ids[0])
+                assert student_a.status=='enrolled'
+                with monkeypatch.context() as patch:
+                    patch.setattr(db,'session',b)
+                    change_student_status(b.get(User,auth.ids['auth_admin']),student_a.student_id,'graduated');b.commit()
+                with monkeypatch.context() as patch:
+                    patch.setattr(db,'session',a)
+>                   with pytest.raises(ValueError):change_student_status(admin_a,student_a.student_id,'suspended')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   Failed: DID NOT RAISE ValueError
+
+tests\test_stage4_audit.py:106: Failed
+_________ test_stale_independent_session_primary_switch_takes_effect __________
+
+auth = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x000002A0D1D22FC0>, login=<function auth.<locals>.login at 0x000002A0D1D23060>, password='Only-for-isolated-tests!42')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002A0D1D1BBC0>
+
+    def test_stale_independent_session_primary_switch_takes_effect(auth,monkeypatch):
+        from sqlalchemy.orm import Session
+        from app.extensions import db
+        from app.models import Parent,User
+        from app.services.parent_service import create_parent,set_primary_parent
+        with auth.app.app_context():
+            first=create_parent(actor(auth),auth.student_ids[0],{**PARENT_DATA,'is_primary':True})
+            second=create_parent(actor(auth),auth.student_ids[0],{**PARENT_DATA,'name':'另一位'})
+            db.session.commit();first_id=first.parent_id;second_id=second.parent_id
+            with Session(db.engine) as a,Session(db.engine) as b:
+                admin_a=a.get(User,auth.ids['auth_admin']);cached_first=a.get(Parent,first_id)
+                assert cached_first.is_primary
+                with monkeypatch.context() as patch:
+                    patch.setattr(db,'session',b)
+                    set_primary_parent(b.get(User,auth.ids['auth_admin']),auth.student_ids[0],second_id);b.commit()
+                with monkeypatch.context() as patch:
+                    patch.setattr(db,'session',a)
+                    set_primary_parent(admin_a,auth.student_ids[0],first_id);a.commit()
+                db.session.expire_all()
+>               assert db.session.get(Parent,first_id).is_primary and not db.session.get(Parent,second_id).is_primary
+E               AssertionError: assert (False)
+E                +  where False = <Parent 1>.is_primary
+E                +    where <Parent 1> = get(<class 'app.models.parent.Parent'>, 1)
+E                +      where get = <sqlalchemy.orm.scoping.scoped_session object at 0x000002A0CFF08860>.get
+E                +        where <sqlalchemy.orm.scoping.scoped_session object at 0x000002A0CFF08860> = <SQLAlchemy sqlite:///C%3A/Users/zhao%27xing%27ze/AppData/Local/Temp/pytest-of-zhao%27xing%27ze/pytest-534/test_stale_independent_session1/test.sqlite>.session
+
+tests\test_stage4_audit.py:133: AssertionError
+__________ test_explicit_negative_confirmation_cannot_archive[false] __________
+
+auth = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x000002A0D1DB3F60>, login=<function auth.<locals>.login at 0x000002A0D1DB3D80>, password='Only-for-isolated-tests!42')
+value = 'false'
+
+    @pytest.mark.parametrize('value',['false',''])
+    def test_explicit_negative_confirmation_cannot_archive(auth,value):
+        from app.extensions import db
+        from app.models import Student
+        auth.login();path=f'/admin/students/{auth.student_ids[0]}/archive'
+>       assert submit(auth,path,{'confirm':value}).status_code==200
+E       AssertionError: assert 303 == 200
+E        +  where 303 = <WrapperTestResponse streamed [303 SEE OTHER]>.status_code
+E        +    where <WrapperTestResponse streamed [303 SEE OTHER]> = submit(namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x000002A0D1DB3F60>, login=<function auth.<locals>.login at 0x000002A0D1DB3D80>, password='Only-for-isolated-tests!42'), '/admin/students/1/archive', {'confirm': 'false'})
+
+tests\test_stage4_permissions.py:52: AssertionError
+________ test_global_parent_search_retains_student_selector_and_scope _________
+
+auth = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x000002A0D1ED7B00>, login=<function auth.<locals>.login at 0x000002A0D1ED7BA0>, password='Only-for-isolated-tests!42')
+
+    def test_global_parent_search_retains_student_selector_and_scope(auth):
+        from app.extensions import db
+        from app.services.parent_service import create_parent
+        with auth.app.app_context():
+            for sid in auth.student_ids:create_parent(actor(auth),sid,{**PARENT_DATA,'name':'同名监护人'})
+            db.session.commit()
+        auth.login();sid=auth.student_ids[0]
+        response=auth.client.get(f'/admin/parents?student_id={sid}&q=同名')
+        assert response.status_code==200
+>       assert 'name="student_id"' in response.text
+E       assert 'name="student_id"' in '<!doctype html>\n<html lang="zh-CN">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device...r class="site-footer"><span>学生综合信息管理系统</span><span>软件工程课程设计 · 2026</span></footer>\n  </div>\n</div>\n</body>\n</html>'
+E        +  where '<!doctype html>\n<html lang="zh-CN">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device...r class="site-footer"><span>学生综合信息管理系统</span><span>软件工程课程设计 · 2026</span></footer>\n  </div>\n</div>\n</body>\n</html>' = <WrapperTestResponse 4276 bytes [200 OK]>.text
+
+tests\test_parent_crud.py:69: AssertionError
+_____________ test_large_valid_entity_ids_can_be_used_as_filters ______________
+
+auth = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x000002A0D1C4FE20>, login=<function auth.<locals>.login at 0x000002A0D1C4FC40>, password='Only-for-isolated-tests!42')
+
+    def test_large_valid_entity_ids_can_be_used_as_filters(auth):
+        from app.extensions import db
+        from app.models import SchoolClass,Student
+        with auth.app.app_context():
+            c=SchoolClass(class_id=3000000000,class_name='高位班级',grade='G')
+            s=Student(student_id=3000000001,student_no='HIGH-S',name='高位学生',gender='未指定',enrollment_date=__import__('datetime').date(2026,9,1),school_class=c)
+            db.session.add_all([c,s]);db.session.commit()
+        auth.login()
+>       assert auth.client.get('/admin/students?class_id=3000000000').status_code==200
+E       AssertionError: assert 400 == 200
+E        +  where 400 = <WrapperTestResponse streamed [400 BAD REQUEST]>.status_code
+E        +    where <WrapperTestResponse streamed [400 BAD REQUEST]> = get('/admin/students?class_id=3000000000')
+E        +      where get = <FlaskClient <Flask 'app'>>.get
+E        +        where <FlaskClient <Flask 'app'>> = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x000002A0D1C4FE20>, login=<function auth.<locals>.login at 0x000002A0D1C4FC40>, password='Only-for-isolated-tests!42').client
+
+tests\test_stage4_permissions.py:64: AssertionError
+_____________ test_empty_class_filter_service_means_all_students ______________
+
+auth = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x000002A0D1F211C0>, login=<function auth.<locals>.login at 0x000002A0D2019C60>, password='Only-for-isolated-tests!42')
+
+    def test_empty_class_filter_service_means_all_students(auth):
+        from app.services.student_service import list_students
+>       with auth.app.app_context():assert list_students(actor(auth),class_id='').total==2
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_student_crud.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+actor = <User 1>, q = '', class_id = '', archived = 'active', page = 1
+per_page = 20
+
+    def list_students(actor, *, q="", class_id=None, archived="active", page=1, per_page=20):
+        require_admin(actor); q = search_term(q)
+        statement = select(Student).outerjoin(SchoolClass).order_by(Student.student_id)
+        if q:
+            statement = statement.where(or_(Student.student_no.contains(q, autoescape=True),
+                Student.name.contains(q, autoescape=True), SchoolClass.class_name.contains(q, autoescape=True)))
+        if class_id is not None:
+            school_class = optional_relation(SchoolClass, class_id, "class_id")
+>           statement = statement.where(Student.class_id == school_class.class_id)
+                                                            ^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: 'NoneType' object has no attribute 'class_id'
+
+app\services\student_service.py:90: AttributeError
+=========================== short test summary info ===========================
+FAILED tests/test_stage4_audit.py::test_stale_independent_session_cannot_reverse_terminal_student_state
+FAILED tests/test_stage4_audit.py::test_stale_independent_session_primary_switch_takes_effect
+FAILED tests/test_stage4_permissions.py::test_explicit_negative_confirmation_cannot_archive[false]
+FAILED tests/test_parent_crud.py::test_global_parent_search_retains_student_selector_and_scope
+FAILED tests/test_stage4_permissions.py::test_large_valid_entity_ids_can_be_used_as_filters
+FAILED tests/test_student_crud.py::test_empty_class_filter_service_means_all_students
+6 failed, 1 passed in 4.16s

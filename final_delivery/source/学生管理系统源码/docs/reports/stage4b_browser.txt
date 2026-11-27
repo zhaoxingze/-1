@@ -1,0 +1,49 @@
+### Result
+{"passed":true,"checks":{"owned_class_only":true,"homeroom_roster":true,"contact_saved":true,"parent_read_only":true,"course_roster_minimal":true,"course_roster_links":true,"other_class":true,"other_course":true,"cross_class_profile":true,"cross_class_parent":true,"admin_route":true,"mobile_form_fit":true,"anonymous_redirect":true,"no_browser_errors":true},"errors":[]}
+### Ran Playwright code
+```js
+await (async page => {
+ const actor={"username": "teacher_demo", "password": "<redacted>", "own": 1, "outside": 2, "class_id": 1, "other_class": 2, "course_id": 1, "other_course": 2, "actor": 1}, base='http://127.0.0.1:5065';
+ const results={}, errors=[];
+ const check=(name, ok)=>{results[name]=Boolean(ok); if(!ok)throw Error(name)};
+ const snap=async()=>await page.locator('body').ariaSnapshot();
+ const shot=async name=>await page.screenshot({path:'F:/StudentManagementSystem/output/playwright/stage4b-'+name+'.png',fullPage:true});
+ page.on('pageerror',e=>errors.push(e.message));
+ page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
+ await page.setViewportSize({width:1440,height:960});
+ await page.goto(base+'/login'); await snap();
+ await page.getByLabel('用户名',{exact:true}).fill(actor.username);
+ await page.getByLabel('密码',{exact:true}).fill(actor.password);
+ await page.getByRole('button',{name:'登录系统',exact:true}).click();
+ await page.waitForURL(base+'/dashboard/teacher'); await snap(); await shot('workbench');
+ await page.getByRole('link',{name:'查看 →'}).first().click(); await snap();
+ check('owned_class_only',(await page.locator('table').innerText()).includes('软件一班') && !(await page.locator('table').innerText()).includes('软件二班'));
+ await page.getByRole('link',{name:'查看 软件一班（虚构）',exact:true}).click(); await snap(); await shot('class-roster');
+ check('homeroom_roster',(await page.locator('table').innerText()).includes('B4-S01') && !(await page.locator('table').innerText()).includes('B4-S02'));
+ await page.getByRole('link',{name:'查看 B4-S01',exact:true}).click(); await snap();
+ await page.getByRole('link',{name:'编辑电话和住址',exact:true}).click(); await snap();
+ await page.getByLabel('联系电话',{exact:true}).fill('000-4199');
+ await page.getByLabel('家庭住址',{exact:true}).fill('虚构校区二号楼'); await shot('contact-edit');
+ await page.getByRole('button',{name:'保存联系方式',exact:true}).click();
+ await page.waitForURL(base+'/teacher/students/'+actor.own); await snap();
+ check('contact_saved',(await page.locator('main').innerText()).includes('000-4199') && (await page.locator('main').innerText()).includes('虚构校区二号楼')); await shot('contact-saved');
+ await page.getByRole('link',{name:'家长联系方式',exact:true}).click(); await snap();
+ check('parent_read_only',(await page.locator('table').innerText()).includes('虚构监护人甲') && await page.locator('main form').count()===0); await shot('parent-read');
+ await page.goto(base+'/teacher/courses'); await snap();
+ await page.getByRole('link',{name:'查看 B4-C01',exact:true}).click(); await snap();
+ const roster=await page.locator('table').innerText();
+ check('course_roster_minimal',roster.includes('B4-S02') && (roster.match(/B4-S02/g)||[]).length===1 && !roster.includes('000-4202') && !roster.includes('97.25')); await shot('course-roster');
+ check('course_roster_links',await page.locator('table a').count()===0);
+ for(const [key,path] of [['other_class','/teacher/classes/'+actor.other_class+'/students'],['other_course','/teacher/courses/'+actor.other_course+'/students'],['cross_class_profile','/teacher/students/'+actor.outside],['cross_class_parent','/teacher/students/'+actor.outside+'/parents'],['admin_route','/admin/students']]) {
+  check(key,(await page.request.get(base+path)).status()===403);
+ }
+ await page.setViewportSize({width:390,height:844});
+ await page.goto(base+'/teacher/students/'+actor.own+'/contact'); await snap();
+ check('mobile_form_fit',await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)); await shot('mobile-contact');
+ await page.getByRole('button',{name:'退出登录',exact:true}).click(); await page.waitForURL(base+'/login');
+ check('anonymous_redirect',(await page.request.get(base+'/teacher/classes',{maxRedirects:0})).status()===302);
+ check('no_browser_errors',errors.length===0);
+ return {passed:true,checks:results,errors};
+})(page);
+```
+

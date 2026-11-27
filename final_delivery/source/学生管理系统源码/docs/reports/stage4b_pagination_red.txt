@@ -1,0 +1,73 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+______________ test_course_pagination_preserves_search_and_scope ______________
+tests\test_teacher_student_read.py:38: in test_course_pagination_preserves_search_and_scope
+    page = auth.client.get(f"/teacher/courses/{ids.own_course}/students?per_page=1&q=AUTH")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:917: in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:902: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\services\permission_service.py:33: in guarded
+    return view(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+app\dashboard\teacher_routes.py:76: in teacher_course_students
+    return _table(f"{course.course_name} · 学生名单", ("学号", "姓名"), page, rows,
+app\dashboard\teacher_routes.py:31: in _table
+    return render_template(
+.venv\Lib\site-packages\flask\templating.py:151: in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:132: in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\jinja2\environment.py:1295: in render
+    self.environment.handle_exception()
+.venv\Lib\site-packages\jinja2\environment.py:942: in handle_exception
+    raise rewrite_traceback_stack(source=source)
+app\templates\teacher\table.html:2: in top-level template code
+    {% from 'admin/_macros.html' import pagination with context %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+app\templates\layout.html:61: in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+app\templates\teacher\table.html:40: in block 'content'
+    {{ pagination(page) }}
+.venv\Lib\site-packages\jinja2\runtime.py:784: in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+app\templates\admin\_macros.html:6: in template
+    {% if result.has_next %}<a class="btn btn-sm btn-outline-secondary" href="{{ page_url(result.next_num,page_name) }}">下一页</a>{% endif %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: _table.<locals>.page_url() takes 1 positional argument but 2 were given
+=========================== short test summary info ===========================
+FAILED tests/test_teacher_student_read.py::test_course_pagination_preserves_search_and_scope
+1 failed in 1.85s

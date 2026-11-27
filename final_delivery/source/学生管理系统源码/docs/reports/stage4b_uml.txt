@@ -1,0 +1,1 @@
+PlantUML 1.2025.10 syntax check exit 0, 7 sources / 12 diagrams.

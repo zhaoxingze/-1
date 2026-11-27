@@ -1,0 +1,42 @@
+{
+  "checked_at": "2026-11-16T17:27:48.124729+08:00",
+  "passed": true,
+  "errors": [],
+  "baseline_files_checked": 14,
+  "unchanged_baseline_files": [
+    "docs/specs/source/学生管理系统_前期设计方案与Codex分阶段提示词.docx",
+    "docs/specs/database_design.md",
+    "docs/uml/activity_diagram.puml",
+    "docs/uml/class_diagram.puml",
+    "docs/uml/communication_diagram.puml",
+    "docs/uml/er_diagram.puml",
+    "docs/uml/README.md",
+    "docs/uml/sequence_diagram.puml",
+    "docs/uml/state_diagram.puml",
+    "docs/uml/usecase.puml"
+  ],
+  "only_authorized_path_and_migration_edits": [
+    "docs/specs/architecture.md",
+    "docs/specs/assumptions.md",
+    "docs/specs/design_review_report.md",
+    "docs/specs/requirements.md"
+  ],
+  "markdown_links_checked": 82,
+  "instance_files": [
+    ".gitkeep"
+  ],
+  "screenshots": [
+    {
+      "path": "output/playwright/homepage.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "0CED2A465C48363DB2104640BC9C0D399883A069E392E6E96D9C1A9BDEBCB8E9"
+    },
+    {
+      "path": "output/playwright/homepage-mobile.png",
+      "width": 390,
+      "height": 1712,
+      "sha256": "064E477E5E4422A9FF6C9220470C6EA9547102135DE0C72828134CBFD97F72C0"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+{% from 'admin/_macros.html' import pagination with context %}
+{% set is_student = current_user.role.name == 'student' %}
+{% set is_teacher = current_user.role.name == 'teacher' %}
+{% set title = ('本人' if is_student else '') ~ ('成绩' if grades else '选课') ~ '查询' %}
+{% block title %}{{ title }}{% endblock %}
+{% block breadcrumb %}{{ title }}{% endblock %}
+{% macro score(value) %}{{ '未评分' if value is none else '%.2f'|format(value) }}{% endmacro %}
+{% block content %}
+<div class="archive-heading"><h1>{{ title }}</h1>
+  {% if not grades and not is_student %}<a class="btn btn-primary" href="{{ url_for('academics.enrollment_new', course_id=course_id, student_id=student_id, semester=term or config.ACTIVE_SEMESTER) }}">新增选课</a>{% endif %}
+</div>
+<section class="archive-panel">
+  <form method="get" class="archive-filters" role="search">
+    <div><label class="form-label" for="q">{{ '课程编号或名称' if is_student else '学号、姓名或课程' }}</label>
+      <input class="form-control" id="q" name="q" maxlength="100" value="{{ q }}">
+    </div>
+    <div><label class="form-label" for="semester">学期</label>
+      <select class="form-select" id="semester" name="semester">
+        {% if not (is_teacher and grades) %}<option value=""{% if term is none %} selected{% endif %}>全部学期</option>{% endif %}
+        {% for option in terms %}<option{% if term == option %} selected{% endif %}>{{ option }}</option>{% endfor %}
+      </select>
+    </div>
+    <div><label class="form-label" for="course-id">课程</label>
+      <select class="form-select" id="course-id" name="course_id">
+        <option value="">范围内全部课程</option>
+        {% for id, code, name in courses %}<option value="{{ id }}"{% if course_id == id %} selected{% endif %}>{{ code }} · {{ name }}</option>{% endfor %}
+      </select>
+    </div>
+    {% if not is_student %}
+    <div><label class="form-label" for="student-id">学生档案 ID</label>
+      <input class="form-control" id="student-id" name="student_id" inputmode="numeric" pattern="[0-9]+" maxlength="19" value="{{ student_id or '' }}">
+    </div>
+    {% endif %}
+    <button class="btn btn-primary" type="submit">查询</button>
+    <a class="btn btn-outline-secondary" href="{{ url_for(request.endpoint) }}">重置</a>
+  </form>
+  <div class="table-responsive">
+    <table class="table align-middle archive-table">
+      <thead><tr><th scope="col">学期</th><th scope="col">学号</th><th scope="col">姓名</th><th scope="col">课程</th>
+        {% if grades %}<th scope="col">平时成绩</th><th scope="col">考试成绩</th><th scope="col">总评</th>
+        {% if not is_student %}<th scope="col">操作</th>{% endif %}{% endif %}
+      </tr></thead>
+      <tbody>
+      {% for record in records.items %}
+        <tr><td>{{ record.semester }}</td><td>{{ record.student.student_no }}</td><td>{{ record.student.name }}</td>
+          <td><a href="{{ url_for('academics.course_detail', course_id=record.course_id, semester=record.semester) }}">{{ record.course.course_code }} · {{ record.course.course_name }}</a></td>
+          {% if grades %}<td>{{ score(record.usual_score) }}</td><td>{{ score(record.exam_score) }}</td><td>{{ score(record.total_score) }}</td>
+          {% if not is_student %}<td class="text-nowrap"><a href="{{ url_for('academics.grade_edit', enrollment_id=record.enrollment_id) }}">{{ '录入成绩' if record.total_score is none else '修改成绩' }}</a></td>{% endif %}{% endif %}
+        </tr>
+      {% else %}<tr><td colspan="{{ 4 if not grades else 7 if is_student else 8 }}" class="empty-state">暂无符合条件的记录。</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {{ pagination(records) }}
+</section>
+{% endblock %}

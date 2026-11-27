@@ -1,0 +1,2 @@
+Command: java -Djava.awt.headless=true -jar C:\Users\LOCAL_USER\AppData\Local\Temp\sms-phase0-review-20261116\plantuml-1.2025.10.jar --check-syntax --check-before-run -charset UTF-8 docs/uml/*.puml
+Exit code: 0

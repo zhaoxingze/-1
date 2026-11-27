@@ -1,0 +1,176 @@
+{
+  "passed": true,
+  "python": "3.12.10",
+  "sqlite": "3.49.1",
+  "system_site_packages": false,
+  "blueprints": [
+    "academics",
+    "admin",
+    "attendance",
+    "auth",
+    "dashboard",
+    "records",
+    "students"
+  ],
+  "domain_tables": 13,
+  "fields": 94,
+  "restricted_foreign_keys": 20,
+  "foreign_keys_enabled": true,
+  "recursive_triggers_enabled": true,
+  "triggers": [
+    "audit_logs_no_delete",
+    "audit_logs_no_update",
+    "notifications_parent_insert",
+    "notifications_parent_update",
+    "parent_contacts_parent_insert",
+    "parent_contacts_parent_update",
+    "parents_preserve_history_owner"
+  ],
+  "unique_constraints": {
+    "attendance_records": [
+      "uq_attendance_student_date_period"
+    ],
+    "audit_logs": [],
+    "courses": [
+      null
+    ],
+    "enrollments": [
+      "uq_enrollments_student_course_semester"
+    ],
+    "notification_logs": [],
+    "parent_contact_logs": [],
+    "parents": [],
+    "reward_records": [],
+    "roles": [
+      null
+    ],
+    "school_classes": [],
+    "students": [
+      null
+    ],
+    "teachers": [
+      null
+    ],
+    "users": [
+      null,
+      null,
+      null
+    ]
+  },
+  "checks": {
+    "attendance_records": [
+      "ck_attendance_status"
+    ],
+    "audit_logs": [
+      "ck_audit_logs_action"
+    ],
+    "courses": [],
+    "enrollments": [
+      "ck_enrollments_exam_score",
+      "ck_enrollments_total_score",
+      "ck_enrollments_usual_score"
+    ],
+    "notification_logs": [
+      "ck_notification_channel",
+      "ck_notification_status"
+    ],
+    "parent_contact_logs": [
+      "ck_parent_contacts_explicit_name",
+      "ck_parent_contacts_method"
+    ],
+    "parents": [
+      "ck_parents_is_primary",
+      "ck_parents_relationship"
+    ],
+    "reward_records": [
+      "ck_reward_record_type"
+    ],
+    "roles": [
+      "ck_roles_name"
+    ],
+    "school_classes": [],
+    "students": [
+      "ck_students_is_archived",
+      "ck_students_status"
+    ],
+    "teachers": [],
+    "users": [
+      "ck_users_is_active"
+    ]
+  },
+  "indexes": {
+    "attendance_records": [
+      "ix_attendance_records_attendance_date",
+      "ix_attendance_records_recorded_by",
+      "ix_attendance_records_student_id"
+    ],
+    "audit_logs": [
+      "ix_audit_logs_actor_user_id",
+      "ix_audit_logs_created_at",
+      "ix_audit_logs_entity_id",
+      "ix_audit_logs_entity_type"
+    ],
+    "courses": [
+      "ix_courses_teacher_id"
+    ],
+    "enrollments": [
+      "ix_enrollments_course_id",
+      "ix_enrollments_semester",
+      "ix_enrollments_student_id"
+    ],
+    "notification_logs": [
+      "ix_notification_logs_created_at",
+      "ix_notification_logs_created_by",
+      "ix_notification_logs_parent_id",
+      "ix_notification_logs_student_id"
+    ],
+    "parent_contact_logs": [
+      "ix_parent_contact_logs_contacted_at",
+      "ix_parent_contact_logs_created_by",
+      "ix_parent_contact_logs_parent_id",
+      "ix_parent_contact_logs_student_id"
+    ],
+    "parents": [
+      "ix_parents_student_id",
+      "uq_parents_primary_per_student"
+    ],
+    "reward_records": [
+      "ix_reward_records_created_by",
+      "ix_reward_records_occurred_on",
+      "ix_reward_records_student_id"
+    ],
+    "roles": [],
+    "school_classes": [
+      "ix_school_classes_homeroom_teacher_id"
+    ],
+    "students": [
+      "ix_students_class_id",
+      "ix_students_status"
+    ],
+    "teachers": [],
+    "users": [
+      "ix_users_role_id"
+    ]
+  },
+  "parent_primary_partial_index": true,
+  "alembic_revision": "fab16ef0dd6f",
+  "counts_after_repeated_init": {
+    "attendance_records": 1,
+    "audit_logs": 14,
+    "courses": 1,
+    "enrollments": 1,
+    "notification_logs": 1,
+    "parent_contact_logs": 1,
+    "parents": 1,
+    "reward_records": 1,
+    "roles": 3,
+    "school_classes": 1,
+    "students": 1,
+    "teachers": 1,
+    "users": 1
+  },
+  "integrity_check": "ok",
+  "foreign_key_violations": 0,
+  "debug": false,
+  "static_assets_http_200": true
+}

@@ -1,0 +1,60 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+___________ test_replace_cannot_overwrite_existing_audit[metadata] ____________
+
+tmp_path = WindowsPath("C:/Users/LOCAL_USER/AppData/Local/Temp/pytest-of-zhao'xing'ze/pytest-513/test_replace_cannot_overwrite_0")
+schema_source = 'metadata'
+
+    @pytest.mark.parametrize("schema_source", ["metadata", "migration"])
+    def test_replace_cannot_overwrite_existing_audit(tmp_path, schema_source):
+        from app import create_app
+        from app.extensions import db
+    
+        database = tmp_path / "replace.sqlite"
+        application = create_app("testing", {"SQLALCHEMY_DATABASE_URI": f"sqlite:///{database.as_posix()}"},
+                                 instance_path=str(tmp_path / "instance"))
+        if schema_source == "migration":
+            result = application.test_cli_runner().invoke(args=["db", "upgrade"])
+            assert result.exit_code == 0, result.output
+        with application.app_context():
+            if schema_source == "metadata":
+                db.create_all()
+            db.session.execute(text("INSERT INTO audit_logs (audit_id,entity_type,entity_id,action) "
+                                    "VALUES (101,'Student',1,'create')"))
+            db.session.commit()
+>           with pytest.raises(IntegrityError, match="append-only"):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE IntegrityError
+
+tests\test_audit_append_only_replace.py:25: Failed
+___________ test_replace_cannot_overwrite_existing_audit[migration] ___________
+
+tmp_path = WindowsPath("C:/Users/LOCAL_USER/AppData/Local/Temp/pytest-of-zhao'xing'ze/pytest-513/test_replace_cannot_overwrite_1")
+schema_source = 'migration'
+
+    @pytest.mark.parametrize("schema_source", ["metadata", "migration"])
+    def test_replace_cannot_overwrite_existing_audit(tmp_path, schema_source):
+        from app import create_app
+        from app.extensions import db
+    
+        database = tmp_path / "replace.sqlite"
+        application = create_app("testing", {"SQLALCHEMY_DATABASE_URI": f"sqlite:///{database.as_posix()}"},
+                                 instance_path=str(tmp_path / "instance"))
+        if schema_source == "migration":
+            result = application.test_cli_runner().invoke(args=["db", "upgrade"])
+            assert result.exit_code == 0, result.output
+        with application.app_context():
+            if schema_source == "metadata":
+                db.create_all()
+            db.session.execute(text("INSERT INTO audit_logs (audit_id,entity_type,entity_id,action) "
+                                    "VALUES (101,'Student',1,'create')"))
+            db.session.commit()
+>           with pytest.raises(IntegrityError, match="append-only"):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE IntegrityError
+
+tests\test_audit_append_only_replace.py:25: Failed
+=========================== short test summary info ===========================
+FAILED tests/test_audit_append_only_replace.py::test_replace_cannot_overwrite_existing_audit[metadata]
+FAILED tests/test_audit_append_only_replace.py::test_replace_cannot_overwrite_existing_audit[migration]
+2 failed in 1.16s

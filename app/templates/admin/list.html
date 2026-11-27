@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% from 'admin/_macros.html' import pagination with context %}
+{% block title %}{{ title }}{% endblock %}
+{% block breadcrumb %}{{ title }}{% endblock %}
+{% block content %}
+<div class="archive-heading"><div><span class="eyebrow text-success">ARCHIVE MANAGEMENT</span><h1>{{ title }}</h1></div>
+{% if new_url %}<a class="btn btn-primary" href="{{ new_url }}">新增档案</a>{% endif %}</div>
+{% if note %}<p class="text-secondary">{{ note }}</p>{% endif %}
+<section class="archive-panel">
+<form method="get" class="archive-filters" role="search">
+<div><label class="form-label" for="search-q">搜索</label><input class="form-control" id="search-q" name="q" value="{{ request.args.get('q','') }}" maxlength="100" placeholder="输入编号、姓名或相关档案名称"></div>
+{% if filters == 'students' %}
+<div><label class="form-label" for="filter-class">班级</label><select class="form-select" id="filter-class" name="class_id"><option value="">全部班级</option>{% for value,label in options.classes %}<option value="{{ value }}"{% if value == selected_class %} selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+<div><label class="form-label" for="filter-archive">档案状态</label><select class="form-select" id="filter-archive" name="archived">{% for value,label in [('active','未归档'),('archived','已归档'),('all','全部档案')] %}<option value="{{ value }}"{% if archived == value %} selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+{% elif filters == 'parents' %}
+<div><label class="form-label" for="filter-student">学生</label><select class="form-select" id="filter-student" name="student_id"><option value="">全部学生</option>{% for value,label in options.students %}<option value="{{ value }}"{% if value == selected_student %} selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+{% endif %}
+<div><label class="form-label" for="per-page">每页</label><select class="form-select" id="per-page" name="per_page">{% for value in [1,10,20,50,100] %}<option value="{{ value }}"{% if result.per_page == value %} selected{% endif %}>{{ value }}条</option>{% endfor %}</select></div>
+<button class="btn btn-primary" type="submit">查询</button><a class="btn btn-outline-secondary" href="{{ url_for(request.endpoint,**request.view_args) }}">重置</a>
+</form>
+<div class="table-responsive"><table class="table align-middle archive-table"><thead><tr>{% for header in headers %}<th scope="col">{{ header }}</th>{% endfor %}<th scope="col">操作</th></tr></thead>
+<tbody>{% for row in rows %}<tr>{% for value in row.cells %}<td>{{ value }}</td>{% endfor %}<td class="text-nowrap"><a href="{{ row.detail }}">详情</a><span class="mx-2 text-secondary">·</span><a href="{{ row.edit }}">编辑</a></td></tr>{% else %}<tr><td colspan="{{ headers|length+1 }}" class="empty-state">暂无符合条件的档案。</td></tr>{% endfor %}</tbody></table></div>
+{{ pagination(result) }}
+</section>
+{% endblock %}

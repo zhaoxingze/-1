@@ -1,0 +1,3 @@
+Some diagram description contains errors
+PlantUML syntax exit code: 200
+PlantUML syntax exit code: 0 for 7 files and 16 diagram blocks

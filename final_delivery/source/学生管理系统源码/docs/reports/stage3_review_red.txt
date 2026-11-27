@@ -1,0 +1,698 @@
+FFFF                                                                     [100%]
+================================== FAILURES ===================================
+_ test_old_valid_cookie_does_not_break_public_pages_when_database_uninitialized[memory] _
+
+self = <sqlalchemy.engine.base.Connection object at 0x00000279B5EBA450>
+dialect = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x00000279B5E99610>
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x00000279B5EB8770>
+statement = <sqlalchemy.dialects.sqlite.base.SQLiteCompiler object at 0x00000279B5EB9D00>
+parameters = [(1,)]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Unpack[TupleAny]]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        evt_handled: bool = False
+        try:
+            if self._has_events or self.engine._has_events:
+                for fn in self.dispatch.before_cursor_execute:
+                    str_statement, effective_parameters = fn(
+                        self,
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                        context.executemany,
+                    )
+    
+            if self._echo:
+                self._log_info(str_statement)
+    
+                stats = context._get_cache_stats()
+    
+                self._log_parameters(
+                    effective_parameters, stats, ismulti=context.executemany
+                )
+    
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1977: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x00000279B5E99610>
+cursor = <sqlite3.Cursor object at 0x00000279B5E7F440>
+statement = 'SELECT users.user_id, users.username, users.password_hash, users.role_id, users.student_id, users.teacher_id, users.is_active, users.created_at \nFROM users \nWHERE users.user_id = ?'
+parameters = (1,)
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x00000279B5EB8770>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       sqlite3.OperationalError: no such table: users
+
+.venv\Lib\site-packages\sqlalchemy\engine\default.py:1192: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+auth = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x00000279B3F06DE0>, login=<function auth.<locals>.login at 0x00000279B5E27A60>, password='Only-for-isolated-tests!42')
+tmp_path = WindowsPath("C:/Users/LOCAL_USER/AppData/Local/Temp/pytest-of-zhao'xing'ze/pytest-525/test_old_valid_cookie_does_not0")
+database_kind = 'memory'
+
+    @pytest.mark.parametrize("database_kind", ["memory", "missing-file"])
+    def test_old_valid_cookie_does_not_break_public_pages_when_database_uninitialized(auth, tmp_path, database_kind):
+        from app import create_app
+        from app.extensions import db
+        auth.login()
+        old_cookie = auth.client.get_cookie("session").value
+        target = tmp_path / "not-initialized.sqlite"
+        uri = "sqlite:///:memory:" if database_kind == "memory" else f"sqlite:///{target.as_posix()}"
+        application=create_app("testing", {"SQLALCHEMY_DATABASE_URI":uri},instance_path=str(tmp_path / "uninitialized"))
+        client=application.test_client();client.set_cookie("session",old_cookie)
+>       assert client.get("/").status_code == 200
+               ^^^^^^^^^^^^^^^
+
+tests\test_auth_security.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:917: in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:902: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\dashboard\routes.py:13: in index
+    return render_template("dashboard/index.html")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:151: in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:128: in _render
+    app.update_template_context(context)
+.venv\Lib\site-packages\flask\app.py:530: in update_template_context
+    context.update(self.ensure_sync(func)())
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask_login\utils.py:405: in _user_context_processor
+    return dict(current_user=_get_user())
+                             ^^^^^^^^^^^
+.venv\Lib\site-packages\flask_login\utils.py:370: in _get_user
+    current_app.login_manager._load_user()
+.venv\Lib\site-packages\flask_login\login_manager.py:364: in _load_user
+    user = self._user_callback(user_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\auth\session.py:85: in load_user
+    user = db.session.get(User, int(identity))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\sqlalchemy\orm\scoping.py:1090: in get
+    return self._proxied.get(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:3934: in get
+    return self._get_impl(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4121: in _get_impl
+    return db_load_fn(
+.venv\Lib\site-packages\sqlalchemy\orm\loading.py:702: in _load_on_pk_identity
+    session.execute(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:2555: in execute
+    return self._execute_internal(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:2445: in _execute_internal
+    compile_state_cls.orm_execute_statement(
+.venv\Lib\site-packages\sqlalchemy\orm\context.py:322: in orm_execute_statement
+    result = conn.execute(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1494: in execute
+    return meth(
+.venv\Lib\site-packages\sqlalchemy\sql\elements.py:534: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1714: in _execute_clauseelement
+    ret = self._execute_context(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1868: in _execute_context
+    return self._exec_single_context(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1996: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:2351: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1977: in _exec_single_context
+    self.dialect.do_execute(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x00000279B5E99610>
+cursor = <sqlite3.Cursor object at 0x00000279B5E7F440>
+statement = 'SELECT users.user_id, users.username, users.password_hash, users.role_id, users.student_id, users.teacher_id, users.is_active, users.created_at \nFROM users \nWHERE users.user_id = ?'
+parameters = (1,)
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x00000279B5EB8770>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: users
+E       [SQL: SELECT users.user_id, users.username, users.password_hash, users.role_id, users.student_id, users.teacher_id, users.is_active, users.created_at 
+E       FROM users 
+E       WHERE users.user_id = ?]
+E       [parameters: (1,)]
+E       (Background on this error at: https://sqlalche.me/e/21/e3q8)
+
+.venv\Lib\site-packages\sqlalchemy\engine\default.py:1192: OperationalError
+_ test_old_valid_cookie_does_not_break_public_pages_when_database_uninitialized[missing-file] _
+
+self = <sqlalchemy.engine.base.Connection object at 0x00000279B719B4A0>
+dialect = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x00000279B7198DA0>
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x00000279B719BF50>
+statement = <sqlalchemy.dialects.sqlite.base.SQLiteCompiler object at 0x00000279B719BDD0>
+parameters = [(1,)]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Unpack[TupleAny]]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        evt_handled: bool = False
+        try:
+            if self._has_events or self.engine._has_events:
+                for fn in self.dispatch.before_cursor_execute:
+                    str_statement, effective_parameters = fn(
+                        self,
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                        context.executemany,
+                    )
+    
+            if self._echo:
+                self._log_info(str_statement)
+    
+                stats = context._get_cache_stats()
+    
+                self._log_parameters(
+                    effective_parameters, stats, ismulti=context.executemany
+                )
+    
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1977: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x00000279B7198DA0>
+cursor = <sqlite3.Cursor object at 0x00000279B6B2BA40>
+statement = 'SELECT users.user_id, users.username, users.password_hash, users.role_id, users.student_id, users.teacher_id, users.is_active, users.created_at \nFROM users \nWHERE users.user_id = ?'
+parameters = (1,)
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x00000279B719BF50>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       sqlite3.OperationalError: no such table: users
+
+.venv\Lib\site-packages\sqlalchemy\engine\default.py:1192: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+auth = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x00000279B5F0CFE0>, login=<function auth.<locals>.login at 0x00000279B5F0D080>, password='Only-for-isolated-tests!42')
+tmp_path = WindowsPath("C:/Users/LOCAL_USER/AppData/Local/Temp/pytest-of-zhao'xing'ze/pytest-525/test_old_valid_cookie_does_not1")
+database_kind = 'missing-file'
+
+    @pytest.mark.parametrize("database_kind", ["memory", "missing-file"])
+    def test_old_valid_cookie_does_not_break_public_pages_when_database_uninitialized(auth, tmp_path, database_kind):
+        from app import create_app
+        from app.extensions import db
+        auth.login()
+        old_cookie = auth.client.get_cookie("session").value
+        target = tmp_path / "not-initialized.sqlite"
+        uri = "sqlite:///:memory:" if database_kind == "memory" else f"sqlite:///{target.as_posix()}"
+        application=create_app("testing", {"SQLALCHEMY_DATABASE_URI":uri},instance_path=str(tmp_path / "uninitialized"))
+        client=application.test_client();client.set_cookie("session",old_cookie)
+>       assert client.get("/").status_code == 200
+               ^^^^^^^^^^^^^^^
+
+tests\test_auth_security.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:917: in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:902: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\dashboard\routes.py:13: in index
+    return render_template("dashboard/index.html")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:151: in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\templating.py:128: in _render
+    app.update_template_context(context)
+.venv\Lib\site-packages\flask\app.py:530: in update_template_context
+    context.update(self.ensure_sync(func)())
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask_login\utils.py:405: in _user_context_processor
+    return dict(current_user=_get_user())
+                             ^^^^^^^^^^^
+.venv\Lib\site-packages\flask_login\utils.py:370: in _get_user
+    current_app.login_manager._load_user()
+.venv\Lib\site-packages\flask_login\login_manager.py:364: in _load_user
+    user = self._user_callback(user_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\auth\session.py:85: in load_user
+    user = db.session.get(User, int(identity))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\sqlalchemy\orm\scoping.py:1090: in get
+    return self._proxied.get(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:3934: in get
+    return self._get_impl(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4121: in _get_impl
+    return db_load_fn(
+.venv\Lib\site-packages\sqlalchemy\orm\loading.py:702: in _load_on_pk_identity
+    session.execute(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:2555: in execute
+    return self._execute_internal(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:2445: in _execute_internal
+    compile_state_cls.orm_execute_statement(
+.venv\Lib\site-packages\sqlalchemy\orm\context.py:322: in orm_execute_statement
+    result = conn.execute(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1494: in execute
+    return meth(
+.venv\Lib\site-packages\sqlalchemy\sql\elements.py:534: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1714: in _execute_clauseelement
+    ret = self._execute_context(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1868: in _execute_context
+    return self._exec_single_context(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1996: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:2351: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1977: in _exec_single_context
+    self.dialect.do_execute(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x00000279B7198DA0>
+cursor = <sqlite3.Cursor object at 0x00000279B6B2BA40>
+statement = 'SELECT users.user_id, users.username, users.password_hash, users.role_id, users.student_id, users.teacher_id, users.is_active, users.created_at \nFROM users \nWHERE users.user_id = ?'
+parameters = (1,)
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x00000279B719BF50>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: users
+E       [SQL: SELECT users.user_id, users.username, users.password_hash, users.role_id, users.student_id, users.teacher_id, users.is_active, users.created_at 
+E       FROM users 
+E       WHERE users.user_id = ?]
+E       [parameters: (1,)]
+E       (Background on this error at: https://sqlalche.me/e/21/e3q8)
+
+.venv\Lib\site-packages\sqlalchemy\engine\default.py:1192: OperationalError
+_ test_oversized_resource_ids_are_handled_as_missing[/students/9223372036854775808/profile] _
+
+auth = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x00000279B7128B80>, login=<function auth.<locals>.login at 0x00000279B7128C20>, password='Only-for-isolated-tests!42')
+path = '/students/9223372036854775808/profile'
+
+    @pytest.mark.parametrize("path", ["/students/9223372036854775808/profile", "/admin/users/9223372036854775808/reset-password"])
+    def test_oversized_resource_ids_are_handled_as_missing(auth, path):
+        auth.login()
+>       assert auth.client.get(path).status_code == 404
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_auth_security.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:917: in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:902: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask_login\utils.py:290: in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\students\routes.py:14: in profile
+    student = db.session.get(Student, student_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\sqlalchemy\orm\scoping.py:1090: in get
+    return self._proxied.get(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:3934: in get
+    return self._get_impl(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4121: in _get_impl
+    return db_load_fn(
+.venv\Lib\site-packages\sqlalchemy\orm\loading.py:702: in _load_on_pk_identity
+    session.execute(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:2555: in execute
+    return self._execute_internal(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:2445: in _execute_internal
+    compile_state_cls.orm_execute_statement(
+.venv\Lib\site-packages\sqlalchemy\orm\context.py:322: in orm_execute_statement
+    result = conn.execute(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1494: in execute
+    return meth(
+.venv\Lib\site-packages\sqlalchemy\sql\elements.py:534: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1714: in _execute_clauseelement
+    ret = self._execute_context(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1868: in _execute_context
+    return self._exec_single_context(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1996: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:2354: in _handle_dbapi_exception
+    raise exc_info[1].with_traceback(exc_info[2])
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1977: in _exec_single_context
+    self.dialect.do_execute(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x00000279B5F65640>
+cursor = <sqlite3.Cursor object at 0x00000279B634DE40>
+statement = 'SELECT students.student_id, students.student_no, students.name, students.gender, students.birth_date, students.phone,...ss_id, students.enrollment_date, students.status, students.is_archived \nFROM students \nWHERE students.student_id = ?'
+parameters = (9223372036854775808,)
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x00000279B71F3260>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       OverflowError: Python int too large to convert to SQLite INTEGER
+
+.venv\Lib\site-packages\sqlalchemy\engine\default.py:1192: OverflowError
+_ test_oversized_resource_ids_are_handled_as_missing[/admin/users/9223372036854775808/reset-password] _
+
+auth = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x00000279B5D727A0>, login=<function auth.<locals>.login at 0x00000279B5CC3EC0>, password='Only-for-isolated-tests!42')
+path = '/admin/users/9223372036854775808/reset-password'
+
+    @pytest.mark.parametrize("path", ["/students/9223372036854775808/profile", "/admin/users/9223372036854775808/reset-password"])
+    def test_oversized_resource_ids_are_handled_as_missing(auth, path):
+        auth.login()
+>       assert auth.client.get(path).status_code == 404
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_auth_security.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\werkzeug\test.py:1166: in get
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\testing.py:235: in open
+    response = super().open(
+.venv\Lib\site-packages\werkzeug\test.py:1120: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:992: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\werkzeug\test.py:1268: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1536: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1514: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:1511: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:919: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:917: in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\flask\app.py:902: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\services\permission_service.py:30: in guarded
+    return view(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+app\admin\routes.py:38: in reset_password
+    target = db.session.get(User, user_id)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\sqlalchemy\orm\scoping.py:1090: in get
+    return self._proxied.get(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:3934: in get
+    return self._get_impl(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:4121: in _get_impl
+    return db_load_fn(
+.venv\Lib\site-packages\sqlalchemy\orm\loading.py:702: in _load_on_pk_identity
+    session.execute(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:2555: in execute
+    return self._execute_internal(
+.venv\Lib\site-packages\sqlalchemy\orm\session.py:2445: in _execute_internal
+    compile_state_cls.orm_execute_statement(
+.venv\Lib\site-packages\sqlalchemy\orm\context.py:322: in orm_execute_statement
+    result = conn.execute(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1494: in execute
+    return meth(
+.venv\Lib\site-packages\sqlalchemy\sql\elements.py:534: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1714: in _execute_clauseelement
+    ret = self._execute_context(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1868: in _execute_context
+    return self._exec_single_context(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1996: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:2354: in _handle_dbapi_exception
+    raise exc_info[1].with_traceback(exc_info[2])
+.venv\Lib\site-packages\sqlalchemy\engine\base.py:1977: in _exec_single_context
+    self.dialect.do_execute(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x00000279B71F0A40>
+cursor = <sqlite3.Cursor object at 0x00000279B8733140>
+statement = 'SELECT users.user_id, users.username, users.password_hash, users.role_id, users.student_id, users.teacher_id, users.is_active, users.created_at \nFROM users \nWHERE users.user_id = ?'
+parameters = (9223372036854775808,)
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x00000279B6B6D820>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       OverflowError: Python int too large to convert to SQLite INTEGER
+
+.venv\Lib\site-packages\sqlalchemy\engine\default.py:1192: OverflowError
+=========================== short test summary info ===========================
+FAILED tests/test_auth_security.py::test_old_valid_cookie_does_not_break_public_pages_when_database_uninitialized[memory]
+FAILED tests/test_auth_security.py::test_old_valid_cookie_does_not_break_public_pages_when_database_uninitialized[missing-file]
+FAILED tests/test_auth_security.py::test_oversized_resource_ids_are_handled_as_missing[/students/9223372036854775808/profile]
+FAILED tests/test_auth_security.py::test_oversized_resource_ids_are_handled_as_missing[/admin/users/9223372036854775808/reset-password]
+4 failed in 4.20s

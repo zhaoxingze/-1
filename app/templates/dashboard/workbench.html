@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block title %}{{ role_label }}工作台{% endblock %}
+{% block breadcrumb %}{{ role_label }}工作台{% endblock %}
+{% block content %}
+<section class="workbench-header" aria-label="工作台入口">
+  <div><h1>{{ role_label }}工作台</h1><p>{{ current_user.username }}</p></div>
+  {% if current_user.role.name == 'admin' %}
+  <a class="btn btn-outline-primary" href="{{ url_for('admin.password_reset_lookup') }}">管理员密码重置</a>
+  {% endif %}
+</section>
+{% include 'dashboard/statistics.html' %}
+<section class="modules-section" aria-labelledby="shortcuts">
+  <div class="section-heading"><h2 id="shortcuts">功能入口</h2></div>
+  <div class="row g-3">
+  {% for section, items in navigation_groups %}
+    <div class="col-12 col-md-6"><article class="archive-panel h-100">
+      <h3 class="h6">{{ section }}</h3>
+      <div class="d-flex flex-wrap gap-2">
+        {% for label, endpoint in items %}<a class="btn btn-sm btn-outline-secondary" href="{{ url_for(endpoint) }}">{{ label }}</a>{% endfor %}
+      </div>
+    </article></div>
+  {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}
+{% block title %}家长详情{% endblock %}
+{% block breadcrumb %}家长详情{% endblock %}
+{% block content %}
+<div class="archive-heading"><h1>{{ parent.name }}</h1><a class="btn btn-outline-secondary" href="{{ url_for('admin.student_parents',student_id=parent.student_id) }}">该学生家长列表</a></div>
+<section class="archive-panel"><div class="archive-actions"><a class="btn btn-primary" href="{{ url_for('admin.parent_edit',student_id=parent.student_id,parent_id=parent.parent_id) }}">编辑家长</a>{% if not parent.is_primary %}<a class="btn btn-outline-secondary" href="{{ url_for('admin.parent_primary',student_id=parent.student_id,parent_id=parent.parent_id) }}">设为主要联系人</a>{% endif %}</div>
+<dl class="archive-facts"><dt>所属学生</dt><dd><a href="{{ url_for('admin.student_detail',student_id=parent.student_id) }}">{{ parent.student.student_no }} · {{ parent.student.name }}</a></dd><dt>家长姓名</dt><dd>{{ parent.name }}</dd><dt>关系</dt><dd>{{ relationship_labels[parent.relationship] }}</dd><dt>联系电话</dt><dd>{{ parent.phone }}</dd><dt>邮箱</dt><dd>{{ parent.email or '—' }}</dd><dt>主要联系人</dt><dd>{{ '是' if parent.is_primary else '否' }}</dd></dl></section>
+{% endblock %}

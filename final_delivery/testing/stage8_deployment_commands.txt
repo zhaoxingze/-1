@@ -1,0 +1,120 @@
+> python -X utf8 -m flask --app run db upgrade
+2026-11-19 14:56:56,666 INFO [app] Application initialized: profile=demo; business tables not created
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> fab16ef0dd6f, Initial thirteen domain tables
+
+> python -X utf8 -m flask --app run db upgrade
+2026-11-19 14:56:57,840 INFO [app] Application initialized: profile=demo; business tables not created
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+
+> python -X utf8 -m flask --app run db check
+No new upgrade operations detected.
+2026-11-19 14:56:58,909 INFO [app] Application initialized: profile=demo; business tables not created
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.schemas
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.tables
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.types
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.constraints
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.defaults
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.comments
+
+> python -X utf8 -m flask --app run seed-roles
+Roles ready; added 3.
+2026-11-19 14:57:00,041 INFO [app] Application initialized: profile=demo; business tables not created
+
+> python -X utf8 -m flask --app run seed-roles
+Roles ready; added 0.
+2026-11-19 14:57:01,170 INFO [app] Application initialized: profile=demo; business tables not created
+
+> python -X utf8 -m flask --app run routes
+Endpoint                           Methods    Rule                                                            
+---------------------------------  ---------  ----------------------------------------------------------------
+academics.course_detail            GET        /academics/courses/<int:course_id>                              
+academics.course_edit              GET, POST  /academics/courses/<int:course_id>/edit                         
+academics.course_new               GET, POST  /academics/courses/new                                          
+academics.courses                  GET        /academics/courses                                              
+academics.enrollment_new           GET, POST  /academics/enrollments/new                                      
+academics.enrollments              GET        /academics/enrollments                                          
+academics.grade_edit               GET, POST  /academics/grades/<int:enrollment_id>/edit                      
+academics.grades                   GET        /academics/grades                                               
+admin.audit_detail                 GET        /admin/audit/<int:audit_id>                                     
+admin.audit_list                   GET        /admin/audit                                                    
+admin.class_detail                 GET        /admin/classes/<int:class_id>                                   
+admin.class_edit                   GET, POST  /admin/classes/<int:class_id>/edit                              
+admin.class_new                    GET, POST  /admin/classes/new                                              
+admin.classes_list                 GET        /admin/classes                                                  
+admin.index                        GET        /admin/                                                         
+admin.parent_detail                GET        /admin/students/<int:student_id>/parents/<int:parent_id>        
+admin.parent_edit                  GET, POST  /admin/students/<int:student_id>/parents/<int:parent_id>/edit   
+admin.parent_new                   GET, POST  /admin/students/<int:student_id>/parents/new                    
+admin.parent_primary               GET, POST  /admin/students/<int:student_id>/parents/<int:parent_id>/primary
+admin.parents_list                 GET        /admin/parents                                                  
+admin.password_reset_lookup        GET, POST  /admin/password-reset                                           
+admin.reset_password               GET, POST  /admin/users/<int:user_id>/reset-password                       
+admin.student_archive              GET, POST  /admin/students/<int:student_id>/archive                        
+admin.student_detail               GET        /admin/students/<int:student_id>                                
+admin.student_edit                 GET, POST  /admin/students/<int:student_id>/edit                           
+admin.student_new                  GET, POST  /admin/students/new                                             
+admin.student_parents              GET        /admin/students/<int:student_id>/parents                        
+admin.student_restore              GET, POST  /admin/students/<int:student_id>/restore                        
+admin.student_status               GET, POST  /admin/students/<int:student_id>/status                         
+admin.students_list                GET        /admin/students                                                 
+admin.teacher_detail               GET        /admin/teachers/<int:teacher_id>                                
+admin.teacher_edit                 GET, POST  /admin/teachers/<int:teacher_id>/edit                           
+admin.teacher_new                  GET, POST  /admin/teachers/new                                             
+admin.teachers_list                GET        /admin/teachers                                                 
+admin.user_activate                GET, POST  /admin/users/<int:user_id>/activate                             
+admin.user_deactivate              GET, POST  /admin/users/<int:user_id>/deactivate                           
+admin.user_detail                  GET        /admin/users/<int:user_id>                                      
+admin.user_edit                    GET, POST  /admin/users/<int:user_id>/edit                                 
+admin.user_new                     GET, POST  /admin/users/new                                                
+admin.users                        GET        /admin/users                                                    
+attendance.detail                  GET        /attendance/<int:attendance_id>                                 
+attendance.edit                    GET, POST  /attendance/<int:attendance_id>/edit                            
+attendance.index                   GET        /attendance/                                                    
+attendance.new                     GET, POST  /attendance/new                                                 
+attendance.statistics              GET        /attendance/statistics                                          
+auth.change_password               GET, POST  /password/change                                                
+auth.login                         GET, POST  /login                                                          
+auth.logout                        POST       /logout                                                         
+dashboard.health                   GET        /health                                                         
+dashboard.index                    GET        /                                                               
+dashboard.profile                  GET        /profile                                                        
+dashboard.student                  GET        /dashboard/student                                              
+dashboard.teacher                  GET        /dashboard/teacher                                              
+dashboard.teacher_class_students   GET        /teacher/classes/<int:class_id>/students                        
+dashboard.teacher_classes          GET        /teacher/classes                                                
+dashboard.teacher_course_students  GET        /teacher/courses/<int:course_id>/students                       
+dashboard.teacher_courses          GET        /teacher/courses                                                
+dashboard.teacher_edit_contact     GET, POST  /teacher/students/<int:student_id>/contact                      
+dashboard.teacher_parents          GET        /teacher/students/<int:student_id>/parents                      
+dashboard.teacher_student          GET        /teacher/students/<int:student_id>                              
+dashboard.workbench                GET        /dashboard                                                      
+records.contact_detail             GET        /records/contacts/<int:contact_id>                              
+records.contact_edit               GET, POST  /records/contacts/<int:contact_id>/edit                         
+records.contact_new                GET, POST  /records/contacts/new                                           
+records.contacts                   GET        /records/contacts                                               
+records.notification_detail        GET        /records/notifications/<int:notification_id>                    
+records.notification_new           GET, POST  /records/notifications/new                                      
+records.notifications              GET        /records/notifications                                          
+records.reward_detail              GET        /records/rewards/<int:record_id>                                
+records.reward_edit                GET, POST  /records/rewards/<int:record_id>/edit                           
+records.reward_new                 GET, POST  /records/rewards/new                                            
+records.rewards                    GET        /records/rewards                                                
+static                             GET        /static/<path:filename>                                         
+students.profile                   GET        /students/<int:student_id>/profile                              
+2026-11-19 14:57:02,199 INFO [app] Application initialized: profile=demo; business tables not created
+
+> create-admin through the registered Flask CLI
+Success; duplicate refused; prompts and credentials omitted.
+
+> python -X utf8 -m flask --app run seed-demo
+Fictional demo data ready; added 10. No accounts or real messages created.
+2026-11-19 14:57:07,847 INFO [app] Application initialized: profile=demo; business tables not created
+
+> python -X utf8 -m flask --app run seed-demo
+Fictional demo data ready; added 0. No accounts or real messages created.
+2026-11-19 14:57:08,790 INFO [app] Application initialized: profile=demo; business tables not created

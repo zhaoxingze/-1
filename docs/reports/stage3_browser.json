@@ -1,0 +1,43 @@
+{
+  "base_url": "http://127.0.0.1:5063",
+  "roles": {
+    "admin": {
+      "landing": "/admin/",
+      "heading": "管理员工作台",
+      "profile": 200,
+      "forbidden_status": 403,
+      "password_reset_form": true,
+      "after_logout": 302
+    },
+    "teacher": {
+      "landing": "/dashboard/teacher",
+      "heading": "教师工作台",
+      "profile": 200,
+      "forbidden_status": 403,
+      "after_logout": 302
+    },
+    "student": {
+      "landing": "/dashboard/student",
+      "heading": "学生工作台",
+      "profile": 200,
+      "forbidden_status": 403,
+      "own_profile": 200,
+      "other_object": 403,
+      "after_logout": 302
+    }
+  },
+  "page_errors": [],
+  "unexpected_console_errors": [],
+  "server_errors": [],
+  "home": 200,
+  "health": {
+    "status": 200,
+    "body": {
+      "service": "student-management-system",
+      "status": "ok"
+    }
+  },
+  "login_page": 200,
+  "mobile_no_overflow": true,
+  "passed": true
+}

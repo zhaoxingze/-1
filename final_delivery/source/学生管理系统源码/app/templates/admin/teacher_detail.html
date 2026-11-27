@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% from 'admin/_macros.html' import pagination with context %}
+{% block title %}教师详情{% endblock %}
+{% block breadcrumb %}教师详情{% endblock %}
+{% block content %}
+<div class="archive-heading"><h1>{{ teacher.name }}</h1><a class="btn btn-outline-secondary" href="{{ url_for('admin.teachers_list') }}">教师列表</a></div>
+<section class="archive-panel"><a class="btn btn-primary mb-4" href="{{ url_for('admin.teacher_edit',teacher_id=teacher.teacher_id) }}">编辑教师</a><dl class="archive-facts">{% for label,value in [('教师编号',teacher.teacher_no),('姓名',teacher.name),('联系电话',teacher.phone or '—'),('邮箱',teacher.email or '—')] %}<dt>{{ label }}</dt><dd>{{ value }}</dd>{% endfor %}</dl></section>
+<section class="archive-panel mt-4"><h2>当前班主任班级</h2><div class="table-responsive"><table class="table"><thead><tr><th>班级</th><th>年级</th></tr></thead><tbody>{% for c in classes.items %}<tr><td><a href="{{ url_for('admin.class_detail',class_id=c.class_id) }}">{{ c.class_name }}</a></td><td>{{ c.grade }}</td></tr>{% else %}<tr><td colspan="2">暂无关联班级。</td></tr>{% endfor %}</tbody></table></div>{{ pagination(classes,'class_page') }}</section>
+<section class="archive-panel mt-4"><h2>当前关联课程</h2><p class="text-secondary small">仅展示已有课程关联，课程维护将在后续阶段开放。</p><div class="table-responsive"><table class="table"><thead><tr><th>课程编号</th><th>课程名称</th><th>学分</th></tr></thead><tbody>{% for c in courses.items %}<tr><td>{{ c.course_code }}</td><td>{{ c.course_name }}</td><td>{{ c.credit }}</td></tr>{% else %}<tr><td colspan="3">暂无关联课程。</td></tr>{% endfor %}</tbody></table></div>{{ pagination(courses,'course_page') }}</section>
+{% endblock %}

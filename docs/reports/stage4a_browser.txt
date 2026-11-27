@@ -1,0 +1,54 @@
+### Result
+{"checks":{"anonymous_management_redirect":true,"teacher_create":true,"class_head_teacher":true,"required_field_failure":true,"student_create_and_class":true,"duplicate_student_failure":true,"legal_state_transition":true,"archive":true,"archived_search":true,"restore":true,"primary_switch":true,"parent_filter_retained":true,"student_search":true,"pagination":true,"class_student_list":true,"mobile_list_no_overflow":true,"mobile_form_no_overflow":true,"teacher_management_denied":true,"student_management_denied":true,"student_own_minimal":true,"student_other_minimal_denied":true,"health":true,"no_unexpected_errors":true},"ids":{"teacher_id":2,"class_id":1,"student_id":3,"parent_ids":[1,2]},"page_errors":[],"unexpected_console_errors":[],"expected_denial_console":[],"server_errors":[],"passed":true}
+### Ran Playwright code
+```js
+await (async(page)=>{
+const accounts={"admin": {"username": "browser_admin", "password": "<temporary-password-redacted>", "user_id": 1, "student_id": null}, "teacher": {"username": "browser_teacher", "password": "<temporary-password-redacted>", "user_id": 2, "student_id": null}, "student": {"username": "browser_student", "password": "<temporary-password-redacted>", "user_id": 3, "student_id": 1}},origin='http://127.0.0.1:5064';
+const report={checks:{},ids:{},page_errors:[],unexpected_console_errors:[],expected_denial_console:[],server_errors:[]};
+const check=(ok,name)=>{report.checks[name]=!!ok;if(!ok)throw Error(name)};
+page.on('pageerror',e=>report.page_errors.push(e.message));
+page.on('console',m=>{if(m.type()==='error'){if(m.text().includes('403'))report.expected_denial_console.push(m.text());else report.unexpected_console_errors.push(m.text())}});
+page.on('response',r=>{if(r.status()>=500)report.server_errors.push({url:r.url(),status:r.status()})});
+const snap=async()=>await page.locator('body').ariaSnapshot();
+const go=async(path)=>{const r=await page.goto(origin+path);await snap();return r;};
+const shot=async(name)=>await page.screenshot({path:'F:/StudentManagementSystem/output/playwright/stage4a-'+name+'.png',fullPage:true});
+const fill=async(label,value)=>await page.getByLabel(label,{exact:true}).fill(value);
+const save=async(label,regexp)=>{await page.getByRole('button',{name:label,exact:true}).click();if(regexp)await page.waitForURL(regexp);await snap();};
+const login=async(role)=>{await go('/login');await fill('用户名',accounts[role].username);await fill('密码',accounts[role].password);await save('登录系统',role==='admin'?/\/admin\/$/:new RegExp('/dashboard/'+role+'$'));};
+await page.setViewportSize({width:1440,height:1050});
+check((await page.request.get(origin+'/admin/students',{maxRedirects:0})).status()===302,'anonymous_management_redirect');
+await login('admin');await shot('admin-dashboard');
+await go('/admin/teachers/new');await fill('教师编号','UI-T001');await fill('姓名','浏览器教师（虚构）');await fill('联系电话','000-1001');await fill('邮箱','ui-teacher@example.invalid');
+await save('保存教师档案',/\/admin\/teachers\/\d+$/);const tid=page.url().split('/').pop();report.ids.teacher_id=Number(tid);check((await page.locator('h1').innerText()).includes('浏览器教师'),'teacher_create');
+await go('/admin/teachers/'+tid+'/edit');await fill('姓名','浏览器教师已编辑（虚构）');await save('保存教师档案',/\/admin\/teachers\/\d+$/);await shot('teacher-detail');
+await go('/admin/classes/new');await fill('班级名称','浏览器演示班');await fill('年级','演示年级');await page.getByLabel('班主任',{exact:true}).selectOption(tid);await save('保存班级',/\/admin\/classes\/\d+$/);
+const cid=page.url().split('/').pop();report.ids.class_id=Number(cid);check((await page.locator('body').innerText()).includes('浏览器教师已编辑'),'class_head_teacher');
+await go('/admin/classes/'+cid+'/edit');await fill('班级名称','浏览器演示班已编辑');await save('保存班级',/\/admin\/classes\/\d+$/);await shot('class-detail');
+await go('/admin/students/new');await fill('学号','UI-S001');await fill('性别','未指定');await fill('出生日期','2008-11-18');await fill('入学日期','2026-09-01');await page.getByLabel('班级',{exact:true}).selectOption(cid);await fill('联系电话','000-1002');await fill('家庭住址','虚构地址，仅供验证');
+await save('保存学生档案');check((await page.locator('body').innerText()).includes('请输入姓名'),'required_field_failure');await shot('student-form-error');
+await fill('姓名','浏览器学生（虚构）');await save('保存学生档案',/\/admin\/students\/\d+$/);const sid=page.url().split('/').pop();report.ids.student_id=Number(sid);
+check((await page.locator('body').innerText()).includes('浏览器演示班已编辑'),'student_create_and_class');
+await go('/admin/students/'+sid+'/edit');await fill('姓名','浏览器学生已编辑（虚构）');await save('保存学生档案',/\/admin\/students\/\d+$/);await shot('student-detail');
+await go('/admin/students/new');await fill('学号','UI-S001');await fill('姓名','重复学号测试（虚构）');await fill('性别','未指定');await fill('入学日期','2026-09-01');await save('保存学生档案');check((await page.locator('body').innerText()).includes('该编号已存在'),'duplicate_student_failure');await shot('duplicate-student-error');
+await go('/admin/students/'+sid+'/status');await page.getByLabel('新学籍状态',{exact:true}).selectOption('suspended');await save('确认变更学籍',/\/admin\/students\/\d+$/);check((await page.locator('body').innerText()).includes('休学'),'legal_state_transition');
+await go('/admin/students/'+sid+'/status');await page.getByLabel('新学籍状态',{exact:true}).selectOption('enrolled');await save('确认变更学籍',/\/admin\/students\/\d+$/);
+await go('/admin/students/'+sid+'/archive');await shot('archive-confirmation');await page.getByLabel('我已核对信息，确认执行此操作',{exact:true}).check();await save('确认执行',/\/admin\/students\/\d+$/);check((await page.locator('body').innerText()).includes('已归档'),'archive');
+await go('/admin/students?archived=archived&q=UI-S001');check((await page.locator('table').innerText()).includes('UI-S001'),'archived_search');
+await go('/admin/students/'+sid+'/restore');await page.getByLabel('我已核对信息，确认执行此操作',{exact:true}).check();await save('确认执行',/\/admin\/students\/\d+$/);check((await page.locator('body').innerText()).includes('未归档'),'restore');
+const parents=[];for(const [name,primary] of [['虚构家长甲',true],['虚构家长乙',false]]){await go('/admin/students/'+sid+'/parents/new');await fill('家长姓名',name);await page.getByLabel('与学生关系',{exact:true}).selectOption('guardian');await fill('联系电话','000-1003');await fill('邮箱','ui-parent@example.invalid');if(primary)await page.getByLabel('设为主要联系人',{exact:true}).check();await save('保存家长档案',/\/parents\/\d+$/);parents.push(Number(page.url().split('/').pop()));}
+report.ids.parent_ids=parents;
+await page.getByRole('link',{name:'设为主要联系人',exact:true}).click();await snap();await page.getByLabel('我已核对信息，确认执行此操作',{exact:true}).check();await save('确认执行',/\/parents\/\d+$/);check((await page.locator('dl').innerText()).includes('主要联系人\n是'),'primary_switch');await shot('parent-detail');
+await go('/admin/students/'+sid+'/parents/'+parents[1]+'/edit');await fill('联系电话','000-1004');await save('保存家长档案',/\/parents\/\d+$/);
+await go('/admin/parents');await page.getByLabel('学生',{exact:true}).selectOption(sid);await page.getByRole('button',{name:'查询',exact:true}).click();await snap();await fill('搜索','虚构家长');await page.getByRole('button',{name:'查询',exact:true}).click();await snap();check(new URL(page.url()).searchParams.get('student_id')===sid,'parent_filter_retained');await shot('parents-list');
+await go('/admin/students');await fill('搜索','UI-S001');await page.getByRole('button',{name:'查询',exact:true}).click();await snap();check((await page.locator('table').innerText()).includes('UI-S001'),'student_search');await shot('students-list');
+await go('/admin/students?per_page=1');await page.getByRole('link',{name:'下一页',exact:true}).click();await snap();check(new URL(page.url()).searchParams.get('page')==='2','pagination');
+await go('/admin/classes/'+cid);check((await page.locator('table').innerText()).includes('UI-S001'),'class_student_list');
+await page.setViewportSize({width:390,height:844});await go('/admin/students');check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'mobile_list_no_overflow');await shot('mobile-students');
+await go('/admin/students/'+sid+'/edit');check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'mobile_form_no_overflow');await shot('mobile-student-form');
+await page.setViewportSize({width:1440,height:1050});await page.getByRole('button',{name:'退出登录',exact:true}).click();await page.waitForURL(origin+'/login');
+for(const role of ['teacher','student']){await login(role);check((await page.request.get(origin+'/admin/students')).status()===403,role+'_management_denied');if(role==='student'){check((await page.request.get(origin+'/students/'+accounts.student.student_id+'/profile')).status()===200,'student_own_minimal');check((await page.request.get(origin+'/students/'+sid+'/profile')).status()===403,'student_other_minimal_denied');}await page.getByRole('button',{name:'退出登录',exact:true}).click();await page.waitForURL(origin+'/login');}
+check((await page.request.get(origin+'/health')).status()===200,'health');
+check(report.page_errors.length===0&&report.unexpected_console_errors.length===0&&report.server_errors.length===0,'no_unexpected_errors');report.passed=true;return report;
+})(page);
+```
+

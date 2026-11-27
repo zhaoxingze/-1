@@ -1,0 +1,81 @@
+FFFFFF                                                                   [100%]
+================================== FAILURES ===================================
+______________ test_login_form_is_public_and_has_no_store_header ______________
+
+client = <FlaskClient <Flask 'app'>>
+
+    def test_login_form_is_public_and_has_no_store_header(client):
+        response = client.get("/login")
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests\test_auth_login.py:6: AssertionError
+_____________ test_anonymous_requests_redirect_to_login[/admin/] ______________
+
+client = <FlaskClient <Flask 'app'>>, path = '/admin/'
+
+    @pytest.mark.parametrize("path", ["/admin/", "/dashboard", "/dashboard/teacher", "/dashboard/student", "/profile"])
+    def test_anonymous_requests_redirect_to_login(client, path):
+        response = client.get(path)
+>       assert response.status_code == 302
+E       assert 404 == 302
+E        +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests\test_rbac.py:15: AssertionError
+____________ test_anonymous_requests_redirect_to_login[/dashboard] ____________
+
+client = <FlaskClient <Flask 'app'>>, path = '/dashboard'
+
+    @pytest.mark.parametrize("path", ["/admin/", "/dashboard", "/dashboard/teacher", "/dashboard/student", "/profile"])
+    def test_anonymous_requests_redirect_to_login(client, path):
+        response = client.get(path)
+>       assert response.status_code == 302
+E       assert 404 == 302
+E        +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests\test_rbac.py:15: AssertionError
+________ test_anonymous_requests_redirect_to_login[/dashboard/teacher] ________
+
+client = <FlaskClient <Flask 'app'>>, path = '/dashboard/teacher'
+
+    @pytest.mark.parametrize("path", ["/admin/", "/dashboard", "/dashboard/teacher", "/dashboard/student", "/profile"])
+    def test_anonymous_requests_redirect_to_login(client, path):
+        response = client.get(path)
+>       assert response.status_code == 302
+E       assert 404 == 302
+E        +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests\test_rbac.py:15: AssertionError
+________ test_anonymous_requests_redirect_to_login[/dashboard/student] ________
+
+client = <FlaskClient <Flask 'app'>>, path = '/dashboard/student'
+
+    @pytest.mark.parametrize("path", ["/admin/", "/dashboard", "/dashboard/teacher", "/dashboard/student", "/profile"])
+    def test_anonymous_requests_redirect_to_login(client, path):
+        response = client.get(path)
+>       assert response.status_code == 302
+E       assert 404 == 302
+E        +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests\test_rbac.py:15: AssertionError
+_____________ test_anonymous_requests_redirect_to_login[/profile] _____________
+
+client = <FlaskClient <Flask 'app'>>, path = '/profile'
+
+    @pytest.mark.parametrize("path", ["/admin/", "/dashboard", "/dashboard/teacher", "/dashboard/student", "/profile"])
+    def test_anonymous_requests_redirect_to_login(client, path):
+        response = client.get(path)
+>       assert response.status_code == 302
+E       assert 404 == 302
+E        +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests\test_rbac.py:15: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_auth_login.py::test_login_form_is_public_and_has_no_store_header
+FAILED tests/test_rbac.py::test_anonymous_requests_redirect_to_login[/admin/]
+FAILED tests/test_rbac.py::test_anonymous_requests_redirect_to_login[/dashboard]
+FAILED tests/test_rbac.py::test_anonymous_requests_redirect_to_login[/dashboard/teacher]
+FAILED tests/test_rbac.py::test_anonymous_requests_redirect_to_login[/dashboard/student]
+FAILED tests/test_rbac.py::test_anonymous_requests_redirect_to_login[/profile]
+6 failed in 1.32s

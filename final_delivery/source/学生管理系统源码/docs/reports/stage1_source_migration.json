@@ -1,0 +1,8 @@
+{
+  "source": "docs/sepecs/学生管理系统_前期设计方案与Codex分阶段提示词.docx",
+  "destination": "docs/specs/source/学生管理系统_前期设计方案与Codex分阶段提示词.docx",
+  "sha256_before": "D4520374DAC8021CD2D7CDBF098C17C7C48BCCB76616A2C82EF587BD0C033C58",
+  "sha256_after": "D4520374DAC8021CD2D7CDBF098C17C7C48BCCB76616A2C82EF587BD0C033C58",
+  "equal": true,
+  "old_empty_directory_removed": true
+}

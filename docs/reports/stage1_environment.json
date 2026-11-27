@@ -1,0 +1,30 @@
+{
+  "python_version": "3.12.10",
+  "executable": "F:\\StudentManagementSystem\\.venv\\Scripts\\python.exe",
+  "prefix": "F:\\StudentManagementSystem\\.venv",
+  "base_prefix": "C:\\Users\\LOCAL_USER\\AppData\\Local\\Programs\\Python\\Python312",
+  "include_system_site_packages": false,
+  "verified_packages": {
+    "Flask": {
+      "version": "3.1.3",
+      "module_path": "F:\\StudentManagementSystem\\.venv\\Lib\\site-packages\\flask\\__init__.py"
+    },
+    "Flask-SQLAlchemy": {
+      "version": "3.1.1",
+      "module_path": "F:\\StudentManagementSystem\\.venv\\Lib\\site-packages\\flask_sqlalchemy\\__init__.py"
+    },
+    "Flask-Login": {
+      "version": "0.6.3",
+      "module_path": "F:\\StudentManagementSystem\\.venv\\Lib\\site-packages\\flask_login\\__init__.py"
+    },
+    "Flask-WTF": {
+      "version": "1.3.0",
+      "module_path": "F:\\StudentManagementSystem\\.venv\\Lib\\site-packages\\flask_wtf\\__init__.py"
+    },
+    "pytest": {
+      "version": "9.2.0",
+      "module_path": "F:\\StudentManagementSystem\\.venv\\Lib\\site-packages\\pytest\\__init__.py"
+    }
+  },
+  "locked_distribution_count": 19
+}

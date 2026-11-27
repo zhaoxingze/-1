@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "errors": [],
+  "domain_tables": 13,
+  "domain_fields": 94,
+  "foreign_keys": 20,
+  "original_fields_preserved": 73,
+  "original_foreign_keys_preserved": 16,
+  "physical_tables": 14,
+  "foreign_keys_enabled": 1,
+  "recursive_triggers_enabled": 1,
+  "foreign_key_check": [],
+  "stage1_test_names_preserved": true,
+  "markdown_links_checked": 106,
+  "word_sha256": "D4520374DAC8021CD2D7CDBF098C17C7C48BCCB76616A2C82EF587BD0C033C58",
+  "database_sha256": "89428DE8F37A14CE68C027A1704427926DB8B5BCF64A6E65260B1412C7664F76"
+}

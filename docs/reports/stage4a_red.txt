@@ -1,0 +1,45 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+___________________ test_admin_can_create_read_edit_student ___________________
+
+auth = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x0000029E319EB880>, login=<function auth.<locals>.login at 0x0000029E319EB7E0>, password='Only-for-isolated-tests!42')
+
+    def test_admin_can_create_read_edit_student(auth):
+        from app.extensions import db
+        from app.models import Student,User
+        auth.login()
+>       response=submit(auth,'/admin/students/new',STUDENT_DATA)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_student_crud.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\archive_support.py:12: in submit
+    return auth.client.post(path,data={"csrf_token":auth.token(path),**data})
+                                                    ^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+path = '/admin/students/new'
+
+    def token(path="/login"):
+        page = client.get(path)
+>       assert page.status_code == 200, f"CSRF form unavailable: {path}: {page.status_code}"
+E       AssertionError: CSRF form unavailable: /admin/students/new: 404
+E       assert 404 == 200
+E        +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests\conftest.py:86: AssertionError
+___ test_each_domain_write_records_actor_fields_and_actions_without_commit ____
+
+auth = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x0000029E31ABDB20>, login=<function auth.<locals>.login at 0x0000029E31ABDBC0>, password='Only-for-isolated-tests!42')
+
+    def test_each_domain_write_records_actor_fields_and_actions_without_commit(auth):
+        from app.extensions import db
+        from app.models import AuditLog,Student
+>       from app.services.student_service import create_student,update_student,change_student_status,set_student_archived
+E       ModuleNotFoundError: No module named 'app.services.student_service'
+
+tests\test_stage4_audit.py:9: ModuleNotFoundError
+=========================== short test summary info ===========================
+FAILED tests/test_student_crud.py::test_admin_can_create_read_edit_student - ...
+FAILED tests/test_stage4_audit.py::test_each_domain_write_records_actor_fields_and_actions_without_commit
+2 failed in 1.45s

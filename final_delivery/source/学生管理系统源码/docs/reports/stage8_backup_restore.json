@@ -1,0 +1,52 @@
+{
+  "source_loopback_and_no_console": true,
+  "online_backup": {
+    "operation": "backup",
+    "file": "classroom.backup.sqlite",
+    "integrity_check": "ok",
+    "foreign_key_violations": 0,
+    "verified_at_utc": "2026-11-19T07:20:35.154291+00:00",
+    "bytes": 245760,
+    "sha256": "dd9c78bb98d27f634837c3cbdfe853225c8b3c1965bf38d20ebfabce7bfd5a0d"
+  },
+  "restore": {
+    "operation": "restore",
+    "file": "student_management.db",
+    "integrity_check": "ok",
+    "foreign_key_violations": 0,
+    "verified_at_utc": "2026-11-19T07:20:35.311348+00:00",
+    "bytes": 245760,
+    "sha256": "dd9c78bb98d27f634837c3cbdfe853225c8b3c1965bf38d20ebfabce7bfd5a0d"
+  },
+  "verify": {
+    "operation": "verify",
+    "file": "student_management.db",
+    "integrity_check": "ok",
+    "foreign_key_violations": 0,
+    "verified_at_utc": "2026-11-19T07:20:35.383634+00:00",
+    "bytes": 245760,
+    "sha256": "dd9c78bb98d27f634837c3cbdfe853225c8b3c1965bf38d20ebfabce7bfd5a0d"
+  },
+  "restored_loopback_and_no_console": true,
+  "passed": true,
+  "role_logins_verified": 3,
+  "role_restrictions_verified": true,
+  "restored_business_reads_verified": true,
+  "isolated_source_sha256_unchanged": true,
+  "domain_rows_match": true,
+  "domain_counts": {
+    "attendance_records": 5,
+    "audit_logs": 47,
+    "courses": 2,
+    "enrollments": 3,
+    "notification_logs": 3,
+    "parent_contact_logs": 2,
+    "parents": 2,
+    "reward_records": 3,
+    "roles": 3,
+    "school_classes": 2,
+    "students": 2,
+    "teachers": 2,
+    "users": 4
+  }
+}

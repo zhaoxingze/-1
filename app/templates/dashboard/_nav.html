@@ -1,0 +1,18 @@
+{% macro links(items) %}
+{% for label, endpoint in items %}
+  {% set href = url_for(endpoint) %}
+  {% set active = request.path == href or (href not in ['/', '/admin/'] and request.path.startswith(href.rstrip('/') ~ '/')) %}
+  <a href="{{ href }}"{% if active %} class="active" aria-current="{{ 'page' if request.path == href else 'location' }}"{% endif %}>{{ label }}</a>
+{% endfor %}
+{% endmacro %}
+
+{% macro navigation(nav_id) %}
+<nav id="{{ nav_id }}" class="navigation-panel" aria-label="主导航">
+  <div class="primary-nav">{{ links(navigation_home) }}</div>
+  {% for section, items in navigation_groups %}
+  <section class="navigation-group" aria-label="{{ section }}">
+    <h2>{{ section }}</h2><div class="primary-nav">{{ links(items) }}</div>
+  </section>
+  {% endfor %}
+</nav>
+{% endmacro %}

@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% from 'admin/_macros.html' import pagination with context %}
+{% from 'records/_filters.html' import select_filter %}
+{% block title %}审计日志{% endblock %}
+{% block breadcrumb %}审计日志{% endblock %}
+{% block content %}
+<div class="archive-heading"><h1>审计日志</h1></div>
+<section class="archive-panel">
+  <form method="get" class="archive-filters" role="search">
+    {{ select_filter('actor_user_id', '操作者', [('system', '系统')] + actors, filters.actor_user_id) }}
+    <div><label class="form-label" for="filter-entity_type">实体类型</label>
+      <select class="form-select" id="filter-entity_type" name="entity_type">
+        <option value="">全部</option>
+        {% for name in entities %}<option value="{{ name }}"{% if name == filters.entity_type %} selected{% endif %}>{{ name }}</option>{% endfor %}
+      </select>
+    </div>
+    {{ select_filter('action', '操作类型', actions.items(), filters.action) }}
+    <div><label class="form-label" for="entity_id">实体 ID</label><input class="form-control" inputmode="numeric" id="entity_id" name="entity_id" value="{{ filters.entity_id or '' }}"></div>
+    {% for key, label in [('start', '起始日期（UTC）'), ('end', '结束日期（UTC）')] %}
+    <div><label class="form-label" for="{{ key }}">{{ label }}</label><input class="form-control" type="date" id="{{ key }}" name="{{ key }}" value="{{ filters[key] or '' }}"></div>
+    {% endfor %}
+    <button class="btn btn-primary" type="submit">查询</button>
+    <a class="btn btn-outline-secondary" href="{{ url_for('admin.audit_list') }}">重置</a>
+  </form>
+  <div class="table-responsive"><table class="table align-middle archive-table">
+    <thead><tr><th scope="col">时间（UTC）</th><th scope="col">操作者</th><th scope="col">实体</th><th scope="col">操作类型</th><th scope="col">操作</th></tr></thead>
+    <tbody>
+    {% for row in page.items %}<tr><td>{{ row.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+      <td>{{ row.actor.username if row.actor else '系统' }}</td><td>{{ row.entity_type }} #{{ row.entity_id }}</td>
+      <td>{{ actions[row.action] }}</td><td><a href="{{ url_for('admin.audit_detail', audit_id=row.audit_id) }}">详情</a></td>
+    </tr>{% else %}<tr><td colspan="5" class="empty-state">暂无符合条件的审计记录。</td></tr>{% endfor %}
+    </tbody>
+  </table></div>
+  {{ pagination(page) }}
+</section>
+{% endblock %}

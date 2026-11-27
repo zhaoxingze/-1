@@ -1,0 +1,245 @@
+@startuml
+skinparam defaultFontName Microsoft YaHei
+skinparam shadowing false
+title UC-02 新增学生活动图（阶段4A已实现）
+start
+:管理员填写学生表单;
+:POST及CSRF检查;
+if (认证、角色与CSRF通过?) then (是)
+else (否)
+ :302登录/403无权/400 CSRF拒绝;
+ stop
+endif
+if (表单输入有效?) then (是)
+else (否)
+ :200字段错误反馈;
+ stop
+endif
+:Service再校验actor;
+:BEGIN IMMEDIATE或复用既有写事务;
+:白名单、长度、日期、班级、唯一学号校验;
+if (业务校验通过?) then (是)
+else (否)
+ :路由rollback并反馈200;
+ stop
+endif
+:add Student并flush取得ID;
+:add create审计，不commit;
+:路由统一commit，flush审计;
+if (业务及审计均提交成功?) then (是)
+ :303到学生详情并提示保存成功;
+else (否)
+ :回滚全部业务和审计;
+ :409冲突或503存储失败，不泄露SQL参数;
+endif
+stop
+legend bottom
+  写锁与缓存刷新防止旧会话覆盖已毕业/退学终态。
+  状态/归档为专用操作，普通档案编辑不授予这些写入。
+  学生归档不删除历史，不联动User.is_active。
+endlegend
+@enduml
+@startuml auth_activity
+skinparam defaultFontName Microsoft YaHei
+skinparam shadowing false
+title 阶段3 认证与权限活动（已实现）
+start
+:GET登录页，取得CSRF token;
+:POST用户名、密码、token;
+if (CSRF有效?) then (是)
+else (否)
+  :400拒绝，不建立认证;
+  stop
+endif
+if (输入、哈希、启停与角色档案绑定有效?) then (是)
+else (否)
+  :统一失败提示，不泄露账号存在性;
+  stop
+endif
+:清空旧会话，建立新身份;
+:保存绝对时间和HMAC凭据版本;
+:303到安全站内next或工作台;
+:每次受保护请求重新加载账号;
+if (会话未过期且版本、启停、绑定有效?) then (是)
+else (否)
+  :清身份，跳转登录;
+  stop
+endif
+if (角色与对象action均已授权?) then (是)
+  :200展示授权最小数据;
+else (否)
+  :403拒绝，不返回对象内容;
+  stop
+endif
+if (用户选择退出?) then (是)
+  :POST退出并校验CSRF;
+  if (CSRF有效?) then (是)
+    :清会话，303登录页;
+  else (否)
+    :400，保持原身份;
+  endif
+else (否)
+  :继续在绝对期限内使用;
+endif
+stop
+legend bottom
+  教师尚未确认的数据范围及未知action默认拒绝。
+  学籍、归档与账号启停独立。GET退出没有副作用。
+endlegend
+@enduml
+
+@startuml
+skinparam defaultFontName Microsoft YaHei
+title 阶段5 UC-04 新增选课活动
+start
+:登录角色、CSRF 与提交字段校验;
+if (初步授权及表单有效?) then (是)
+  :SQLite BEGIN IMMEDIATE;
+  :检查真实账号绑定、现有课程与学生;
+  if (管理员或教师满足 A-22?) then (是)
+    if (同学生、课程、学期已有记录?) then (是)
+      :回滚并提示重复选课;
+    else (否)
+      :添加 Enrollment，三项成绩均 NULL;
+      :追加创建审计，由 editor 提交;
+      if (写入和提交成功?) then (是)
+        :303 跳回指定课程与学期的选课列表;
+      else (否)
+        :整体回滚并返回保存失败;
+      endif
+    endif
+  else (否)
+    :回滚，返回 403 或 404;
+  endif
+else (否)
+  :返回拒绝响应或表单提示;
+endif
+stop
+@enduml
+
+@startuml
+skinparam defaultFontName Microsoft YaHei
+title 阶段5 UC-05 成绩编辑活动
+start
+:提交两项成绩，校验 CSRF、角色与对象;
+if (已授权?) then (是)
+  if (两项均为 0–100 有限数值?) then (是)
+    :Decimal 按 30/70 加权并半入两位;
+    :获取写锁、刷新目标、重新授权;
+    if (锁内仍授权?) then (是)
+      :程序写入成绩，追加三项前后值审计;
+      if (事务提交成功?) then (是)
+        :303 返回课程与学期成绩;
+      else (否)
+        :回滚成绩与审计;
+      endif
+    else (否)
+      :回滚并拒绝越权;
+    endif
+  else (否)
+    :返回缺分或非法分数提示;
+  endif
+else (否)
+  :拒绝访问;
+endif
+stop
+@enduml
+
+@startuml stage6_attendance_statistics
+skinparam defaultFontName Microsoft YaHei
+title 阶段6 UC-14 考勤统计
+start
+:请求考勤统计，读取学生、班级与起止日期;
+if (角色、范围及日期有效?) then (是)
+  :管理员全局、班主任本班、学生本人;
+  :在授权范围内按四种状态统计已有记录;
+  :分母=出勤+迟到+缺勤;
+  if (分母为零?) then (是)
+    :保留四项计数，显示无可统计数据;
+  else (否)
+    :计算 (出勤+迟到)÷分母×100%，显示两位小数;
+  endif
+else (否)
+  :返回权限或筛选错误;
+endif
+stop
+@enduml
+
+@startuml stage6_records_activity
+skinparam defaultFontName Microsoft YaHei
+title 阶段6 UC-07、UC-08、UC-15 新增记录
+start
+:验证登录角色、CSRF 与表单字段;
+:开始 SQLite 写事务，复核授权学生;
+if (在当前范围内?) then (是)
+  if (奖惩?) then (是)
+    :校验奖励或处分类型、类别、事由和发生日期;
+  elseif (普通联系?) then (是)
+    :验证家长归属，保存当时的联系姓名和电话;
+  else (显式模拟)
+    :验证渠道和接收对象，调用既有模拟通知服务;
+  endif
+  if (校验成功?) then (是)
+    :写入业务记录与审计;
+    if (事务通过?) then (是)
+      :303 跳转详情;
+    else (否)
+      :回滚全部写入，提示保存失败;
+    endif
+  else (否)
+    :回滚，返回字段提示;
+  endif
+else (否)
+  :回滚，返回拒绝响应;
+endif
+stop
+@enduml
+
+@startuml stage7_user_activity
+skinparam defaultFontName Microsoft YaHei
+title 阶段7 UC-10 账号写入和会话失效
+start
+:核验管理员、表单字段和 CSRF;
+if (创建账号?) then (是)
+  :校验两次密码并生成 Werkzeug 哈希;
+  :SQLite 写锁内重验管理员、用户名与匹配档案;
+else (编辑或启停)
+  :SQLite 写锁内重验身份与目标;
+  :保护自身管理员及最后可用管理员;
+  :检查新角色和绑定，启用时验证完整性;
+endif
+if (所有检查通过?) then (是)
+  :写入 User 并追加对应审计;
+  if (同一事务提交成功?) then (是)
+    :身份或状态变化的审计 ID 更新旧会话校验版本;
+    :重定向到账号详情;
+  else (否)
+    :回滚账号及审计并提示存储失败;
+  endif
+else (否)
+  :回滚并反馈权限或字段错误;
+endif
+stop
+@enduml
+
+@startuml stage7_statistics_activity
+skinparam defaultFontName Microsoft YaHei
+title 阶段7 UC-14 三角色统计
+start
+:获取登录角色，解析许可筛选字段;
+if (管理员?) then (是)
+  :统计全局档案数，读取所选学期和考勤班级;
+elseif (教师?) then (是)
+  :分别限定本班学生、当前授课课程和配置学期;
+else (学生)
+  :限定账号关联的本人 ID 和配置学期;
+endif
+if (筛选和权限有效?) then (是)
+  :在 SQL 中按范围计数，聚合三项完整成绩;
+  :在 SQL 中汇总最近30个UTC自然日考勤;
+  :显示时间范围、学期、均值及适用的空数据提示;
+else (否)
+  :返回拒绝或无效输入;
+endif
+stop
+@enduml

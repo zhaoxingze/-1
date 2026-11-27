@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% from 'admin/_macros.html' import pagination with context %}
+{% from 'records/_filters.html' import select_filter %}
+{% block title %}用户管理{% endblock %}
+{% block breadcrumb %}用户管理{% endblock %}
+{% block content %}
+<div class="archive-heading"><h1>用户管理</h1><a class="btn btn-primary" href="{{ url_for('admin.user_new') }}">创建账号</a></div>
+<section class="archive-panel">
+  <form method="get" class="archive-filters" role="search">
+    <div><label class="form-label" for="q">用户名</label><input class="form-control" id="q" name="q" value="{{ request.args.get('q', '') }}" maxlength="100"></div>
+    {{ select_filter('role', '角色', roles.items(), role) }}
+    {{ select_filter('active', '账号状态', [('1', '已启用'), ('0', '已停用')], active) }}
+    <button class="btn btn-primary" type="submit">查询</button>
+    <a class="btn btn-outline-secondary" href="{{ url_for('admin.users') }}">重置</a>
+  </form>
+  <div class="table-responsive"><table class="table align-middle archive-table">
+    <thead><tr><th scope="col">用户名</th><th scope="col">角色</th><th scope="col">绑定档案</th><th scope="col">状态</th><th scope="col">操作</th></tr></thead>
+    <tbody>
+    {% for account in page.items %}<tr>
+      <td class="text-break">{{ account.username }}</td><td>{{ roles[account.role.name] }}</td>
+      <td>{% if account.teacher %}{{ account.teacher.teacher_no }} · {{ account.teacher.name }}{% elif account.student %}{{ account.student.student_no }} · {{ account.student.name }}{% else %}—{% endif %}</td>
+      <td>{{ '已启用' if account.is_active else '已停用' }}</td>
+      <td><a href="{{ url_for('admin.user_detail', user_id=account.user_id) }}">详情</a></td>
+    </tr>{% else %}<tr><td colspan="5" class="empty-state">暂无符合条件的账号。</td></tr>{% endfor %}
+    </tbody>
+  </table></div>
+  {{ pagination(page) }}
+</section>
+{% endblock %}

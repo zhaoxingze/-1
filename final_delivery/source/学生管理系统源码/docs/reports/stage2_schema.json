@@ -1,0 +1,1731 @@
+{
+  "tables": [
+    {
+      "table": "roles",
+      "class": "Role",
+      "fields": [
+        {
+          "name": "role_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "tags": [
+            "PK"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "角色主键"
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "UQ"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "admin / teacher / student"
+        },
+        {
+          "name": "description",
+          "type": "VARCHAR(200)",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "角色说明"
+        }
+      ],
+      "unique_constraints": [
+        [
+          "name"
+        ]
+      ],
+      "check_constraints": [
+        {
+          "name": "ck_roles_name",
+          "expression": "name IN ('admin','teacher','student')"
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "table": "teachers",
+      "class": "Teacher",
+      "fields": [
+        {
+          "name": "teacher_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "tags": [
+            "PK"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "教师主键"
+        },
+        {
+          "name": "teacher_no",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "UQ"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "教师编号"
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "姓名"
+        },
+        {
+          "name": "phone",
+          "type": "VARCHAR(30)",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "电话"
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "邮箱"
+        }
+      ],
+      "unique_constraints": [
+        [
+          "teacher_no"
+        ]
+      ],
+      "check_constraints": [],
+      "indexes": []
+    },
+    {
+      "table": "school_classes",
+      "class": "SchoolClass",
+      "fields": [
+        {
+          "name": "class_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "tags": [
+            "PK"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "班级主键"
+        },
+        {
+          "name": "class_name",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "班级名称；原案未规定名称或年级名称组合唯一"
+        },
+        {
+          "name": "grade",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "年级"
+        },
+        {
+          "name": "homeroom_teacher_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL",
+            "FK"
+          ],
+          "foreign_key": "teachers.teacher_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "班主任，可暂未指定"
+        }
+      ],
+      "unique_constraints": [],
+      "check_constraints": [],
+      "indexes": [
+        {
+          "name": "ix_school_classes_homeroom_teacher_id",
+          "columns": [
+            "homeroom_teacher_id"
+          ],
+          "unique": false,
+          "where": null
+        }
+      ]
+    },
+    {
+      "table": "students",
+      "class": "Student",
+      "fields": [
+        {
+          "name": "student_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "tags": [
+            "PK"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "学生主键"
+        },
+        {
+          "name": "student_no",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "UQ"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "学号"
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "学生姓名"
+        },
+        {
+          "name": "gender",
+          "type": "VARCHAR(10)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "性别，具体值域未指定 A-14"
+        },
+        {
+          "name": "birth_date",
+          "type": "DATE",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "出生日期；年龄计算展示，不存 age"
+        },
+        {
+          "name": "phone",
+          "type": "VARCHAR(30)",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "学生电话"
+        },
+        {
+          "name": "address",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "家庭住址"
+        },
+        {
+          "name": "class_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL",
+            "FK"
+          ],
+          "foreign_key": "school_classes.class_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "可空，允许未分班"
+        },
+        {
+          "name": "enrollment_date",
+          "type": "DATE",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "入学日期"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "enrolled/suspended/graduated/withdrawn；学籍独立于归档"
+        },
+        {
+          "name": "is_archived",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "独立归档标记；默认 false，不改变学籍或账号启停"
+        }
+      ],
+      "unique_constraints": [
+        [
+          "student_no"
+        ]
+      ],
+      "check_constraints": [
+        {
+          "name": "ck_students_is_archived",
+          "expression": "students.is_archived IN (0, 1)"
+        },
+        {
+          "name": "ck_students_status",
+          "expression": "status IN ('enrolled','suspended','graduated','withdrawn')"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_students_class_id",
+          "columns": [
+            "class_id"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_students_status",
+          "columns": [
+            "status"
+          ],
+          "unique": false,
+          "where": null
+        }
+      ]
+    },
+    {
+      "table": "users",
+      "class": "User",
+      "fields": [
+        {
+          "name": "user_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "tags": [
+            "PK"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "账号主键"
+        },
+        {
+          "name": "username",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "UQ"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "登录名"
+        },
+        {
+          "name": "password_hash",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "密码哈希"
+        },
+        {
+          "name": "role_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "FK"
+          ],
+          "foreign_key": "roles.role_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "必需角色；角色档案匹配由 Service 与 ORM 检验"
+        },
+        {
+          "name": "student_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL",
+            "UQ",
+            "FK"
+          ],
+          "foreign_key": "students.student_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "学生账号关联档案"
+        },
+        {
+          "name": "teacher_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL",
+            "UQ",
+            "FK"
+          ],
+          "foreign_key": "teachers.teacher_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "教师账号关联档案"
+        },
+        {
+          "name": "is_active",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "账号启停，不等于学籍状态"
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "账号创建时间；时区见 A-18；UTC naive"
+        }
+      ],
+      "unique_constraints": [
+        [
+          "teacher_id"
+        ],
+        [
+          "student_id"
+        ],
+        [
+          "username"
+        ]
+      ],
+      "check_constraints": [
+        {
+          "name": "ck_users_is_active",
+          "expression": "users.is_active IN (0, 1)"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_users_role_id",
+          "columns": [
+            "role_id"
+          ],
+          "unique": false,
+          "where": null
+        }
+      ]
+    },
+    {
+      "table": "courses",
+      "class": "Course",
+      "fields": [
+        {
+          "name": "course_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "tags": [
+            "PK"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "课程主键"
+        },
+        {
+          "name": "course_code",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "UQ"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "课程编号"
+        },
+        {
+          "name": "course_name",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "课程名称"
+        },
+        {
+          "name": "credit",
+          "type": "FLOAT",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "学分；最小值和步长待定 A-14"
+        },
+        {
+          "name": "teacher_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL",
+            "FK"
+          ],
+          "foreign_key": "teachers.teacher_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "当前授课教师，单教师模型"
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "课程说明"
+        }
+      ],
+      "unique_constraints": [
+        [
+          "course_code"
+        ]
+      ],
+      "check_constraints": [],
+      "indexes": [
+        {
+          "name": "ix_courses_teacher_id",
+          "columns": [
+            "teacher_id"
+          ],
+          "unique": false,
+          "where": null
+        }
+      ]
+    },
+    {
+      "table": "enrollments",
+      "class": "Enrollment",
+      "fields": [
+        {
+          "name": "enrollment_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "tags": [
+            "PK"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "选课与成绩记录主键"
+        },
+        {
+          "name": "student_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "FK"
+          ],
+          "foreign_key": "students.student_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "选课学生"
+        },
+        {
+          "name": "course_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "FK"
+          ],
+          "foreign_key": "courses.course_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "课程"
+        },
+        {
+          "name": "semester",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "学期；2026-Fall 只是示例，不是既定正则"
+        },
+        {
+          "name": "usual_score",
+          "type": "FLOAT",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "平时成绩，存在时为 0–100"
+        },
+        {
+          "name": "exam_score",
+          "type": "FLOAT",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "考试成绩，存在时为 0–100"
+        },
+        {
+          "name": "total_score",
+          "type": "FLOAT",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "由服务计算的总分，存在时为 0–100"
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "选课记录创建时间，不是最近成绩修改时间；UTC naive"
+        }
+      ],
+      "unique_constraints": [
+        [
+          "student_id",
+          "course_id",
+          "semester"
+        ]
+      ],
+      "check_constraints": [
+        {
+          "name": "ck_enrollments_exam_score",
+          "expression": "exam_score IS NULL OR (exam_score >= 0 AND exam_score <= 100)"
+        },
+        {
+          "name": "ck_enrollments_usual_score",
+          "expression": "usual_score IS NULL OR (usual_score >= 0 AND usual_score <= 100)"
+        },
+        {
+          "name": "ck_enrollments_total_score",
+          "expression": "total_score IS NULL OR (total_score >= 0 AND total_score <= 100)"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_enrollments_course_id",
+          "columns": [
+            "course_id"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_enrollments_semester",
+          "columns": [
+            "semester"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_enrollments_student_id",
+          "columns": [
+            "student_id"
+          ],
+          "unique": false,
+          "where": null
+        }
+      ]
+    },
+    {
+      "table": "attendance_records",
+      "class": "AttendanceRecord",
+      "fields": [
+        {
+          "name": "attendance_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "tags": [
+            "PK"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "考勤主键"
+        },
+        {
+          "name": "student_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "FK"
+          ],
+          "foreign_key": "students.student_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "学生"
+        },
+        {
+          "name": "attendance_date",
+          "type": "DATE",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "考勤日期；统一使用此名，不用图中的 date 简写"
+        },
+        {
+          "name": "period",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "节次或时段；值域待 A-14"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "present / late / absent / leave"
+        },
+        {
+          "name": "note",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "备注或请假原因；未规定请假原因必填"
+        },
+        {
+          "name": "recorded_by",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "FK"
+          ],
+          "foreign_key": "users.user_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "登记 User，不是 Teacher；由会话确定"
+        }
+      ],
+      "unique_constraints": [
+        [
+          "student_id",
+          "attendance_date",
+          "period"
+        ]
+      ],
+      "check_constraints": [
+        {
+          "name": "ck_attendance_status",
+          "expression": "status IN ('present','late','absent','leave')"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_attendance_records_attendance_date",
+          "columns": [
+            "attendance_date"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_attendance_records_recorded_by",
+          "columns": [
+            "recorded_by"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_attendance_records_student_id",
+          "columns": [
+            "student_id"
+          ],
+          "unique": false,
+          "where": null
+        }
+      ]
+    },
+    {
+      "table": "reward_records",
+      "class": "RewardRecord",
+      "fields": [
+        {
+          "name": "record_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "tags": [
+            "PK"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "奖惩主键，不改成 reward_id"
+        },
+        {
+          "name": "student_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "FK"
+          ],
+          "foreign_key": "students.student_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "学生"
+        },
+        {
+          "name": "record_type",
+          "type": "VARCHAR(20)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "reward / punishment"
+        },
+        {
+          "name": "category",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "奖励或处分类别，未给出封闭字典"
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "事由"
+        },
+        {
+          "name": "occurred_on",
+          "type": "DATE",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "发生日期，不是记录创建时间"
+        },
+        {
+          "name": "created_by",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "FK"
+          ],
+          "foreign_key": "users.user_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "记录 User"
+        }
+      ],
+      "unique_constraints": [],
+      "check_constraints": [
+        {
+          "name": "ck_reward_record_type",
+          "expression": "record_type IN ('reward','punishment')"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_reward_records_created_by",
+          "columns": [
+            "created_by"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_reward_records_occurred_on",
+          "columns": [
+            "occurred_on"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_reward_records_student_id",
+          "columns": [
+            "student_id"
+          ],
+          "unique": false,
+          "where": null
+        }
+      ]
+    },
+    {
+      "table": "parents",
+      "class": "Parent",
+      "fields": [
+        {
+          "name": "parent_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "tags": [
+            "PK"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "家长联系档案主键"
+        },
+        {
+          "name": "student_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "FK"
+          ],
+          "foreign_key": "students.student_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "所属学生"
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "家长姓名"
+        },
+        {
+          "name": "relationship",
+          "type": "VARCHAR(20)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "father/mother/guardian/other"
+        },
+        {
+          "name": "phone",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "联系电话，不要求全局唯一"
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "邮箱"
+        },
+        {
+          "name": "is_primary",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "每生最多一位 true，允许零位"
+        }
+      ],
+      "unique_constraints": [],
+      "check_constraints": [
+        {
+          "name": "ck_parents_is_primary",
+          "expression": "parents.is_primary IN (0, 1)"
+        },
+        {
+          "name": "ck_parents_relationship",
+          "expression": "relationship IN ('father','mother','guardian','other')"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_parents_student_id",
+          "columns": [
+            "student_id"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "uq_parents_primary_per_student",
+          "columns": [
+            "student_id"
+          ],
+          "unique": true,
+          "where": "is_primary = 1"
+        }
+      ]
+    },
+    {
+      "table": "parent_contact_logs",
+      "class": "ParentContactLog",
+      "fields": [
+        {
+          "name": "contact_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "tags": [
+            "PK"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "联系记录主键"
+        },
+        {
+          "name": "student_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "FK"
+          ],
+          "foreign_key": "students.student_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "关联学生"
+        },
+        {
+          "name": "parent_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL",
+            "FK"
+          ],
+          "foreign_key": "parents.parent_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "可空；非空时必须属于同一学生"
+        },
+        {
+          "name": "method",
+          "type": "VARCHAR(20)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "phone/in_person/sms/email/other"
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "联系内容"
+        },
+        {
+          "name": "result",
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "沟通结果，不等于结构化通知发送状态"
+        },
+        {
+          "name": "contacted_at",
+          "type": "DATETIME",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "原始字段",
+          "note": "业务联系时间，不一定是录入时间；UTC naive"
+        },
+        {
+          "name": "created_by",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "FK"
+          ],
+          "foreign_key": "users.user_id",
+          "ondelete": "RESTRICT",
+          "origin": "原始字段",
+          "note": "记录 User"
+        },
+        {
+          "name": "contact_person_name",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "无 parent_id 时去空白姓名必填"
+        },
+        {
+          "name": "contact_person_phone",
+          "type": "VARCHAR(30)",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "未关联家长时可保存的联系对象电话"
+        }
+      ],
+      "unique_constraints": [],
+      "check_constraints": [
+        {
+          "name": "ck_parent_contacts_method",
+          "expression": "method IN ('phone','in_person','sms','email','other')"
+        },
+        {
+          "name": "ck_parent_contacts_explicit_name",
+          "expression": "parent_id IS NOT NULL OR (contact_person_name IS NOT NULL AND length(trim(contact_person_name, char(9)||char(10)||char(11)||char(12)||char(13)||' ')) > 0)"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_parent_contact_logs_contacted_at",
+          "columns": [
+            "contacted_at"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_parent_contact_logs_created_by",
+          "columns": [
+            "created_by"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_parent_contact_logs_parent_id",
+          "columns": [
+            "parent_id"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_parent_contact_logs_student_id",
+          "columns": [
+            "student_id"
+          ],
+          "unique": false,
+          "where": null
+        }
+      ]
+    },
+    {
+      "table": "audit_logs",
+      "class": "AuditLog",
+      "fields": [
+        {
+          "name": "audit_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "tags": [
+            "PK"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "审计主键"
+        },
+        {
+          "name": "actor_user_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL",
+            "FK"
+          ],
+          "foreign_key": "users.user_id",
+          "ondelete": "RESTRICT",
+          "origin": "阶段2新增",
+          "note": "操作用户；系统操作可空"
+        },
+        {
+          "name": "entity_type",
+          "type": "VARCHAR(80)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "多态被操作对象类型"
+        },
+        {
+          "name": "entity_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "多态对象 ID，无伪造单表外键"
+        },
+        {
+          "name": "action",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "create/update/archive/restore/status_change/delete"
+        },
+        {
+          "name": "before_data",
+          "type": "JSON",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "修改前 JSON；递归移除凭证"
+        },
+        {
+          "name": "after_data",
+          "type": "JSON",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "修改后 JSON；递归移除凭证"
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "UTC naive；默认当前 UTC；UTC naive"
+        },
+        {
+          "name": "request_id",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "可空请求追踪标识"
+        }
+      ],
+      "unique_constraints": [],
+      "check_constraints": [
+        {
+          "name": "ck_audit_logs_action",
+          "expression": "action IN ('create','update','archive','restore','status_change','delete')"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_audit_logs_actor_user_id",
+          "columns": [
+            "actor_user_id"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_audit_logs_created_at",
+          "columns": [
+            "created_at"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_audit_logs_entity_id",
+          "columns": [
+            "entity_id"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_audit_logs_entity_type",
+          "columns": [
+            "entity_type"
+          ],
+          "unique": false,
+          "where": null
+        }
+      ]
+    },
+    {
+      "table": "notification_logs",
+      "class": "NotificationLog",
+      "fields": [
+        {
+          "name": "notification_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": true,
+          "tags": [
+            "PK"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "模拟通知主键"
+        },
+        {
+          "name": "student_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "FK"
+          ],
+          "foreign_key": "students.student_id",
+          "ondelete": "RESTRICT",
+          "origin": "阶段2新增",
+          "note": "目标学生"
+        },
+        {
+          "name": "parent_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "tags": [
+            "NULL",
+            "FK"
+          ],
+          "foreign_key": "parents.parent_id",
+          "ondelete": "RESTRICT",
+          "origin": "阶段2新增",
+          "note": "可空家长；非空须属于目标学生"
+        },
+        {
+          "name": "channel",
+          "type": "VARCHAR(20)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "sms/email"
+        },
+        {
+          "name": "recipient_snapshot",
+          "type": "JSON",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "独立 JSON 接收对象快照"
+        },
+        {
+          "name": "content",
+          "type": "TEXT",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "模拟通知内容，无真实发送"
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "prepared/simulated/cancelled；模拟服务只生成 simulated"
+        },
+        {
+          "name": "created_by",
+          "type": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN",
+            "FK"
+          ],
+          "foreign_key": "users.user_id",
+          "ondelete": "RESTRICT",
+          "origin": "阶段2新增",
+          "note": "创建 User"
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "nullable": false,
+          "primary_key": false,
+          "tags": [
+            "NN"
+          ],
+          "foreign_key": null,
+          "ondelete": null,
+          "origin": "阶段2新增",
+          "note": "UTC naive；默认当前 UTC；UTC naive"
+        }
+      ],
+      "unique_constraints": [],
+      "check_constraints": [
+        {
+          "name": "ck_notification_status",
+          "expression": "status IN ('prepared','simulated','cancelled')"
+        },
+        {
+          "name": "ck_notification_channel",
+          "expression": "channel IN ('sms','email')"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "ix_notification_logs_created_at",
+          "columns": [
+            "created_at"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_notification_logs_created_by",
+          "columns": [
+            "created_by"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_notification_logs_parent_id",
+          "columns": [
+            "parent_id"
+          ],
+          "unique": false,
+          "where": null
+        },
+        {
+          "name": "ix_notification_logs_student_id",
+          "columns": [
+            "student_id"
+          ],
+          "unique": false,
+          "where": null
+        }
+      ]
+    }
+  ],
+  "domain_table_count": 13,
+  "field_count": 94,
+  "original_field_count": 73,
+  "foreign_key_count": 20,
+  "triggers": [
+    "audit_logs_no_update",
+    "audit_logs_no_delete",
+    "parent_contacts_parent_insert",
+    "parent_contacts_parent_update",
+    "notifications_parent_insert",
+    "notifications_parent_update",
+    "parents_preserve_history_owner"
+  ],
+  "revision": "fab16ef0dd6f"
+}

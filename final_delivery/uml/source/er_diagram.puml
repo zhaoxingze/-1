@@ -1,0 +1,161 @@
+@startuml
+!pragma layout smetana
+skinparam defaultFontName Microsoft YaHei
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+hide methods
+title 学生综合信息管理系统 阶段 2 ER 图
+entity "roles" as roles {
+  {field} role_id : INTEGER <<PK>>
+  {field} name : VARCHAR(30) <<NN,UQ>>
+  {field} description : VARCHAR(200) <<NULL>>
+}
+entity "teachers" as teachers {
+  {field} teacher_id : INTEGER <<PK>>
+  {field} teacher_no : VARCHAR(30) <<NN,UQ>>
+  {field} name : VARCHAR(50) <<NN>>
+  {field} phone : VARCHAR(30) <<NULL>>
+  {field} email : VARCHAR(100) <<NULL>>
+}
+entity "school_classes" as school_classes {
+  {field} class_id : INTEGER <<PK>>
+  {field} class_name : VARCHAR(50) <<NN>>
+  {field} grade : VARCHAR(30) <<NN>>
+  {field} homeroom_teacher_id : INTEGER <<NULL,FK>>
+}
+entity "students" as students {
+  {field} student_id : INTEGER <<PK>>
+  {field} student_no : VARCHAR(30) <<NN,UQ>>
+  {field} name : VARCHAR(50) <<NN>>
+  {field} gender : VARCHAR(10) <<NN>>
+  {field} birth_date : DATE <<NULL>>
+  {field} phone : VARCHAR(30) <<NULL>>
+  {field} address : VARCHAR(255) <<NULL>>
+  {field} class_id : INTEGER <<NULL,FK>>
+  {field} enrollment_date : DATE <<NN>>
+  {field} status : VARCHAR(20) <<NN>>
+  {field} is_archived : BOOLEAN <<NN ,S2>>
+}
+entity "users" as users {
+  {field} user_id : INTEGER <<PK>>
+  {field} username : VARCHAR(50) <<NN,UQ>>
+  {field} password_hash : VARCHAR(255) <<NN>>
+  {field} role_id : INTEGER <<NN,FK>>
+  {field} student_id : INTEGER <<NULL,UQ,FK>>
+  {field} teacher_id : INTEGER <<NULL,UQ,FK>>
+  {field} is_active : BOOLEAN <<NN>>
+  {field} created_at : DATETIME <<NN>>
+}
+entity "courses" as courses {
+  {field} course_id : INTEGER <<PK>>
+  {field} course_code : VARCHAR(30) <<NN,UQ>>
+  {field} course_name : VARCHAR(100) <<NN>>
+  {field} credit : FLOAT <<NN>>
+  {field} teacher_id : INTEGER <<NULL,FK>>
+  {field} description : TEXT <<NULL>>
+}
+entity "enrollments" as enrollments {
+  {field} enrollment_id : INTEGER <<PK>>
+  {field} student_id : INTEGER <<NN,FK>>
+  {field} course_id : INTEGER <<NN,FK>>
+  {field} semester : VARCHAR(30) <<NN>>
+  {field} usual_score : FLOAT <<NULL>>
+  {field} exam_score : FLOAT <<NULL>>
+  {field} total_score : FLOAT <<NULL>>
+  {field} created_at : DATETIME <<NN>>
+}
+entity "attendance_records" as attendance_records {
+  {field} attendance_id : INTEGER <<PK>>
+  {field} student_id : INTEGER <<NN,FK>>
+  {field} attendance_date : DATE <<NN>>
+  {field} period : VARCHAR(30) <<NN>>
+  {field} status : VARCHAR(20) <<NN>>
+  {field} note : VARCHAR(255) <<NULL>>
+  {field} recorded_by : INTEGER <<NN,FK>>
+}
+entity "reward_records" as reward_records {
+  {field} record_id : INTEGER <<PK>>
+  {field} student_id : INTEGER <<NN,FK>>
+  {field} record_type : VARCHAR(20) <<NN>>
+  {field} category : VARCHAR(50) <<NN>>
+  {field} description : TEXT <<NN>>
+  {field} occurred_on : DATE <<NN>>
+  {field} created_by : INTEGER <<NN,FK>>
+}
+entity "parents" as parents {
+  {field} parent_id : INTEGER <<PK>>
+  {field} student_id : INTEGER <<NN,FK>>
+  {field} name : VARCHAR(50) <<NN>>
+  {field} relationship : VARCHAR(20) <<NN>>
+  {field} phone : VARCHAR(30) <<NN>>
+  {field} email : VARCHAR(100) <<NULL>>
+  {field} is_primary : BOOLEAN <<NN>>
+}
+entity "parent_contact_logs" as parent_contact_logs {
+  {field} contact_id : INTEGER <<PK>>
+  {field} student_id : INTEGER <<NN,FK>>
+  {field} parent_id : INTEGER <<NULL,FK>>
+  {field} method : VARCHAR(20) <<NN>>
+  {field} content : TEXT <<NN>>
+  {field} result : TEXT <<NULL>>
+  {field} contacted_at : DATETIME <<NN>>
+  {field} created_by : INTEGER <<NN,FK>>
+  {field} contact_person_name : VARCHAR(50) <<NULL ,S2>>
+  {field} contact_person_phone : VARCHAR(30) <<NULL ,S2>>
+}
+entity "audit_logs" as audit_logs {
+  {field} audit_id : INTEGER <<PK ,S2>>
+  {field} actor_user_id : INTEGER <<NULL,FK ,S2>>
+  {field} entity_type : VARCHAR(80) <<NN ,S2>>
+  {field} entity_id : INTEGER <<NN ,S2>>
+  {field} action : VARCHAR(30) <<NN ,S2>>
+  {field} before_data : JSON <<NULL ,S2>>
+  {field} after_data : JSON <<NULL ,S2>>
+  {field} created_at : DATETIME <<NN ,S2>>
+  {field} request_id : VARCHAR(100) <<NULL ,S2>>
+}
+entity "notification_logs" as notification_logs {
+  {field} notification_id : INTEGER <<PK ,S2>>
+  {field} student_id : INTEGER <<NN,FK ,S2>>
+  {field} parent_id : INTEGER <<NULL,FK ,S2>>
+  {field} channel : VARCHAR(20) <<NN ,S2>>
+  {field} recipient_snapshot : JSON <<NN ,S2>>
+  {field} content : TEXT <<NN ,S2>>
+  {field} status : VARCHAR(20) <<NN ,S2>>
+  {field} created_by : INTEGER <<NN,FK ,S2>>
+  {field} created_at : DATETIME <<NN ,S2>>
+}
+teachers "0..1" -- "0..*" school_classes : homeroom_teacher_id
+school_classes "0..1" -- "0..*" students : class_id
+roles "1" -- "0..*" users : role_id
+students "0..1" -- "0..1" users : student_id
+teachers "0..1" -- "0..1" users : teacher_id
+teachers "0..1" -- "0..*" courses : teacher_id
+students "1" -- "0..*" enrollments : student_id
+courses "1" -- "0..*" enrollments : course_id
+students "1" -- "0..*" attendance_records : student_id
+users "1" -- "0..*" attendance_records : recorded_by
+students "1" -- "0..*" reward_records : student_id
+users "1" -- "0..*" reward_records : created_by
+students "1" -- "0..*" parents : student_id
+students "1" -- "0..*" parent_contact_logs : student_id
+parents "0..1" -- "0..*" parent_contact_logs : parent_id
+users "1" -- "0..*" parent_contact_logs : created_by
+users "0..1" -- "0..*" audit_logs : actor_user_id
+students "1" -- "0..*" notification_logs : student_id
+parents "0..1" -- "0..*" notification_logs : parent_id
+users "1" -- "0..*" notification_logs : created_by
+legend left
+  13 领域表 / 94 字段 / 20 FK；另计 Alembic 版本表。
+  保留原 11 表 / 73 原字段 / 16 原 FK；S2 为阶段2新增字段。
+  全部外键 RESTRICT；无删除级联或强组合关系。
+  Student.is_archived 与学籍、User.is_active 独立。
+  UQ Enrollment(student_id, course_id, semester)
+  UQ AttendanceRecord(student_id, attendance_date, period)
+  部分 UQ Parent(student_id) WHERE is_primary=1
+  User 档案互斥及角色匹配经 Service / ORM 校验。
+  联系/通知家长归属经校验及触发器保护。
+  审计追加且快照去凭证；通知模拟且保留快照。
+  所有 DATETIME 均 UTC naive；未确定成绩权重或教师权限。
+endlegend
+@enduml

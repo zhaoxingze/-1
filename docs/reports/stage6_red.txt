@@ -1,0 +1,57 @@
+FFFFF                                                                    [100%]
+================================== FAILURES ===================================
+________________ test_attendance_create_edit_and_date_filters _________________
+tests\test_attendance_routes.py:12: in test_attendance_create_edit_and_date_filters
+    created = submit(auth, "/attendance/new", data)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\archive_support.py:12: in submit
+    return auth.client.post(path,data={"csrf_token":auth.token(path),**data})
+                                                    ^^^^^^^^^^^^^^^^
+tests\conftest.py:86: in token
+    assert page.status_code == 200, f"CSRF form unavailable: {path}: {page.status_code}"
+E   AssertionError: CSRF form unavailable: /attendance/new: 404
+E   assert 404 == 200
+E    +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+___________________ test_reward_create_detail_edit_and_list ___________________
+tests\test_reward_service.py:35: in test_reward_create_detail_edit_and_list
+    created = submit(auth, "/records/rewards/new", {**REWARD, "student_id": ids.own})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\archive_support.py:12: in submit
+    return auth.client.post(path,data={"csrf_token":auth.token(path),**data})
+                                                    ^^^^^^^^^^^^^^^^
+tests\conftest.py:86: in token
+    assert page.status_code == 200, f"CSRF form unavailable: {path}: {page.status_code}"
+E   AssertionError: CSRF form unavailable: /records/rewards/new: 404
+E   assert 404 == 200
+E    +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+___________________ test_contact_browser_forms_and_filters ____________________
+tests\test_parent_contact_service.py:42: in test_contact_browser_forms_and_filters
+    created = submit(auth, "/records/contacts/new", {**data, "student_id": ids.own, "parent_id": ids.parent})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\archive_support.py:12: in submit
+    return auth.client.post(path,data={"csrf_token":auth.token(path),**data})
+                                                    ^^^^^^^^^^^^^^^^
+tests\conftest.py:86: in token
+    assert page.status_code == 200, f"CSRF form unavailable: {path}: {page.status_code}"
+E   AssertionError: CSRF form unavailable: /records/contacts/new: 404
+E   assert 404 == 200
+E    +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+_________________ test_notification_route_explicit_simulation _________________
+tests\test_stage6_notifications.py:56: in test_notification_route_explicit_simulation
+    assert auth.client.get(path).status_code == 200
+E   AssertionError: assert 404 == 200
+E    +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+E    +    where <WrapperTestResponse streamed [404 NOT FOUND]> = get('/records/notifications/new')
+E    +      where get = <FlaskClient <Flask 'app'>>.get
+E    +        where <FlaskClient <Flask 'app'>> = namespace(app=<Flask 'app'>, client=<FlaskClient <Flask 'app'>>, ids={'auth_admin': 1, 'auth_teacher': 3, 'auth_studen...0x000002118B19E2A0>, login=<function auth.<locals>.login at 0x000002118B0CAFC0>, password='Only-for-isolated-tests!42').client
+___________ test_attendance_statistics_use_scope_and_exclude_leave ____________
+tests\test_stage6_statistics.py:8: in test_attendance_statistics_use_scope_and_exclude_leave
+    from app.services.attendance_service import attendance_statistics, create_attendance
+E   ModuleNotFoundError: No module named 'app.services.attendance_service'
+=========================== short test summary info ===========================
+FAILED tests/test_attendance_routes.py::test_attendance_create_edit_and_date_filters
+FAILED tests/test_reward_service.py::test_reward_create_detail_edit_and_list
+FAILED tests/test_parent_contact_service.py::test_contact_browser_forms_and_filters
+FAILED tests/test_stage6_notifications.py::test_notification_route_explicit_simulation
+FAILED tests/test_stage6_statistics.py::test_attendance_statistics_use_scope_and_exclude_leave
+5 failed in 3.63s

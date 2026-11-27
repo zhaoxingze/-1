@@ -1,0 +1,331 @@
+@startuml
+skinparam defaultFontName Microsoft YaHei
+skinparam shadowing false
+title UC-02 管理员新增学生（阶段4A已实现）
+actor 管理员 as Admin
+boundary "admin/form.html" as UI
+control "admin.student_new / archive_views.editor" as Ctrl
+control "student_service.create_student" as Svc
+control "audit_service" as Audit
+entity "SQLAlchemy Session" as ORM
+database SQLite as DB
+Admin -> UI : 1. 填写并保存
+UI -> Ctrl : 2. POST /admin/students/new + CSRF
+Ctrl -> Ctrl : 2.1 登录/有效账号/管理员/CSRF/表单
+alt 入口或表单失败
+ Ctrl --> UI : 2.2 登录302/无权403/CSRF400/字段反馈200
+else 入口通过
+ Ctrl -> Svc : 3. create_student(current_user, allowed_data)
+ Svc -> DB : 3.1 BEGIN IMMEDIATE（若无既有事务）
+ Svc -> Svc : 3.2 再检查actor、白名单、必填/日期/长度
+ Svc -> ORM : 4. 查询真实班级、精确唯一学号
+ ORM -> DB : 5. SELECT
+ DB --> ORM : 6. 当前数据
+ ORM --> Svc : 6.1 查询结果
+ alt 字段/关联/重复校验失败
+  Svc --> Ctrl : A1. ArchiveValidationError
+  Ctrl -> ORM : A2. rollback
+  Ctrl --> UI : A3. 字段反馈200
+ else 校验通过
+  Svc -> ORM : 7. add Student / flush
+  ORM -> DB : 7.1 INSERT Student（未提交）
+  Svc -> Audit : 8. record_audit(create, actor, allowed snapshot)
+  Audit -> ORM : 8.1 add AuditLog（无commit）
+  Svc --> Ctrl : 9. 返回Student（未提交）
+  Ctrl -> ORM : 9.1 commit（flush审计）
+  ORM -> DB : 9.2 INSERT AuditLog / COMMIT
+  alt 任一写入/审计/提交失败
+   DB --> Ctrl : E1. 数据库异常
+   Ctrl -> ORM : E2. rollback全部业务与审计
+   Ctrl --> UI : E3. 冲突409或存储503，固定安全反馈
+  else 成功
+   Ctrl --> UI : 10. 303 /admin/students/id
+  end
+ end
+end
+note over Svc,DB
+ SQLite写锁在可变业务读取前取得，已有事务复用，写目标刷新缓存。
+ 服务不commit。普通编辑不能更改status/is_archived或User字段。
+ 家长主要切换：同锁内刷新→旧主要false/flush→新主要true/flush→两侧审计→外层提交。
+end note
+@enduml
+@startuml auth_sequence
+skinparam defaultFontName Microsoft YaHei
+skinparam shadowing false
+title 阶段3 登录、受保护访问、退出（已实现）
+actor 用户 as Actor
+boundary 浏览器 as Browser
+control "auth.routes / Flask-WTF" as Auth
+control "auth.session / Flask-Login" as Session
+control "permission_service" as Permission
+database "User / Role / SQLite" as DB
+Actor -> Browser : 打开登录页并填写凭据
+Browser -> Auth : GET /login；POST /login + CSRF
+Auth -> Auth : CSRF与输入校验
+alt CSRF无效
+  Auth --> Browser : 400
+else 表单有效
+  Auth -> DB : 按精确用户名查询
+  DB --> Auth : 账号或无记录
+  Auth -> Auth : Werkzeug校验真实/随机虚拟哈希
+  Auth -> Session : 校验账号有效与角色档案绑定
+  alt 失败
+    Auth --> Browser : 统一失败提示；不建立身份
+  else 成功
+    Auth -> Session : 清旧session；login_user；30分钟时间及HMAC版本
+    Auth --> Browser : 303 安全站内next或/dashboard
+    Browser -> Session : 请求受保护页面 + 签名Cookie
+    Session -> DB : 当前账号/角色/档案
+    Session -> Session : 验签、绝对期限、fresh、HMAC版本及启停
+    alt 身份失效
+      Session --> Browser : 清身份；302 /login
+    else 身份有效
+      Session -> Permission : role_required / require_student_access
+      alt 未授权
+        Permission --> Browser : 403，不返回对象数据
+      else 授权
+        Permission --> Browser : 工作台/本人资料200
+      end
+    end
+  end
+end
+Browser -> Auth : POST /logout + CSRF
+Auth -> Session : logout_user；session.clear
+Auth --> Browser : 303 /login
+note over Auth, DB
+  不记录密码/哈希/Cookie；不向AuditLog增加登录Action。
+  GET /logout 返回405。改密与管理员重置另由password_service
+  修改哈希并add update审计，路由同事务提交/回滚。
+end note
+@enduml
+
+@startuml teacher_contact_sequence
+skinparam defaultFontName Microsoft YaHei
+title 阶段4B 班主任编辑学生联系方式
+actor 班主任 as Teacher
+boundary "联系表单" as Form
+control "dashboard.teacher_edit_contact" as Route
+control "teacher_student_service" as Service
+control "permission_service" as Policy
+database "SQLite / SQLAlchemy" as DB
+Teacher -> Form : 1. 提交电话与住址
+Form -> Route : 2. POST /teacher/students/id/contact + CSRF
+Route -> Policy : 3. 认证、教师角色、当前本班目标
+alt 不在范围或表单无效
+ Route --> Form : 403拒绝或400/字段错误
+else 校验通过
+ Route -> Service : 4. update_student_contact(current_user, id, fields)
+ Service -> DB : 5. BEGIN IMMEDIATE或复用事务
+ Service -> Policy : 6. 锁内重新校验当前User与班主任范围
+ Policy -> DB : 6.1 查询当前绑定与当前班级
+ alt 转班/改派等导致无权
+  Service --> Route : PermissionError
+  Route -> DB : rollback
+  Route --> Form : 403
+ else 当前仍授权
+  Service -> DB : 7. 刷新学生，只写phone/address并flush
+  Service -> DB : 8. audit_service add更新审计
+  Route -> DB : 9. commit业务与审计
+  alt 业务或审计失败
+   Route -> DB : 9.1 rollback全部
+   Route --> Form : 安全错误反馈
+  else 成功
+   Route --> Form : 10. 303回到本班详情
+  end
+ end
+end
+@enduml
+
+@startuml
+skinparam defaultFontName Microsoft YaHei
+title 阶段5 UC-05 录入或修改成绩
+actor "管理员或授课教师" as Actor
+boundary "grade_routes / editor" as Route
+control "GradeService" as Service
+control "PermissionService / AcademicScope" as Permissions
+control "审计服务" as Audit
+database "SQLite" as DB
+
+Actor -> Route : 1. POST /academics/grades/{id}/edit（两项分数、CSRF）
+Route -> Permissions : 2. 检查登录角色和目标读写范围
+alt CSRF 无效或字段不支持
+    Route --> Actor : 2A. 400 拒绝
+else 越权、对象不存在
+    Route --> Actor : 2B. 403 或 404
+else 可访问
+    Route -> Service : 3. save_grades(actor, id, usual, exam)
+    Service -> Service : 4. 校验两项都是有限数值，0–100
+    alt 非法成绩或缺分
+        Service --> Route : 4A. 校验反馈
+        Route --> Actor : 返回表单
+    else 分数有效
+        Service -> Service : 5. Decimal 30/70 加权、ROUND_HALF_UP 两位
+        Service -> DB : 6. BEGIN IMMEDIATE
+        Service -> Permissions : 7. 按持久化关系重新授权并刷新 Enrollment
+        alt 当前关系越权
+            Service --> Route : 7A. 权限异常
+            Route -> DB : ROLLBACK
+            Route --> Actor : 403
+        else 锁内授权
+            Service -> DB : 8. 更新三项成绩（原 Float）
+            Service -> Audit : 9. 追加真实操作者和前后三项快照
+            Service --> Route : 返回 Enrollment
+            Route -> DB : 10. 同事务提交成绩及审计
+            alt 写入、审计或提交失败
+                Route -> DB : 10A. ROLLBACK
+                Route --> Actor : 409 或 503
+            else 提交成功
+                Route --> Actor : 11. 303 跳回课程与学期成绩列表
+            end
+        end
+    end
+end
+@enduml
+
+@startuml stage6_attendance_sequence
+skinparam defaultFontName Microsoft YaHei
+title 阶段6 UC-06 登记或修改考勤
+actor "管理员或班主任" as Actor
+boundary "attendance.routes / editor" as Route
+control "AttendanceService" as Service
+control "权限服务 / StudentRecordScope" as Scope
+control "StudentRecordService" as Common
+database "SQLite" as DB
+Actor -> Route : 1. 提交考勤及 CSRF
+Route -> Scope : 2. 检查角色、表单字段和路由对象
+alt 初检失败
+    Route --> Actor : 400 / 403 / 404 或字段提示
+else 初检通过
+    Route -> Service : 3. create_attendance 或 update_attendance
+    Service -> Common : 4. 验证身份，取得 BEGIN IMMEDIATE
+    Common -> DB : 获取写锁
+    Common -> Scope : 5. 按当前关系重新授予动作范围
+    Service -> DB : 6. 受限查询查学生或刷新考勤
+    alt 锁内越权或目标缺失
+        Service --> Route : 权限或查找异常
+        Route -> DB : ROLLBACK
+        Route --> Actor : 403 或 404
+    else 目标有权限
+        Service -> Service : 7. 校验日期、节次、状态和唯一组合
+        alt 非法输入或重复
+            Service --> Route : 字段错误
+            Route -> DB : ROLLBACK
+            Route --> Actor : 原表单与具体提示
+        else 校验通过
+            Service -> Common : 8. 写入考勤与登记人，追加审计
+            Common -> DB : flush 考勤，追加审计
+            Service --> Route : 返回考勤主键
+            Route -> DB : 9. 一次提交
+            alt 写入或审计失败
+                Route -> DB : ROLLBACK
+                Route --> Actor : 409 或 503
+            else 成功
+                Route --> Actor : 10. 303 到考勤详情
+            end
+        end
+    end
+end
+@enduml
+
+@startuml stage6_records_sequence
+skinparam defaultFontName Microsoft YaHei
+title 阶段6 UC-07、UC-08、UC-15 记录写入
+actor "管理员或班主任" as Actor
+boundary "records Blueprint / editor" as Route
+control "RewardService / ParentContactService" as Service
+control "StudentRecordService" as Common
+control "原 NotificationService" as Notification
+database "SQLite" as DB
+Actor -> Route : 提交奖惩、家长联系或模拟通知
+Route -> Service : 已检查角色、CSRF 和表单白名单
+Service -> Common : 检查动作，获取写锁，重新验证关系和对象
+alt 越权或目标缺失
+  Service --> Route : 403 或 404
+else 有权限
+  alt 新增奖惩
+    Service -> Service : 校验类型、类别、事由、日期
+  else 普通家长联系
+    Service -> Service : 校验家长归属或临时联系人，保存联系快照
+  else 显式模拟通知
+    Service -> Service : 校验渠道、家长归属与接收地址
+    Service -> Notification : create_simulated_notification
+    Notification --> Service : 待写入的 simulated 记录及收件快照
+  end
+  Service -> Common : flush 业务记录，追加限定字段审计
+  Common -> DB : 持久化业务记录，审计等待提交
+  Service --> Route : 返回记录
+  Route -> DB : 业务与审计统一提交
+end
+alt 非法输入、越权或提交失败
+  Route -> DB : ROLLBACK
+  Route --> Actor : 表单提示或错误页
+else 成功
+  Route --> Actor : 303 到对应详情
+end
+@enduml
+
+@startuml stage7_user_sequence
+skinparam defaultFontName Microsoft YaHei
+title 阶段7 UC-10 账号创建、编辑及启停
+actor 管理员 as Admin
+boundary "user_routes / editor" as Route
+control "UserManagementService" as Service
+control "PermissionService" as Scope
+control "AuditService" as Audit
+database "SQLite" as DB
+Admin -> Route : POST 账号表单（含 CSRF）
+Route -> Scope : 验证管理员角色
+alt 未授权或 CSRF 失败
+  Route --> Admin : 登录跳转或 403 / 400
+else 初检通过
+  Route -> Service : create_user / update_user / set_user_active
+  Service -> DB : BEGIN IMMEDIATE
+  Service -> Scope : 按持久化账号重新核验管理员
+  alt 请求已失去权限
+    Service --> Route : 拒绝
+  else 仍有权限
+    Service -> DB : 校验 Role、档案占用、可用管理员
+    alt 重名、绑定无效、自身保护或最后管理员
+      Service --> Route : 字段或权限错误
+    else 校验通过
+      Service -> DB : flush 账号，创建密码仅存哈希
+      Service -> Audit : 追加 create / update / status_change
+      Service --> Route : 返回目标账号
+      Route -> DB : 同一事务提交
+    end
+  end
+  alt 任一步骤失败
+    Route -> DB : ROLLBACK
+    Route --> Admin : 校验提示、冲突或拒绝
+  else 提交成功
+    Route --> Admin : 303 到详情
+    note over DB : 启停或身份变化推进会话版本
+  end
+end
+@enduml
+
+@startuml stage7_audit_sequence
+skinparam defaultFontName Microsoft YaHei
+title 阶段7 UC-10 只读审计查询
+actor 管理员 as Admin
+boundary "audit_routes" as Route
+control "AuditQueryService" as Audit
+control "PermissionService" as Scope
+database SQLite as DB
+Admin -> Route : GET 列表、详情或实体历史
+Route -> Audit : 校验筛选值，传递当前用户
+Audit -> Scope : 验证数据库当前管理员
+alt 越权或筛选不合法
+  Audit --> Route : 403 或 400
+else 合法
+  alt 列表
+    Audit -> DB : 按操作者、实体、状态、UTC 日期分页
+    DB --> Audit : 元数据
+  else 详情
+    Audit -> DB : 查询一条审计
+    Audit -> Audit : 清理凭证并投影许可元数据
+  end
+  Audit --> Route : 返回展示数据
+  Route --> Admin : 200 页面或 404
+end
+@enduml

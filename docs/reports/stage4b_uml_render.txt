@@ -1,0 +1,1 @@
+PlantUML render exit 0 for use case, class, sequence and communication sources.

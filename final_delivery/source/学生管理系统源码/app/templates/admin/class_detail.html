@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% from 'admin/_macros.html' import pagination with context %}
+{% block title %}班级详情{% endblock %}
+{% block breadcrumb %}班级详情{% endblock %}
+{% block content %}
+<div class="archive-heading"><h1>{{ school_class.class_name }}</h1><a class="btn btn-outline-secondary" href="{{ url_for('admin.classes_list') }}">班级列表</a></div>
+<section class="archive-panel"><a class="btn btn-primary mb-4" href="{{ url_for('admin.class_edit',class_id=school_class.class_id) }}">编辑班级 / 更换班主任</a><dl class="archive-facts"><dt>年级</dt><dd>{{ school_class.grade }}</dd><dt>班主任</dt><dd>{% if school_class.homeroom_teacher %}<a href="{{ url_for('admin.teacher_detail',teacher_id=school_class.homeroom_teacher_id) }}">{{ school_class.homeroom_teacher.name }}</a>{% else %}未指定{% endif %}</dd><dt>当前关联学生数</dt><dd>{{ student_count }}（含全部学籍与归档状态）</dd></dl></section>
+<section class="archive-panel mt-4"><h2>当前班级学生</h2><form method="get" class="archive-filters"><div><label class="form-label" for="class-search">学号或姓名搜索</label><input class="form-control" id="class-search" name="q" value="{{ request.args.get('q','') }}" maxlength="100"></div><button class="btn btn-primary" type="submit">查询</button></form>
+<div class="table-responsive"><table class="table"><thead><tr><th>学号</th><th>姓名</th><th>学籍</th><th>归档</th></tr></thead><tbody>{% for s in students.items %}<tr><td><a href="{{ url_for('admin.student_detail',student_id=s.student_id) }}">{{ s.student_no }}</a></td><td>{{ s.name }}</td><td>{{ status_labels[s.status] }}</td><td>{{ '已归档' if s.is_archived else '未归档' }}</td></tr>{% else %}<tr><td colspan="4">暂无符合条件的学生。</td></tr>{% endfor %}</tbody></table></div>{{ pagination(students) }}</section>
+{% endblock %}

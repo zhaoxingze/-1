@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "python": "3.12.10",
+  "protected_files": 57,
+  "archival_base_zip_checked": true,
+  "tests": {
+    "baseline": 335,
+    "new": 31,
+    "total": 366
+  },
+  "database": {
+    "domain_tables": 13,
+    "fields": 94,
+    "foreign_keys": 20,
+    "revision": "fab16ef0dd6f",
+    "triggers": [
+      "audit_logs_no_delete",
+      "audit_logs_no_update",
+      "notifications_parent_insert",
+      "notifications_parent_update",
+      "parent_contacts_parent_insert",
+      "parent_contacts_parent_update",
+      "parents_preserve_history_owner"
+    ],
+    "sha256": "89428de8f37a14ce68c027a1704427926db8b5bcf64a6e65260b1412c7664f76",
+    "foreign_key_check": []
+  },
+  "browser": {
+    "passed": true,
+    "checks": {
+      "owned_class_only": true,
+      "homeroom_roster": true,
+      "contact_saved": true,
+      "parent_read_only": true,
+      "course_roster_minimal": true,
+      "course_roster_links": true,
+      "other_class": true,
+      "other_course": true,
+      "cross_class_profile": true,
+      "cross_class_parent": true,
+      "admin_route": true,
+      "mobile_form_fit": true,
+      "anonymous_redirect": true,
+      "no_browser_errors": true
+    },
+    "errors": [],
+    "browser_edit_audit_verified": true
+  },
+  "uml": {
+    "source_files": 7,
+    "diagrams": 12,
+    "syntax_exit": 0,
+    "render_exit": 0
+  }
+}

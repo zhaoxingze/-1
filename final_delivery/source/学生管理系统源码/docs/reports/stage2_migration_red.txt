@@ -1,0 +1,36 @@
+F
+================================== FAILURES ===================================
+_________ test_empty_database_upgrade_matches_metadata_and_can_repeat _________
+
+tmp_path = WindowsPath("C:/Users/LOCAL_USER/AppData/Local/Temp/pytest-of-zhao'xing'ze/pytest-502/test_empty_database_upgrade_ma0")
+
+    def test_empty_database_upgrade_matches_metadata_and_can_repeat(tmp_path):
+        from app import create_app
+        from app.extensions import db
+    
+        database = tmp_path / "migration.sqlite"
+        application = create_app("testing", {"SQLALCHEMY_DATABASE_URI": f"sqlite:///{database.as_posix()}"},
+                                 instance_path=str(tmp_path / "instance"))
+        assert not database.exists()
+        runner = application.test_cli_runner()
+        upgraded = runner.invoke(args=["db", "upgrade"])
+>       assert upgraded.exit_code == 0, upgraded.output
+E       AssertionError: INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+E         INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+E         INFO  [alembic.runtime.migration] Running upgrade  -> fab16ef0dd6f, Initial thirteen domain tables
+E         
+E       assert 1 == 0
+E        +  where 1 = <Result NameError("name 'app' is not defined")>.exit_code
+
+tests\test_database_migrations.py:16: AssertionError
+============================== warnings summary ===============================
+tests/test_database_migrations.py::test_empty_database_upgrade_matches_metadata_and_can_repeat
+tests/test_database_migrations.py::test_empty_database_upgrade_matches_metadata_and_can_repeat
+  F:\StudentManagementSystem\migrations\env.py:21: DeprecationWarning: 'get_engine' is deprecated and will be removed in Flask-SQLAlchemy 3.2. Use 'engine' or 'engines[key]' instead. If you're using Flask-Migrate or Alembic, you'll need to update your 'env.py' file.
+    return current_app.extensions['migrate'].db.get_engine()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_database_migrations.py::test_empty_database_upgrade_matches_metadata_and_can_repeat
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 2 warnings in 0.69s

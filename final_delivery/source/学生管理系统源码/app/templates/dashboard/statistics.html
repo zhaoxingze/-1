@@ -1,0 +1,61 @@
+{% from 'admin/_macros.html' import pagination with context %}
+<section class="modules-section" aria-labelledby="stats-title">
+  <div class="section-heading"><h2 id="stats-title">首页统计</h2></div>
+  {% if stats.student is defined %}<p>{{ stats.student.name }} · {{ stats.student.student_no }} · {{ stats.student.school_class.class_name if stats.student.school_class else '未分班' }}</p>{% endif %}
+  <div class="row g-3 mb-4">
+    {% for key, value in stats.counts.items() %}
+    <div class="col-6 col-lg-4"><article class="archive-panel metric-card h-100">
+      <h3 class="h6">{{ stats.labels[key] }}</h3><strong class="metric-number">{{ value }}</strong>
+      {% if stats.student is defined %}<span class="d-block text-secondary">{{ stats.semester }}</span>{% endif %}
+    </article></div>
+    {% endfor %}
+    {% if stats.average is defined %}
+    <div class="col-6 col-lg-4"><article class="archive-panel metric-card h-100"><h3 class="h6">本人平均分</h3>
+      <strong class="metric-number">{{ '暂无数据' if stats.average is none else '%.2f'|format(stats.average) }}</strong>
+      <span class="d-block text-secondary">{{ stats.semester }}</span>
+    </article></div>
+    {% endif %}
+  </div>
+  {% if stats.course_page is defined and (stats.semesters is defined or stats.classes) %}
+  <form method="get" class="archive-panel archive-filters mb-4" aria-label="统计筛选">
+    {% if stats.semesters is defined %}
+    <div><label for="semester" class="form-label">成绩学期</label><select id="semester" name="semester" class="form-select">
+      {% for term in stats.semesters %}<option value="{{ term }}"{% if term == stats.semester %} selected{% endif %}>{{ term }}</option>{% endfor %}
+    </select></div>
+    {% endif %}
+    {% if stats.classes %}
+    <div><label for="class_id" class="form-label">考勤班级</label><select id="class_id" name="class_id" class="form-select">
+      <option value="">范围内全部班级</option>
+      {% for id, grade, name in stats.classes %}<option value="{{ id }}"{% if id == stats.class_id %} selected{% endif %}>{{ grade }} · {{ name }}</option>{% endfor %}
+    </select></div>
+    {% endif %}
+    <button type="submit" class="btn btn-primary">应用筛选</button>
+  </form>
+  {% endif %}
+  <section class="archive-panel mb-4" aria-labelledby="recent-attendance">
+    <h3 class="h5" id="recent-attendance">近 30 天考勤</h3>
+    <p class="text-secondary">{{ stats.start }} 至 {{ stats.end }}（UTC）</p>
+    <dl class="row g-3 attendance-counts">
+      {% for status, value in stats.attendance.items() %}
+      <div class="col-6 col-md-3"><dt>{{ stats.attendance_labels[status] }}</dt><dd class="fs-4 mb-0">{{ value }}</dd></div>
+      {% endfor %}
+    </dl>
+    <p class="attendance-rate mb-0"><strong>出勤率</strong> · {% if stats.rate is none %}无可统计数据{% else %}{{ stats.rate }}%{% endif %}</p>
+  </section>
+  {% if stats.course_page is defined %}
+  <section class="archive-panel" aria-labelledby="course-averages">
+    <h3 class="h5" id="course-averages">课程平均分</h3><p class="text-secondary">{{ stats.semester }} · 仅统计三项成绩完整的记录</p>
+    <div class="table-responsive"><table class="table archive-table">
+      <thead><tr><th scope="col">课程编号</th><th scope="col">课程名称</th><th scope="col">完整成绩</th><th scope="col">平均分</th></tr></thead>
+      <tbody>
+      {% for course in stats.course_page.items %}
+        {% set sample = stats.averages.get(course.course_id) %}
+        <tr><td>{{ course.course_code }}</td><td>{{ course.course_name }}</td><td>{{ sample[0] if sample else 0 }}</td>
+          <td>{{ ('%.2f'|format(sample[1])) if sample else '暂无数据' }}</td></tr>
+      {% else %}<tr><td colspan="4" class="empty-state">暂无课程。</td></tr>{% endfor %}
+      </tbody>
+    </table></div>
+    {{ pagination(stats.course_page, 'course_page') }}
+  </section>
+  {% endif %}
+</section>

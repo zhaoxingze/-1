@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+<section class="welcome-panel" aria-labelledby="welcome-title">
+  <div class="welcome-copy">
+    <span class="eyebrow">STUDENT INFORMATION CENTER</span>
+    <h1 id="welcome-title">学生综合信息管理系统</h1>
+    <p>统一管理学生档案与日常事务，让每一份成长记录清晰可查。</p>
+    <a class="btn btn-light health-button" href="{{ url_for('dashboard.health') }}">查看健康状态 <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="welcome-mark" aria-hidden="true">
+    <svg viewBox="0 0 180 150" fill="none"><rect x="34" y="22" width="112" height="110" rx="12" stroke="currentColor" stroke-width="2"/><path d="M56 54h68M56 72h45M56 90h58M56 108h34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="138" cy="112" r="26" fill="#e0bd7b"/><path d="m126 112 8 8 16-18" stroke="#173c3b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</section>
+
+<section class="modules-section" aria-labelledby="modules-title">
+  <div class="section-heading"><div><h2 id="modules-title">管理模块</h2><p>围绕学生日常管理，提供六类业务能力。</p></div></div>
+  <div class="row g-3">
+    {% for name, description, symbol in [
+      ('学生信息', '学生、班级、教师与家长档案', '档'),
+      ('课程成绩', '课程安排、选课与成绩记录', '课'),
+      ('考勤管理', '日常考勤登记与出勤查询', '勤'),
+      ('奖励与处分', '记录奖励、处分与成长经历', '录'),
+      ('家长联系', '联系信息与家校沟通记录', '联'),
+      ('管理员权限', '账号、角色与数据访问管理', '权')
+    ] %}
+    <div class="col-12 col-md-6 col-xl-4">
+      <article class="module-card">
+        <div class="module-top"><span class="module-icon" aria-hidden="true">{{ symbol }}</span></div>
+        <h3>{{ name }}</h3><p>{{ description }}</p>
+      </article>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="current-stage" aria-labelledby="stage-title">
+  
+  <div><h2 id="stage-title">进入角色工作台</h2><p>登录后查看有权使用的业务和统计。</p></div>
+  <a class="stage-state" href="{{ url_for('dashboard.workbench') if current_user.is_authenticated else url_for('auth.login') }}">{{ '进入工作台' if current_user.is_authenticated else '前往登录' }} →</a>
+</section>
+{% endblock %}

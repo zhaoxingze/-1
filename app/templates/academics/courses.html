@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% from 'admin/_macros.html' import pagination with context %}
+{% block title %}课程查询{% endblock %}
+{% block breadcrumb %}课程查询{% endblock %}
+{% block content %}
+<div class="archive-heading">
+  <h1>{{ {'admin':'课程管理', 'teacher':'本人授课课程', 'student':'本人课程'}[current_user.role.name] }}</h1>
+  {% if current_user.role.name == 'admin' %}<a class="btn btn-primary" href="{{ url_for('academics.course_new') }}">新增课程</a>{% endif %}
+</div>
+<section class="archive-panel">
+  <form class="archive-filters" method="get" role="search">
+    <div><label class="form-label" for="q">课程编号或名称</label><input class="form-control" id="q" name="q" value="{{ q }}" maxlength="100"></div>
+    <button class="btn btn-primary" type="submit">查询</button>
+    <a class="btn btn-outline-secondary" href="{{ url_for('academics.courses') }}">重置</a>
+  </form>
+  <div class="table-responsive">
+    <table class="table align-middle archive-table">
+      <thead><tr><th scope="col">课程编号</th><th scope="col">课程名称</th><th scope="col">学分</th><th scope="col">授课教师</th><th scope="col">操作</th></tr></thead>
+      <tbody>
+      {% for course in courses.items %}
+        <tr><td>{{ course.course_code }}</td><td>{{ course.course_name }}</td><td>{{ course.credit }}</td>
+        <td>{{ course.teacher.name if course.teacher else '未指定' }}</td>
+        <td class="text-nowrap">
+          <a href="{{ url_for('academics.course_detail', course_id=course.course_id) }}">详情</a>
+          {% if current_user.role.name == 'admin' %}<a class="ms-2" href="{{ url_for('academics.course_edit', course_id=course.course_id) }}">编辑</a>{% endif %}
+        </td></tr>
+      {% else %}<tr><td colspan="5" class="empty-state">暂无符合条件的课程。</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {{ pagination(courses) }}
+</section>
+{% endblock %}

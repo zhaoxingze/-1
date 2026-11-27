@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block title %}{{ error_code }} {{ error_title }}{% endblock %}
+{% block breadcrumb %}请求提示{% endblock %}
+{% block content %}
+<section class="error-panel" aria-labelledby="error-title">
+  <span class="error-code">{{ error_code }}</span>
+  <h1 id="error-title">{{ error_title }}</h1>
+  <p>{{ error_message }}</p>
+  <a class="btn btn-primary" href="{{ url_for('dashboard.index') }}">返回系统首页</a>
+</section>
+{% endblock %}

@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "archive": "output/delivery/StudentManagementSystem_重要修改说明_阶段0-3_20261117.zip",
+  "bytes": 2470158,
+  "sha256": "e976e2b93cb768aefcc77c3a30bf09121ced3303cd4aba8eb2a7663f199ba776",
+  "file_count": 55,
+  "crc_check": true,
+  "extraction_hash_check": true,
+  "packaged_markdown_links_valid": true,
+  "rewritten_project_only_links": 27,
+  "private_credentials_found": false,
+  "runtime_or_source_files_included": false,
+  "source_documents_preserved": true
+}

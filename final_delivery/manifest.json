@@ -1,0 +1,2661 @@
+{
+  "stage": "9",
+  "date": "2026-11-19",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1675,
+      "sha256": "7476a3994ddbb25b271bf08edb2ecc07354fdafb518be48783905d59a65fa1af"
+    },
+    {
+      "path": "deployment/backup_restore.md",
+      "bytes": 2924,
+      "sha256": "130b1a94524dc10d3638aad9bc9e530114f31f3a53047dad51305fa2183e18de"
+    },
+    {
+      "path": "deployment/windows_setup.md",
+      "bytes": 4153,
+      "sha256": "e3d53e7ca848a89a5cac76b07b8bc4c5f9c5b1fbfc851c2fafb59822274e2ad5"
+    },
+    {
+      "path": "report/evidence_inventory.md",
+      "bytes": 5533,
+      "sha256": "f540e287c289b0a85161c8f531636a7fe899922a1326690e9010cd93b9f38195"
+    },
+    {
+      "path": "report/软件工程课程设计报告_学生综合信息管理系统.docx",
+      "bytes": 3566524,
+      "sha256": "a2b7456b6a740907e69614dfe77e2a6ca8b0fbf0b30c4738dd7dc43d7d9a7861"
+    },
+    {
+      "path": "screenshots/stage8-account-detail.png",
+      "bytes": 53966,
+      "sha256": "ef06b4910cb6cdde677771548c60c7395950ac3b0b0f4694913e769ce8c28485"
+    },
+    {
+      "path": "screenshots/stage8-admin-dashboard.png",
+      "bytes": 99201,
+      "sha256": "9c971336adf1312542973ef61d1b4d83c25e30e88e5e1f7d32b536717925a8e4"
+    },
+    {
+      "path": "screenshots/stage8-audit-history.png",
+      "bytes": 59440,
+      "sha256": "289848f11b4252320a0a5fe16a0c1995038f97cc01de61144da51cdd886fa0d5"
+    },
+    {
+      "path": "screenshots/stage8-mobile-form.png",
+      "bytes": 26020,
+      "sha256": "64938883e6920fb6cb322db2435e19778513d2f4b96405ebc290d84d0911f082"
+    },
+    {
+      "path": "screenshots/stage8-mobile-student-grades.png",
+      "bytes": 28615,
+      "sha256": "840a5a436df487b87634291ee60ebe87805ab78dca26fdc649a87569021ffd27"
+    },
+    {
+      "path": "screenshots/stage8-permission-denied.png",
+      "bytes": 36941,
+      "sha256": "b6c2511174a7c58813294503495c4832236e5d766a47cbeff9390c29ca1facc7"
+    },
+    {
+      "path": "screenshots/stage8-student-dashboard.png",
+      "bytes": 52899,
+      "sha256": "b6f4113d99a1c5c1224c179f3ef92be53475f05d7d3ea217d5ead9fbe3a9260b"
+    },
+    {
+      "path": "screenshots/stage8-students-search.png",
+      "bytes": 54341,
+      "sha256": "f0b930b064f0e2d6becae6de1152d2c99ff41d1de70fbdd4e34565f1f8deb2a3"
+    },
+    {
+      "path": "screenshots/stage8-teacher-attendance.png",
+      "bytes": 54953,
+      "sha256": "72cdb00ca36e67f29a55d2bdb49d13c4a01c365e433d00c09ee1cfc488f519c9"
+    },
+    {
+      "path": "screenshots/stage8-teacher-contacts.png",
+      "bytes": 54642,
+      "sha256": "e46c86eecd54f213341c1e0e4478ab7eca7d7af64bde34292c7f968fca73ba79"
+    },
+    {
+      "path": "screenshots/stage8-teacher-dashboard.png",
+      "bytes": 77358,
+      "sha256": "2db4d4d6cafe1a07fd452ad716d6e9c485cb7890c967bc103ef9c33a6625c3ef"
+    },
+    {
+      "path": "screenshots/stage8-teacher-grades.png",
+      "bytes": 52542,
+      "sha256": "e5576e866c16f0fc53f5f9e07938b58f67f31f2ba930990a087f2bf5739d998c"
+    },
+    {
+      "path": "screenshots/stage8-teacher-notification.png",
+      "bytes": 57780,
+      "sha256": "0837d88eada5b762472db20d229d670912323b33dc21347dbd9c5ab1d9ccebeb"
+    },
+    {
+      "path": "screenshots/stage8-teacher-rewards.png",
+      "bytes": 55689,
+      "sha256": "e6cb21b758ec9d74278292d82e5b10acc1503a04ca150c48f03ee0c408ff38d2"
+    },
+    {
+      "path": "source/学生管理系统源码/.gitignore",
+      "bytes": 307,
+      "sha256": "42cfdc7428442f5653f4daf5014418d64a5e38516a6df78ceeef1ad96532031a"
+    },
+    {
+      "path": "source/学生管理系统源码/README.md",
+      "bytes": 18213,
+      "sha256": "b838052f552a1a91a05ce9eb875c24c251b691de57aee7d1e923953a236088e6"
+    },
+    {
+      "path": "source/学生管理系统源码/app/__init__.py",
+      "bytes": 3230,
+      "sha256": "41343a458d95ba001d2ba30c2b51b729d5711ee06de433c373fca00f151d35db"
+    },
+    {
+      "path": "source/学生管理系统源码/app/academics/__init__.py",
+      "bytes": 226,
+      "sha256": "93ef8d645db899164cf19e54482a84f7d57616f962c9ef1422281d197c6a4068"
+    },
+    {
+      "path": "source/学生管理系统源码/app/academics/course_routes.py",
+      "bytes": 2261,
+      "sha256": "5226c92f1ce03e97ed886a61a9545101e3ade22d26baafd7aa16de91b82430e9"
+    },
+    {
+      "path": "source/学生管理系统源码/app/academics/enrollment_routes.py",
+      "bytes": 2214,
+      "sha256": "0510210617375712950e23abbaedeb5c444eea4d40f70e047bba21834c98888e"
+    },
+    {
+      "path": "source/学生管理系统源码/app/academics/forms.py",
+      "bytes": 1672,
+      "sha256": "36cff07896e33aa4cb71f803865a243f2cba76f74bb28b542b31b30254985938"
+    },
+    {
+      "path": "source/学生管理系统源码/app/academics/grade_routes.py",
+      "bytes": 1237,
+      "sha256": "b7ee9629f398cc44b210afa37e10f63c330794535113d0380a74155b820da73d"
+    },
+    {
+      "path": "source/学生管理系统源码/app/academics/views.py",
+      "bytes": 1670,
+      "sha256": "4456f0614cf2ec867617a53b8a1ba668ce1d1a83cf0b29552f66165c41c3889e"
+    },
+    {
+      "path": "source/学生管理系统源码/app/admin/__init__.py",
+      "bytes": 336,
+      "sha256": "730de16d4b2554f25134593f36d981996d3df979f0c82aacfca0aa3d1d2f14c9"
+    },
+    {
+      "path": "source/学生管理系统源码/app/admin/archive_forms.py",
+      "bytes": 2888,
+      "sha256": "fa89ba650fe098e2c81fd85558f6b20f8d166042ff76152f686b96916e34b186"
+    },
+    {
+      "path": "source/学生管理系统源码/app/admin/archive_views.py",
+      "bytes": 4150,
+      "sha256": "9b1dfde883e61b155e1f2f1624c8fb42e9a19f8be9e718369eed4bdae9ff5d26"
+    },
+    {
+      "path": "source/学生管理系统源码/app/admin/audit_routes.py",
+      "bytes": 1191,
+      "sha256": "31284f1adaa12c7f7ae4f28644c571bfe30c4d91fee998303f4c475a4a4bed76"
+    },
+    {
+      "path": "source/学生管理系统源码/app/admin/class_routes.py",
+      "bytes": 2400,
+      "sha256": "6ea405cb36b1ebf27bdc9292b3feb165e0c46e9ea3ec77a685430d24ee5bd400"
+    },
+    {
+      "path": "source/学生管理系统源码/app/admin/parent_routes.py",
+      "bytes": 4010,
+      "sha256": "86b3bcc7971b97381d42a71d94ac8e1df10df08645310e1e96fbbe016453c5eb"
+    },
+    {
+      "path": "source/学生管理系统源码/app/admin/routes.py",
+      "bytes": 2823,
+      "sha256": "0f8a57fd54f55a86107cf07a644755c5deb0d9c1cd58b4ac7441bdf49ac52d29"
+    },
+    {
+      "path": "source/学生管理系统源码/app/admin/student_routes.py",
+      "bytes": 4669,
+      "sha256": "575ce341befc41b1b3eb239bcde8f4274bf580baa8bdeb0b41ed26d48022f3d8"
+    },
+    {
+      "path": "source/学生管理系统源码/app/admin/teacher_routes.py",
+      "bytes": 2179,
+      "sha256": "4af46c4dec4b1f0a3b5cc6313b210331dd79bf7d7f85eb12384fc4d51269da35"
+    },
+    {
+      "path": "source/学生管理系统源码/app/admin/user_forms.py",
+      "bytes": 1032,
+      "sha256": "71b6d8cf0c2c16f8fc43a8f8ebdf1c921b47e6730dc575e3cd839f8162e61d85"
+    },
+    {
+      "path": "source/学生管理系统源码/app/admin/user_routes.py",
+      "bytes": 3855,
+      "sha256": "c7b7ce709c5b12a87c742781b7f016f06d944bf1bfe2efc58ded72765896ab70"
+    },
+    {
+      "path": "source/学生管理系统源码/app/attendance/__init__.py",
+      "bytes": 191,
+      "sha256": "4469776096b4e7a7990bf9ef8eb4dafec54b17ede8320f4d3336dfb80fc76f82"
+    },
+    {
+      "path": "source/学生管理系统源码/app/attendance/forms.py",
+      "bytes": 716,
+      "sha256": "cbb1b9d0e39d42c697ef0a5b947756eff86adf0b86423a2fe28cd55a2462fd78"
+    },
+    {
+      "path": "source/学生管理系统源码/app/attendance/routes.py",
+      "bytes": 3827,
+      "sha256": "4298a808fe10909e2594c1576b09a7cd484a856272e69e08ddcb66b429ca8e78"
+    },
+    {
+      "path": "source/学生管理系统源码/app/auth/__init__.py",
+      "bytes": 167,
+      "sha256": "b5a893a359290b2a3db7211a5d3e60548b4f3b3083800864cb1bb021475f20f8"
+    },
+    {
+      "path": "source/学生管理系统源码/app/auth/forms.py",
+      "bytes": 1733,
+      "sha256": "4e44bf8e4572d41c0ed5c647b77ab5bcc92f3bf3084dfff2fca66adcdddd1443"
+    },
+    {
+      "path": "source/学生管理系统源码/app/auth/routes.py",
+      "bytes": 3295,
+      "sha256": "b4b9ecafe98966671b64382777a390c972cdeb3c5132b4b1c96815e386f0333c"
+    },
+    {
+      "path": "source/学生管理系统源码/app/auth/session.py",
+      "bytes": 5563,
+      "sha256": "393edf42e016e760f34f1249a1a756ea8c430c9812454746232354c54d9e79e3"
+    },
+    {
+      "path": "source/学生管理系统源码/app/cli.py",
+      "bytes": 7918,
+      "sha256": "a5638b92117d76b2ff483f4c8caf9b3615e22f67761ab1e2a6f2e7f421405594"
+    },
+    {
+      "path": "source/学生管理系统源码/app/dashboard/__init__.py",
+      "bytes": 299,
+      "sha256": "711495161688838cbf1d061e30c7269928ae67e194263a68a073de3046c6855b"
+    },
+    {
+      "path": "source/学生管理系统源码/app/dashboard/navigation.py",
+      "bytes": 2285,
+      "sha256": "66bb68e4914245d28d0530ea3eb1fb1576a0e4fd4dba736c4841eae88dab70af"
+    },
+    {
+      "path": "source/学生管理系统源码/app/dashboard/routes.py",
+      "bytes": 1460,
+      "sha256": "0dc3b99e300af0a5dfcca29058cb2897398e9ec27e515e11cf9f9773e90dde0c"
+    },
+    {
+      "path": "source/学生管理系统源码/app/dashboard/teacher_routes.py",
+      "bytes": 5270,
+      "sha256": "9aae00f7e811fe91d0f862e69d5bf6992c38051fdd8da6a98b69fcf45c22e9fb"
+    },
+    {
+      "path": "source/学生管理系统源码/app/dashboard/views.py",
+      "bytes": 886,
+      "sha256": "4b13677ec77f41d17f6db6cee6dadab8c4f03080b05036696d6374cb00d80b29"
+    },
+    {
+      "path": "source/学生管理系统源码/app/errors.py",
+      "bytes": 579,
+      "sha256": "74796ffa36cd19f1c98337028a4a0f1b19ce86b1e93544dd1e1158465244f3c2"
+    },
+    {
+      "path": "source/学生管理系统源码/app/extensions.py",
+      "bytes": 1025,
+      "sha256": "4caf3a6246773f9c0ae70bc02cae50d76c03a6b72b2de13f44747158e2bae8b4"
+    },
+    {
+      "path": "source/学生管理系统源码/app/logging_config.py",
+      "bytes": 437,
+      "sha256": "11ee41448f7e72d0a0c3ea58b56c80b58cd7ae7083efadebed92c220007272f4"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/__init__.py",
+      "bytes": 904,
+      "sha256": "bf305f7e98db0c555a42fae11b1b5c17d1b35a5393295d40f6bd7979899a1d34"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/attendance.py",
+      "bytes": 1411,
+      "sha256": "f993772587ed8f8e851d52278c57a8769c85933f5d567b9b7bfde09d40564429"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/audit_log.py",
+      "bytes": 1665,
+      "sha256": "99ae524492c21b5a95009d963433e53da849af90d159d4ae45fdba7a51127170"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/course.py",
+      "bytes": 973,
+      "sha256": "68eba4099f54dd21d1fd56d129b322f05e49a6a674a4c8d6d671b08bf7d41ff4"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/enrollment.py",
+      "bytes": 2092,
+      "sha256": "09b6d96925eee1a2ad888fb7e589740565fabd7f496d9838380fe3d2fcbff8c9"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/integrity.py",
+      "bytes": 7527,
+      "sha256": "391190bbeb4d4779b6491078ab90e091acf361543f820ca1b1f165187c9188f9"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/notification_log.py",
+      "bytes": 1882,
+      "sha256": "e4e0b6779cbae621cdaa13f143739f21583d9a24182fee16503ac1972ad579e8"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/parent.py",
+      "bytes": 1570,
+      "sha256": "baa08f0e894dfcbe51ccdb30b561f8d13bce15a7b78ce2c3bcc99bcf94ce2eac"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/parent_contact.py",
+      "bytes": 1974,
+      "sha256": "2393a31a1c15ddc288aa267fafb89685e10218086762f01f21dc5973c21143f2"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/reward.py",
+      "bytes": 1258,
+      "sha256": "2b8d8e2ddebd011a78d6e9054b36b0cc7981e14c97785665a4bb522cdf2d1f28"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/role.py",
+      "bytes": 719,
+      "sha256": "2844f0ed8e6edda3ec2bff7f5866874c591f17a2dd3a9e80a4c01623dfd01681"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/school_class.py",
+      "bytes": 865,
+      "sha256": "3c77134d14633370e7143b0694ed75fded196f70eaafd37cb0172e1fa17a9fc1"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/security.py",
+      "bytes": 1466,
+      "sha256": "3238d592f759aad8292134b588b568f8141b0078670038f1628e245ca943d3a9"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/student.py",
+      "bytes": 2338,
+      "sha256": "4492e71b012e787d71191f7cfdd5b2b6d24d6f9ca97fefc6c54fe3acb9e058ff"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/teacher.py",
+      "bytes": 974,
+      "sha256": "f0891bcdff9e4935e35548c6dcde87081dc5129fcefc4fe5300be3fb7c24f322"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/types.py",
+      "bytes": 1058,
+      "sha256": "832dc5de970f9f337c8269ba3b6ab4c65ea8051f5366bd9be4f8736cdcd73741"
+    },
+    {
+      "path": "source/学生管理系统源码/app/models/user.py",
+      "bytes": 2265,
+      "sha256": "7018e8b7e31112e71077b628fad68f5b35c855482163ec4854f8428ffab13515"
+    },
+    {
+      "path": "source/学生管理系统源码/app/record_views.py",
+      "bytes": 3460,
+      "sha256": "7df8a081e6034c93c0f5cd3b594ff6483086566e833e5163c19061a266c78daf"
+    },
+    {
+      "path": "source/学生管理系统源码/app/records/__init__.py",
+      "bytes": 246,
+      "sha256": "aba1f3e53a0015996dca5d73fa27c7757732675a88832aa2ebd377817026ed91"
+    },
+    {
+      "path": "source/学生管理系统源码/app/records/contact_routes.py",
+      "bytes": 3538,
+      "sha256": "26e555480534a51cf0a71c0f747623a4d3813444d68136ebc97521f1b407190f"
+    },
+    {
+      "path": "source/学生管理系统源码/app/records/forms.py",
+      "bytes": 2239,
+      "sha256": "220b6a3177f5a3bc9320873f9cf7f0748810058d46694082ef48c04950ad92be"
+    },
+    {
+      "path": "source/学生管理系统源码/app/records/notification_routes.py",
+      "bytes": 3122,
+      "sha256": "476a9c20e5b4b87b57a20f187e5f449c3af971f9cbfaae0642ae222d4be48fb5"
+    },
+    {
+      "path": "source/学生管理系统源码/app/records/reward_routes.py",
+      "bytes": 3017,
+      "sha256": "1c9bffac67d297d83e21ec3be401582e36978b82e9f88c9e6b77afb46634fad4"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/__init__.py",
+      "bytes": 79,
+      "sha256": "8042dcded94f1d78195a8db1a5a3fa080aaf596dcdcc82f64e0209bd6a123f94"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/archive_common.py",
+      "bytes": 5469,
+      "sha256": "4bfac0b0d91cade5dacb32e8859b54469c6e4d869ee579083bd0cedd6ee3a3e5"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/archive_references.py",
+      "bytes": 1204,
+      "sha256": "7f2172234a6b5feebe77b18a4afb58b28be835d2d5de06f4bdd8c7ac9069ead3"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/attendance_service.py",
+      "bytes": 3911,
+      "sha256": "e5ce92c280e67a186527170470d85e785a475c0e3d4433c4fb62ec2d8a3c161a"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/audit_query_service.py",
+      "bytes": 6286,
+      "sha256": "e7e651a84ba13c171c63b00e40dfabd9326475f5c2df5f215eb308f90c2207ef"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/audit_service.py",
+      "bytes": 3316,
+      "sha256": "611ad4a8a2fc69f0ceec0c3c06e6e705413a2f6758969c9878355510668d7f38"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/class_service.py",
+      "bytes": 1887,
+      "sha256": "a84f00bd3395686abd725e7384daf9c62a12312b51dddf093a16650af2a864fa"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/course_service.py",
+      "bytes": 4201,
+      "sha256": "a314575276318e38ae89d8f1d0b53cc9dc802ea67831eeb259470a0d0577dfe0"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/dashboard_statistics_service.py",
+      "bytes": 6436,
+      "sha256": "eaac0b52221393ab2aba5c765aa1945f2863b59d60d161c48f61fb0c82bc2fe2"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/data_validation_service.py",
+      "bytes": 5516,
+      "sha256": "321540a2d0d3ff109023648bbf8615a75883a4c7192fe4e81b52a7252bb2ad02"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/enrollment_service.py",
+      "bytes": 4854,
+      "sha256": "7fe345e54c003487b65a202e94d19f9627b74030216b26180341ed700caf778b"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/grade_service.py",
+      "bytes": 2656,
+      "sha256": "de4549a0a1659da916902ac236383b7835029850509596db5b3e983e880771f7"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/notification_service.py",
+      "bytes": 2507,
+      "sha256": "13bf0cf9480423363776c2eba946250b7564199630aae0c527a6856b6d4f6268"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/parent_contact_service.py",
+      "bytes": 5662,
+      "sha256": "91b10125526edd14c5e972929199bf4734931b51fdc7eca054b912e3cf9db204"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/parent_service.py",
+      "bytes": 3488,
+      "sha256": "5eb703440e530163d44c31598597d271563f773270ccbacb038aeb1796652e12"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/password_service.py",
+      "bytes": 2247,
+      "sha256": "1980e49ed286f56d87379b566b94494972f3b188f05545e31719bd84f16d27f4"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/permission_service.py",
+      "bytes": 9916,
+      "sha256": "441dac895c5ce3649f8176275a0c1d4e578c2699da65d9e2e1036912ed6b7f2f"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/reward_service.py",
+      "bytes": 2600,
+      "sha256": "29aba2a5c772a4874b3f939fbdfc96f41ded71aaadd770586f13136910d56194"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/student_record_service.py",
+      "bytes": 6206,
+      "sha256": "6b2717ffc641e75207737babf0f6dd19721b29352a9d77f6b8d032b4b82b8e9a"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/student_service.py",
+      "bytes": 4348,
+      "sha256": "ec40619fe86733f1732cff8004416384b53dfd315614c9ee2ba8ecbcede50c31"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/teacher_service.py",
+      "bytes": 1783,
+      "sha256": "be36ed9c0c3d84d44c5f6192c40d9d81315db7ec2f024d1635bdd665ea81b40e"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/teacher_student_service.py",
+      "bytes": 5055,
+      "sha256": "34b3597b01f523fdc407eafdef583dc9bab5c2009ad7902157bb18d3c0300169"
+    },
+    {
+      "path": "source/学生管理系统源码/app/services/user_management_service.py",
+      "bytes": 7410,
+      "sha256": "046e345d53dde355e259e9cb3ca09b9b449f4ee49b967b07b5068a9aceebed3b"
+    },
+    {
+      "path": "source/学生管理系统源码/app/static/brand.svg",
+      "bytes": 285,
+      "sha256": "4b117a4eb24f7cc3f9e753046e23980f0d65b16a37b802feb832a2dbeb19c436"
+    },
+    {
+      "path": "source/学生管理系统源码/app/static/css/app.css",
+      "bytes": 12950,
+      "sha256": "49c5511e40da668bfef1d280435a49be25d2cf5a3908480dee50ed816248066e"
+    },
+    {
+      "path": "source/学生管理系统源码/app/static/vendor/bootstrap-5.3.3.min.css",
+      "bytes": 232803,
+      "sha256": "3c8f27e6009ccfd710a905e6dcf12d0ee3c6f2ac7da05b0572d3e0d12e736fc8"
+    },
+    {
+      "path": "source/学生管理系统源码/app/students/__init__.py",
+      "bytes": 190,
+      "sha256": "736aa54967d229cc01c4ff5a55e78b7af27822386ea92c09d2fc4c9f60c4a98a"
+    },
+    {
+      "path": "source/学生管理系统源码/app/students/routes.py",
+      "bytes": 604,
+      "sha256": "e3aeee61d913ffe2d112880003c364b23ad4126412b62e10bc04558c81e7c130"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/academics/course_detail.html",
+      "bytes": 2161,
+      "sha256": "9c81c2594d68369a7b1587e62895850f1bc15c8ab6b22cacdd3afee99618b225"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/academics/courses.html",
+      "bytes": 1951,
+      "sha256": "a1a7a10a69132f6a36cc055161631f20b8953f2314a1747da58b62b5f01b32bc"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/academics/records.html",
+      "bytes": 3797,
+      "sha256": "98c8091c2a0873d3ec35240ddc94fc6fc5d4c0ca6b92ddb83e03d0b447048807"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/admin/_macros.html",
+      "bytes": 532,
+      "sha256": "2a483a0963129e727af83d713152492fbfc4676c81528d985b9d99ab0012fbe6"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/admin/audit_detail.html",
+      "bytes": 1399,
+      "sha256": "f4869bc5e1071e4a734321f5823b2fdc300eb5eb17fc4152d864619e253093b6"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/admin/audit_list.html",
+      "bytes": 2454,
+      "sha256": "97d837d354205230f26716d25d942c6f711e47beca6fa62ae09c54b4eb17e186"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/admin/class_detail.html",
+      "bytes": 1886,
+      "sha256": "dd672fae8a99211e0ba2413f0c679020e512950eaf729e81db07a8430fda08ba"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/admin/form.html",
+      "bytes": 1545,
+      "sha256": "52c6f877a696a98f9d5b86a44800697e719590e6a381633b070d4a3969d692af"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/admin/list.html",
+      "bytes": 3010,
+      "sha256": "80f7e2d0f55d0d8601f19be905685d2a95dcf9f076b9d4a022de8260be342785"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/admin/parent_detail.html",
+      "bytes": 1272,
+      "sha256": "169b0216ee94db0f89e437b7814482c9e70841fb139e8068643ba337b3972e63"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/admin/student_detail.html",
+      "bytes": 2924,
+      "sha256": "990723b3fe657c14a22826c841fd1d36a9815025c85b6b93ed344bf16f7137f2"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/admin/teacher_detail.html",
+      "bytes": 1831,
+      "sha256": "de0784b3f31d6f88d60d2c203650821096eb3fe7437734571f23f1027081d289"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/admin/user_detail.html",
+      "bytes": 1678,
+      "sha256": "f23fc875e29f77a5ccd89964fa88a9fe9f37bf57f0b3b6d4e1f68fdb29ee69be"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/admin/user_list.html",
+      "bytes": 1961,
+      "sha256": "2288e0ce388c6b5d235fb54268f99cb9181e8ba27cc1866c58d284fa5b55a4a8"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/attendance/statistics.html",
+      "bytes": 925,
+      "sha256": "aa1dc9fa720072f04cdc4eb601dbe594ae6d05af886870fd7bf9f5dd00948084"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/auth/login.html",
+      "bytes": 1126,
+      "sha256": "588f8833fe162edd1b68301bd2404295eaaed7267cd60685cc3473bf3b13212a"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/auth/password.html",
+      "bytes": 982,
+      "sha256": "76cb14a0faed7f3296af76b3f386caff6e9eb02fb46c539a2775f3dfb9f038ae"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/auth/password_lookup.html",
+      "bytes": 760,
+      "sha256": "52930969760eee1d06c8e97760b3544ddd1ab9f3a93bec939eaecbe660f307f9"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/dashboard/_nav.html",
+      "bytes": 805,
+      "sha256": "9ca486d2e261e8d67904fa66363eb1e2934abf006a3aecf7c026d35d6e321a06"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/dashboard/index.html",
+      "bytes": 2473,
+      "sha256": "8b00197502aa02e9dda3499dad7323d82d605c3affd049c63fe0cfb803583276"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/dashboard/profile.html",
+      "bytes": 1404,
+      "sha256": "94ec4ce576d31ed4930294704d9f2cbf654895ef4fbb21d33da02d25b4e64078"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/dashboard/statistics.html",
+      "bytes": 4013,
+      "sha256": "a642e1e18a26b4dd5eeabf692af45b3b6e97007e9ca83515be3bf3244fecac73"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/dashboard/student_profile.html",
+      "bytes": 711,
+      "sha256": "ad344e1430a455226232be0b0a332c5fb12552d8297b26f20948266637223ec5"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/dashboard/workbench.html",
+      "bytes": 1156,
+      "sha256": "106c572220aaa8cc5cd5d1ba3a01772b1cc3287518a6526b8b883319a9238f21"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/errors/403.html",
+      "bytes": 179,
+      "sha256": "83ca573c8b6cb5e851f9a398cb65bc30eb0c3f1bdcae2a531ae23012f2e91ab1"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/errors/404.html",
+      "bytes": 197,
+      "sha256": "505b71ca7da52924af4942c49ce644b5eab7f275f7f38256a1c58d6aa5c91c83"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/errors/500.html",
+      "bytes": 185,
+      "sha256": "035cd08724bbd625c76e4dedac268c72c9c22d2d3e73aeb655fd14a314dcb3dc"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/errors/base.html",
+      "bytes": 467,
+      "sha256": "c5656446b654b8b85b76ed794df30ccb6e4e0430fb6a8d75d4c16648f3c17658"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/layout.html",
+      "bytes": 2884,
+      "sha256": "98499e9f99aa534b6bd5502b6dd3f2c5cebc0bc38f7f6d3dc50cb4017adfcdc2"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/records/_filters.html",
+      "bytes": 2243,
+      "sha256": "ae09e5750e6f7422a5b0d2f1697e019806e94b4bde713a74ba10f88ed3629957"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/records/detail.html",
+      "bytes": 696,
+      "sha256": "969243c8153321a98bb39f3104e124b73a3bb7f5f2e22da38cf9b35fa2eb13b2"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/records/list.html",
+      "bytes": 1344,
+      "sha256": "fdd0232db725da1b68088b3871eac881da5279b390b26b83c2a2752c4eb0a083"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/teacher/student.html",
+      "bytes": 1101,
+      "sha256": "d99760b72b721fecf24b1adf9826a197cca05664899536bcac7b831f2a8c21cc"
+    },
+    {
+      "path": "source/学生管理系统源码/app/templates/teacher/table.html",
+      "bytes": 1684,
+      "sha256": "02763d90c6386a7c3e214a97b804076078556f4752d4fca2c9d05968c0380db6"
+    },
+    {
+      "path": "source/学生管理系统源码/config.py",
+      "bytes": 1388,
+      "sha256": "6bd678feabcac76a40625247c24a56a6969d43e96f05d78ca9baf5376777517c"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/deployment/backup_restore.md",
+      "bytes": 2924,
+      "sha256": "ee880a046e12b23d2bb9409d1f79380371f573cddb31d078d0a820e7c38ccd31"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/deployment/windows_setup.md",
+      "bytes": 4120,
+      "sha256": "355d7cfe89a6087da95a8510ab7e2b569ed27528b4a6c5a84d9708c980a9c7c3"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/final/evidence_inventory.md",
+      "bytes": 4656,
+      "sha256": "3d7b13be4bc42f55510769174363f22186b4791b049440425def6eb3ad920373"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/final/视频录制清单.md",
+      "bytes": 2409,
+      "sha256": "b8d2f54a7d7d4d740b28eefe3d16cf9593a35ba5fc649368b91e6378cd1d74b6"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/final/视频演示脚本.md",
+      "bytes": 4651,
+      "sha256": "bef406d505090dcdd75d71a1833a0b5a28ed442ccdbd0a89124b86dd05adc71a"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/final/软件工程课程设计报告_学生综合信息管理系统.docx",
+      "bytes": 3566524,
+      "sha256": "a2b7456b6a740907e69614dfe77e2a6ca8b0fbf0b30c4738dd7dc43d7d9a7861"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/important_changes.md",
+      "bytes": 4495,
+      "sha256": "4f25fd786d21368bde270555f903b992400ce20e96defe9cab6a982c76ffc392"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage1_browser.txt",
+      "bytes": 807,
+      "sha256": "4082c5e542458d406b7b9ffd7b0d1bc6de99d7c5af77cfa6b5ce6d509368dba1"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage1_environment.json",
+      "bytes": 1155,
+      "sha256": "cbafbd2a5ce61be6c98058d0e048b4db06f06d9c5a560a9c0ec807fcf9ea7b92"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage1_final_validation.json",
+      "bytes": 1278,
+      "sha256": "ca0e56717879400a5fb2eaa38ce92fcfb132c7de5e6e5bdfc9cd553ae5c38b81"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage1_http_smoke.json",
+      "bytes": 341,
+      "sha256": "d943fdb308c2f9bea805714c812a7379617307486695b96482ba8b9448709948"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage1_pip_check.txt",
+      "bytes": 31,
+      "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage1_project_tree.txt",
+      "bytes": 3294,
+      "sha256": "5f9b2c39d366dae7625d9c525b8a0217b00428603bf5facc465dcf63208c9137"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage1_pytest.txt",
+      "bytes": 101,
+      "sha256": "40c7d06eb33b9c9cb8dfbbd43f0188ad6a131c962609d040688bc5c07b0ef1a7"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage1_pytest_before_pages.txt",
+      "bytes": 92827,
+      "sha256": "f3f52e9bf86f51a627a6edbe1c2cc03c8e8d02f54ecef1447ffe5b5f412160ea"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage1_pytest_red.txt",
+      "bytes": 854,
+      "sha256": "d675e0bc8c877b6fc22659e10364efb671edd1b14140cede91906bca58e68b1f"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage1_report.md",
+      "bytes": 7774,
+      "sha256": "bc74fb010f4a94ba66df93fb6bf4ac44cf3702a240c2c03460923b5157f1dfc9"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage1_source_migration.json",
+      "bytes": 443,
+      "sha256": "135770595b7d8fea812de398767d9539679a693df23bd2222c73ea013793356e"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage2_audit_replace_red.txt",
+      "bytes": 3410,
+      "sha256": "0ca902a422a093db79584f6433fbcb1df34b4c65644d9dc933dfe2d80cdf9548"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage2_database_inspection.json",
+      "bytes": 1645,
+      "sha256": "a32de5cbc2cac95b7b91052cfab7904faad15bcd4cecd72032c19d818502b84b"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage2_final_validation.json",
+      "bytes": 560,
+      "sha256": "dab63ef3699a51f7e11aecf7c6229e84a85aee9a6410cbb852f67c53d60a6f98"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage2_http_smoke.json",
+      "bytes": 182,
+      "sha256": "8e676937ea7514b8e5363c9393e52e87b9e3ac750a1fcb08f050827b3a435ce5"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage2_integration_first.txt",
+      "bytes": 183,
+      "sha256": "d0d111a5db7a0898da38a28e9bc3d2b36c67114cec68063fd499202d7644dad3"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage2_migration_check.txt",
+      "bytes": 838,
+      "sha256": "bbd0425bedf645fcf9b58d023b6c547a4f56459221bd7578cce0112fa79a3f49"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage2_migration_logging_red.txt",
+      "bytes": 1465,
+      "sha256": "e36dfbe30df64c92f912860f4e77c4d579bedef38233020f3445f0a4472c851d"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage2_migration_red.txt",
+      "bytes": 2319,
+      "sha256": "7de084b6c6f993ba2b6c23ce44fd0ce15bb92de7c00f809fe24b5ed12dd7705b"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage2_pip_check.txt",
+      "bytes": 31,
+      "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage2_project_tree.txt",
+      "bytes": 5438,
+      "sha256": "0b01b403cc1118f41a3aad6e479ed574c6b5f842c7041925fa25daeaf4189e63"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage2_pytest.txt",
+      "bytes": 275,
+      "sha256": "1dead2e2244065378b0b483573c562fc8135cedf5c83ffd6b8e356ee15001a32"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage2_report.md",
+      "bytes": 8980,
+      "sha256": "b2a939ebc5c875bc95152ee0d83150280c2fa91cf0576b41a90917d2e6166030"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage2_schema.json",
+      "bytes": 45212,
+      "sha256": "c93dfca5435544ea383187f490f99ee9f67021cb7b5ce108c3cd0be009781fc1"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage2_stage1_regression.txt",
+      "bytes": 101,
+      "sha256": "333c90b7b4a3cb34fb4c4789e5fdab4c546a57c645ff0ac92baa6fd099bb0fc5"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage2_upgrade.txt",
+      "bytes": 340,
+      "sha256": "7c1cb1600cae66f6a8d2687f634b52003c4648c42e4c8a256c35d933963fdbef"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_auth_first.txt",
+      "bytes": 4771,
+      "sha256": "3000e2588ab976053427d73268a569faa304eddc4c256adb8eacc3dd4b7b74ab"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_auth_red.txt",
+      "bytes": 4031,
+      "sha256": "194956ede0e11b88323fe4f00a2a620f8d470bc61483f7700c652dd40a6667cd"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_baseline_db_check.txt",
+      "bytes": 838,
+      "sha256": "763d22858934f2de3c4eb8041dcb7ec00191227945f38811b1c27adbf32802e5"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_baseline_pytest.txt",
+      "bytes": 265,
+      "sha256": "621e7af46bf8c2126a8d991d1ccd801cb37cfbbf6f4290fcd047a9b3316517af"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_boundary_red.txt",
+      "bytes": 6574,
+      "sha256": "3f4161b8d80ab3f531c7cad46f6782b8ee43cfc2d6f34a161c178d9705fc2094"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_browser.json",
+      "bytes": 1000,
+      "sha256": "e6ed8b625fbaba622718a7747854c5fb8bbd511dafa762ef90a5f218f077ea31"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_browser.txt",
+      "bytes": 5679,
+      "sha256": "06f030c3c249a739a05b9733a15fe7bc178abaacd182b008cbcd9d5027123c9f"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_final_validation.json",
+      "bytes": 2470,
+      "sha256": "91c37bc7efda1cd21ea34a8f5aed35450e2dea5f2e7f437829e230d24921c202"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_independent_review.md",
+      "bytes": 7504,
+      "sha256": "dc8be4127185ae06db3ae4d365b7949f5315fb8faf294b0629d65e86b937bfa5"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_integration_first.txt",
+      "bytes": 356,
+      "sha256": "a1302cb2deced50bfb27bbd2597904a8e5b73b04b4dcb12ea9e9fae7e9a4bc3c"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_migration_check.txt",
+      "bytes": 838,
+      "sha256": "54c47c10cba2e65f73c1c6a7e759c853c1e200bee3b3e2ac37ba720ef3f2f908"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_package_validation.json",
+      "bytes": 505,
+      "sha256": "79b456330a6f86d1709319e8f7a2ca49c370f51ac7487b04512d495144949672"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_password_red.txt",
+      "bytes": 1899,
+      "sha256": "2ee7d39fd0c9a95982d1c6acca52f94961a48c95b4633652d367aba76251ca0c"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_password_session.txt",
+      "bytes": 102,
+      "sha256": "e8c694e7145a8e8daa2051957c80e009547e9b17968efe13970ec2495145ba81"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_pip_check.txt",
+      "bytes": 31,
+      "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_project_tree.txt",
+      "bytes": 8762,
+      "sha256": "b3a8bc2898ca0d88e4aac31071f754f6cf7ca786e7d500c820ae59b33c7bee70"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_pytest.txt",
+      "bytes": 356,
+      "sha256": "169d552afbae011a5f1272355d259f3ba71a032c86b12481fe5e9677f218e266"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_report.md",
+      "bytes": 11859,
+      "sha256": "68bcec79092d0ba45e80233e3b76fb0a47aaebdd9fa5626ed9026500073c431b"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_review_green.txt",
+      "bytes": 100,
+      "sha256": "8778217ff0e15a2f5831f006a46af56bb0a9c8765806762ba0e7ead39860fdb8"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_review_red.txt",
+      "bytes": 36472,
+      "sha256": "4ff18bcfd1b85a5b89698c196a8b614f086289cede1ce1f3875d9e1c84d12ab8"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_server.txt",
+      "bytes": 8858,
+      "sha256": "cbc74cf6e72ef615dccb05a8850804c3ee4fa1805d33ef5b7569d571aa0fc97b"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_uml_render.txt",
+      "bytes": 378,
+      "sha256": "a37eef5d9eb27836970d0cbbd04c662b64df614045bb06d48bd7050374f92dff"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage3_uml_validation.txt",
+      "bytes": 213,
+      "sha256": "32dec249cabd35b33f1e4718d4a652cdbb87c680dd566d3d78bcacc533760d46"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_backup.json",
+      "bytes": 415,
+      "sha256": "19b2246a3bfac53900a36d2c933122a898e54c84e0b12ac336e8a016e8ae3e7f"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_baseline_pytest.txt",
+      "bytes": 356,
+      "sha256": "29b3f941331a52b2126bc7a9737b9062fa0a51e9da209ef1a44103ddf7c74590"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_browser.json",
+      "bytes": 1109,
+      "sha256": "26c15425bdb5863d60f1e1cfb7d5e3b37aa0c15b3f241d0d40aeab3a6ab23211"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_browser.txt",
+      "bytes": 9989,
+      "sha256": "90bf5422825f067f986b3e7d31dca903d6a8b70f6f6e0e2d7f0f9c161b660473"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_browser_final_screens.txt",
+      "bytes": 1331,
+      "sha256": "b45f9e460ef53e337ca131dbbd4b3857a340c5e9a0edc46db3c7ac79343f555a"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_extracted_install.txt",
+      "bytes": 5022,
+      "sha256": "9bc9a193696fe0fc694c77f8c6cf1b7ae4a2c7b073547bb5b612d6d842a5211f"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_extracted_pip_check.txt",
+      "bytes": 31,
+      "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_extracted_pytest.txt",
+      "bytes": 438,
+      "sha256": "be127753c90d4b87797a32d5b857dbc620297aad521b43140448514ba95ac737"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_extracted_validation.json",
+      "bytes": 12243,
+      "sha256": "bd99ca31b9332a3b82ad54b9619386625da8bc0f073cab7f18ec1fa607a6ac99"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_extracted_venv.txt",
+      "bytes": 312,
+      "sha256": "faaed50111fc37b6d8605cb1154e673040aba75e0bd3cc04c67fd4adb6e1c31a"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_final_validation.json",
+      "bytes": 3821,
+      "sha256": "4899505bbc556e1e299125f462ce52af685186a371e1a83eaf5d7125901ad308"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_first.txt",
+      "bytes": 581,
+      "sha256": "5cc2276d86f0d7144ff823b2d8118528952bbafc2c39df5fd78a8d8b2d0024f4"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_independent_review.md",
+      "bytes": 5589,
+      "sha256": "861b7fbcb28d4f3947fc050fa367130f2f82855b06e8e9555a65f64b22275075"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_integration.txt",
+      "bytes": 438,
+      "sha256": "d488d88151298730f30ae8812954431610c8d5a0f2fac20eb799bce1ce759557"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_migration_check.txt",
+      "bytes": 838,
+      "sha256": "822953d143af446bbe8580c7281b58cb55653c1f04ef0029235f24ddc30884a5"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_package_validation.json",
+      "bytes": 613,
+      "sha256": "dc0421b19fb3e5cbac4a78cea6a2208afd11d3da3363a5176c79efb2ebee6137"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_pip_check.txt",
+      "bytes": 31,
+      "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_project_tree.txt",
+      "bytes": 11930,
+      "sha256": "d1b2c784386ed4911c79ecfad8bb8226f922a8d8fa6daa381d1d8796e634a91e"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_pytest.txt",
+      "bytes": 438,
+      "sha256": "b175f304ddd1f9283f2fd1625be81585c71fe72969fb67b11554046d6cfa828b"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_red.txt",
+      "bytes": 2643,
+      "sha256": "a2834c74348249dc281d4abdce86d33c38588fe7f56685a87f492b6954279544"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_report.md",
+      "bytes": 12833,
+      "sha256": "dcc836cd4598b3d8e44491252769ba351b4a1c6bb95d267f585f8273defd551a"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_review_green.txt",
+      "bytes": 183,
+      "sha256": "5f9f5e46362c15423de619eb14bb5cfd0fd6b8bff7b0ed0e6a2690cfc4e3580f"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_review_red.txt",
+      "bytes": 11076,
+      "sha256": "338aaf87bb5340cf19b70e6fca336442763e5757de76cb8ac6079d59b6b74b21"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_server.txt",
+      "bytes": 27164,
+      "sha256": "34053bec0cca14818f4d35c7990eb0d94d9e11be14737d93a9e861708bfb9b92"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_services.txt",
+      "bytes": 101,
+      "sha256": "f1fcbbec70bbaa3ccaf69193f8646975ef2005307c29dbc75b696a7dc853bd4f"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_uml_render.txt",
+      "bytes": 14,
+      "sha256": "78e1eefdd5b61c51d0683723752d200301095922e4bb612ea6dd3ea448d410bf"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_uml_syntax.txt",
+      "bytes": 14,
+      "sha256": "78e1eefdd5b61c51d0683723752d200301095922e4bb612ea6dd3ea448d410bf"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4a_warning_red.txt",
+      "bytes": 6162,
+      "sha256": "fd3f02f672448900a3223cb894e25eacf3e8573b2e8dea8067f5bd2f399aa7a9"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4b_baseline_pytest.txt",
+      "bytes": 438,
+      "sha256": "5952255b34559b6e0c5fab156c544ceb62af8099d89d974f19b200dc0e25d915"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4b_browser.json",
+      "bytes": 530,
+      "sha256": "eb7f1f7a7b77e314d27fd897f1d67d05026856361f89781a8f464d8c8e200c8e"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4b_browser.txt",
+      "bytes": 4488,
+      "sha256": "9b00d91860f44b9ab6f79e9f7da60d58a593621a346d6ed74097efc075a04b06"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4b_extracted_pytest.txt",
+      "bytes": 102,
+      "sha256": "ca24405fffb59680e1204c480b3c2afbfebc32cffcf61062bc56f569ec02b94d"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4b_final_validation.json",
+      "bytes": 1403,
+      "sha256": "6a5387dede94583e23d035f635559963e42e3e5a2a923c1d8f44ace1f80e5974"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4b_migration_check.txt",
+      "bytes": 838,
+      "sha256": "2b77fc915263ea15a29326f92a72345dbbb3b6a41bc3b9d6429637421898e186"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4b_pagination_red.txt",
+      "bytes": 4144,
+      "sha256": "1c748424c78332e8d32fbf79560d32d5461b8861685b0540c0f78ea3bc50981a"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4b_pip_check.txt",
+      "bytes": 31,
+      "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4b_pytest.txt",
+      "bytes": 519,
+      "sha256": "7ee5a31960c6a69f854f428cc1609f80d1bac2dea339dd106e208f86392665fa"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4b_red.txt",
+      "bytes": 2780,
+      "sha256": "60b85f6211a011eca5402091f1580a2c184db8c56b47cec0d1f819218591a696"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4b_report.md",
+      "bytes": 6174,
+      "sha256": "bd5ab00ceaac3568561ba0b680a3e30dcbff0dcc74b9aa9869d089be4f629bf1"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4b_targeted_pytest.txt",
+      "bytes": 102,
+      "sha256": "84860a28e5e55f93288755316f58cac16aa647a0ee6de17178cf2956ac361deb"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4b_uml.txt",
+      "bytes": 66,
+      "sha256": "1af01373ad4f0c880c5e12c578c82f28f5e2543bc51325b6feaa7477610d07ad"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage4b_uml_render.txt",
+      "bytes": 81,
+      "sha256": "5efa5f9c32bca955f487a52af759141524bdcc0b09e47d30ab31f4d504e498dc"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage5_baseline_pytest.txt",
+      "bytes": 519,
+      "sha256": "f5b9458c93ade9a52731ca35da9959ae56bf59fd90bbf5ed0f4f9476b9aaa6c3"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage5_browser.json",
+      "bytes": 986,
+      "sha256": "585ec738ca7d88790ac4da4d973f7177bef23b271926855ef727f69d7a8f0f58"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage5_database_and_preservation.json",
+      "bytes": 1116,
+      "sha256": "35f53a8deb976a3c3feaf6225415b2ac783fb30e72f2329527954c25cdc1ea69"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage5_migration_check.txt",
+      "bytes": 838,
+      "sha256": "98dd161d2c4569c19431893d9d452e92aa49ff1cb06314e13a0963221ffdcb29"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage5_pip_check.txt",
+      "bytes": 31,
+      "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage5_pytest.txt",
+      "bytes": 519,
+      "sha256": "73700694e9da16e393c2a5d946aa90818ea92d4f925cbd29f95d727a4e7572d8"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage5_red.txt",
+      "bytes": 1577,
+      "sha256": "c5ec8d898bbcbe969579bc8f3348639a6d745b9a398c0ed3f7fbcacead61593f"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage5_report.md",
+      "bytes": 7433,
+      "sha256": "c47fc6fe026a1e9cc9ab73083c45ba2747014f34b844bd136b1dbcf9199a1824"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage5_uml_render.txt",
+      "bytes": 564,
+      "sha256": "5cbbd8634c8f132975c679a3e1d51f97251f573b4957318631b0c57c9856592d"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage5_uml_syntax.txt",
+      "bytes": 138,
+      "sha256": "a3b88364025132d32a22d70de7de91aa2f1d85b2d2b62273676a0c0dcfb3b0ef"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage6_baseline_pytest.txt",
+      "bytes": 519,
+      "sha256": "bcceb0ef089aad85d3b78008f48bc7b4530d407811f4d4c1788e915deceae346"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage6_browser.json",
+      "bytes": 1421,
+      "sha256": "91803da63aee17d7b67624e1e2bf0a66d4f1ad274059b053bc1048d52b19914d"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage6_database_and_preservation.json",
+      "bytes": 1147,
+      "sha256": "67bd187386f051a310ed56d9a54e3a982cd34737d88b1e5912b27356e348cd07"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage6_migration_check.txt",
+      "bytes": 838,
+      "sha256": "b30f089f641cd2f46125ce044485019de4b01c20422ed58089da6e595f838a3c"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage6_pip_check.txt",
+      "bytes": 31,
+      "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage6_pytest.txt",
+      "bytes": 600,
+      "sha256": "c213563d109a5165a9b44f011691eb6b0a77b8c7764761502a0171016ea35efa"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage6_red.txt",
+      "bytes": 4271,
+      "sha256": "409ec122f92875265e0fac2853d065c0bc6a8f86de37c0d9fa262d8a473cb39a"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage6_report.md",
+      "bytes": 7641,
+      "sha256": "40c36964e54a01c6c321f888b0c632836ceff1063b30d1e2826f6d900394cf73"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage6_targeted_initial.txt",
+      "bytes": 2404,
+      "sha256": "5af1340f74314bc8588fe4ad16fe65b0cfeb80ec8cee8385f4f82baa39ab6112"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage6_uml_render.txt",
+      "bytes": 782,
+      "sha256": "1a54daf430b5a72d10b1b096e4f9f4d758bf9c97bbcba490efe42a0c45535258"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage6_uml_syntax.txt",
+      "bytes": 64,
+      "sha256": "3b35a8f2db81813750c9457f6ce84f7e1f093dc6e16919f2d95d875bbd3abd87"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage7_baseline_pytest.txt",
+      "bytes": 600,
+      "sha256": "196890e41e5e2bd88e0c04175c6f29dbc1b0666b81250eeaeaa7602a0261c9d4"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage7_browser.json",
+      "bytes": 1260,
+      "sha256": "92da346e952d85c2c3101ee5498a89106b570ad0ad75f6c24c9f4cb2a7f6ac3d"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage7_database_and_preservation.json",
+      "bytes": 1300,
+      "sha256": "acf48ea3f7173ff11ad602f10cb4d8aaaff9562657b118abd8be790f8986a654"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage7_migration_check.txt",
+      "bytes": 838,
+      "sha256": "5b6c3cb6ac1334705d55f7c8d78f93dc22317c669d7cd05094fc3662a89b2a24"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage7_pip_check.txt",
+      "bytes": 31,
+      "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage7_pytest.txt",
+      "bytes": 681,
+      "sha256": "7dc634d6619f393762d1320b8ea7d4721356d57d5b79c874aebff7216f457c6c"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage7_report.md",
+      "bytes": 7883,
+      "sha256": "9ecd3dcdc83b9c2d51413850fc0024ee8b30021df9af8a78dddd85b5788c3b2a"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage7_uml_render.txt",
+      "bytes": 989,
+      "sha256": "87403d2d3f55f253a5fa41d72cc834ab392419f6c5a058b8d86cbdb75558242c"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage7_uml_syntax.txt",
+      "bytes": 64,
+      "sha256": "9535e81f63f841e8fe98176e4d15f615ba49ebe6f2d20148225247a36ab061f2"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage7a_pytest.txt",
+      "bytes": 102,
+      "sha256": "22eed94e1688a64809e59f87061e74f945cbcfcac977f1e6d39a7bf64def854d"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage7a_red.txt",
+      "bytes": 1669,
+      "sha256": "eb8d5c7f3ebca9b6307a3e7b15358ad078fb567a7788d8c98f5a944db2534cb5"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage7b_pytest.txt",
+      "bytes": 102,
+      "sha256": "4887b1367357b4cdc2287819bf1834405c285b21192f5c0dfaf03304b9177c8f"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage7b_red.txt",
+      "bytes": 1159,
+      "sha256": "f5d00f663a2643f464bb701df08d2ea82fe85a9d751588db6029c73356af915e"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage7c_pytest.txt",
+      "bytes": 102,
+      "sha256": "c9be0c038e4dc3f25aa34cab774dda65d550cdac4098f7b95183dbabad73950f"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage7c_red.txt",
+      "bytes": 3557,
+      "sha256": "074f4ce562468f36283e4211644c0b6169e6a7a66871a11ffc401d3e96b3471a"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_acceptance_checklist.md",
+      "bytes": 1087,
+      "sha256": "7b1838ba64af85b9e38988ae3295c872de8c14547995538013ade020e29debb9"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_backup_restore.json",
+      "bytes": 1584,
+      "sha256": "a8078e56b70ecd668ee55093cd092febc965cfc641efba7f8f86fdcdea58fd05"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_baseline_pip_check.txt",
+      "bytes": 31,
+      "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_baseline_pytest.txt",
+      "bytes": 681,
+      "sha256": "66a92887954f6896da50c72c6cd116de502829d78c203b4a4997b80ca653d6fb"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_browser.json",
+      "bytes": 2446,
+      "sha256": "93da0778fae42b97db92f9c85b07a7130825b86ee259f39aad27d13e41b9fe49"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_compileall.txt",
+      "bytes": 91,
+      "sha256": "6610c7270dad9f9099600b556909067bc1cf5b83fe8cda359f4e85993eff9ccc"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_database_and_preservation.json",
+      "bytes": 943,
+      "sha256": "a65e711e86ca1a0c81667ca33502fb0df39a7dfc164eff9b00963f206b861c90"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_deployment_commands.txt",
+      "bytes": 11124,
+      "sha256": "1df5fd251af5c7238a6f9cd0ff956b80cce62fd9f33a489e3c54f42a24459452"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_development_db_check.txt",
+      "bytes": 838,
+      "sha256": "6e5ef7267e3fe42d3eb117e3c4f953827b0829096a9d5ada43419e0b3f4d5728"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_fresh_deployment.json",
+      "bytes": 4142,
+      "sha256": "d0d99e37507345ca9bd0ec9a18fc747cd48d51e3ae1abec9ef3f730b047d5a49"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_fresh_install.txt",
+      "bytes": 4815,
+      "sha256": "701f166b2b601571a23df7c4417c8c13d224f0b268ca6a33e09cc5df073151ba"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_fresh_pip_check.txt",
+      "bytes": 31,
+      "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_pytest.txt",
+      "bytes": 681,
+      "sha256": "d16ed407bb1be4cb9da9a93093d6bcf9848f740c2de06b2f4b77e5c51da151cb"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_pytest_interrupted.txt",
+      "bytes": 324,
+      "sha256": "41538bec24feaac71a6928ba44cc38e6c7efe85b8e6f629edd94f555a282aaff"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_red.txt",
+      "bytes": 6230,
+      "sha256": "8e9246ef57143c214d99efdb49084cd7f5d44b89da2d34c9093a5755e4bf2378"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_report.md",
+      "bytes": 7240,
+      "sha256": "83a570215cabfac7b2438b919e675ca0e5dc289d7c86b87c17b57f22b9f00d31"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_routes.txt",
+      "bytes": 8615,
+      "sha256": "6b4cde48de4c5f4e49998b3245cbdd7cd0eb8a15dcd18349d671f192a9c81758"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_security_review.md",
+      "bytes": 3992,
+      "sha256": "65f73ae53619827f7aa6559c28b1f7143ce072794d32a537aea4d3c50024a0d6"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_targeted_pytest.txt",
+      "bytes": 101,
+      "sha256": "671a35b980fbeba10eaa33e7aa8c80096681f0120105d265dea8ef926d794695"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_test_matrix.md",
+      "bytes": 3779,
+      "sha256": "90cc60ebde8e67839d91b87a3a8f7976758e36cf30101664df62db0d065a0729"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_uml_render.txt",
+      "bytes": 989,
+      "sha256": "f63fca1b6e61ee8e7d4943bb7677f4e16fc36e712216a1454e21ac6e0922cd93"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage8_uml_syntax.txt",
+      "bytes": 64,
+      "sha256": "9535e81f63f841e8fe98176e4d15f615ba49ebe6f2d20148225247a36ab061f2"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage9_pytest.txt",
+      "bytes": 681,
+      "sha256": "7db96aa5323a8070f2e83ad415d18d1b5ddddab7c2b7757da1c986591f75d866"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage9_report.md",
+      "bytes": 5003,
+      "sha256": "104c48f91e1351e5496ee32c588d476c55e860b5ef99a9c9e77dacbd42eea976"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/reports/stage9_verification.json",
+      "bytes": 4427,
+      "sha256": "e05fa4be85986f70a5069a92b2ca807eed6c7d35bce02e8ec18d5a3ecb113c5a"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/specs/architecture.md",
+      "bytes": 22854,
+      "sha256": "10c403289b95ab29d6854f4a2dd8e7adc1a405205b786fcc17d42e2ce4d80204"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/specs/assumptions.md",
+      "bytes": 12740,
+      "sha256": "bbd5b604ca94afecf0afd25a6076068332ef22c0b245bc15b438ca2ec777c888"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/specs/database_design.md",
+      "bytes": 20156,
+      "sha256": "cb2ec8f15d68aa47dac05ccbb6525a903027fe28387e515ba04cc0810077e2a3"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/specs/design_review_report.md",
+      "bytes": 13237,
+      "sha256": "71f414d308a8b79194960e827099118188d38ecccc9406712020e1eadba6a89c"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/specs/requirements.md",
+      "bytes": 23040,
+      "sha256": "5ba674c471d7b8edc13fbc67f4b4ea58c73392c3ad93157cde65c933219be118"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/specs/source/学生管理系统_前期设计方案与Codex分阶段提示词.docx",
+      "bytes": 1594118,
+      "sha256": "d4520374dac8021cd2d7cdbf098c17c7c48bccb76616a2c82ef587bd0c033c58"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/specs/stage2_decisions.md",
+      "bytes": 6512,
+      "sha256": "f1e5d4eeb925d1d0047849e881aab97d5b8798252353ce0f2d462529722e34d0"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/specs/stage3_auth_rbac_design.md",
+      "bytes": 6519,
+      "sha256": "f80e2580f10124f546ba908dfffd54b2e4a7bb25e49c833b946a579dbcff6620"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/specs/stage4a_design.md",
+      "bytes": 5708,
+      "sha256": "e25eb08ef54e20adb80110215109207ee365513e448c6ddbb95f2f898b76f651"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/specs/stage4b_permissions.md",
+      "bytes": 2994,
+      "sha256": "f988a352227e55a7abdd894bda3bdb3052e9f9c7ac7c2a78f214b34900143da4"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/specs/stage5_decisions.md",
+      "bytes": 2529,
+      "sha256": "598a342a14c246966e16e4fc0686d180be19d68c2e15a18407e356e424ebeb07"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/specs/stage6_decisions.md",
+      "bytes": 2626,
+      "sha256": "acf860e8df88c63a9f2952d225d00b58966be97605746608461f620a0e14b88e"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/specs/stage7_decisions.md",
+      "bytes": 2055,
+      "sha256": "18e89506a9fb414a995a3de79d0dc8c380383d23b5820272675a619a097c248e"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/superpowers/plans/2026-11-16-phase1-flask-scaffold.md",
+      "bytes": 6219,
+      "sha256": "1ed27f597b99a4961e6d5e52c0892698c14506a6dad7381021dce0a967c430dd"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/superpowers/plans/2026-11-16-phase2-database.md",
+      "bytes": 5838,
+      "sha256": "0417fbe9d4294ab78250af3457ba8fa90b798aa14a5aa7664f016ef897b9e175"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/superpowers/plans/2026-11-17-phase3-auth-rbac.md",
+      "bytes": 6754,
+      "sha256": "fdfe41b61450ffe46024753141fa6b824cc57f689e9dc2b58a771ad5988bdd4f"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/superpowers/plans/2026-11-18-phase4a-archives.md",
+      "bytes": 5054,
+      "sha256": "628ed8fcdf43156aa24d6bf0495381f7ba45af9f8773139789e8a688f3f04870"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/uml/README.md",
+      "bytes": 4203,
+      "sha256": "06428d37a7fe351ac6bd8fde2ee2fb6e235edebc5cc54ab152c0479a0e8b0c04"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/uml/activity_diagram.puml",
+      "bytes": 7202,
+      "sha256": "14baeb5fce17ca18e05bc4366fa32c04e732aa972ce3cc8d9c6bbbfac968db59"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/uml/class_diagram.puml",
+      "bytes": 14575,
+      "sha256": "02546294b3a3e03300754b1a93ab3aab8069006c0964846a9e368388d3a47cd7"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/uml/communication_diagram.puml",
+      "bytes": 5968,
+      "sha256": "5cc38a018ff31496191f7483e9818a4a6c49648f027703271c6798c793b36029"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/uml/er_diagram.puml",
+      "bytes": 6449,
+      "sha256": "44318eab7fad3e1d230d295f06c4090c094b8e11747ea288771e2bfb1d8b5a39"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/uml/sequence_diagram.puml",
+      "bytes": 12904,
+      "sha256": "d7caa414ce05c93ca6db770a6f2298df9e1d1257a562f75a81fea2c8d5b41d2f"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/uml/state_diagram.puml",
+      "bytes": 1938,
+      "sha256": "ae9d8d00abf6dd00e47ad7975c602e982671b68a8121b908c3e0024678a8cb2d"
+    },
+    {
+      "path": "source/学生管理系统源码/docs/uml/usecase.puml",
+      "bytes": 5912,
+      "sha256": "2275c2849856833322676e77c9293226c9363fb5cd1a4a8db5b3f5751906fdf6"
+    },
+    {
+      "path": "source/学生管理系统源码/instance/.gitkeep",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "source/学生管理系统源码/migrations/README",
+      "bytes": 41,
+      "sha256": "24bd0dae33abb1c3dc2a0466421d51de196fd7fae8843a2dd13be999d336ec99"
+    },
+    {
+      "path": "source/学生管理系统源码/migrations/alembic.ini",
+      "bytes": 857,
+      "sha256": "4a36049892b3cfa2bc41fb995ad2c900959c08a39d45b7d486c565a60bfca1c9"
+    },
+    {
+      "path": "source/学生管理系统源码/migrations/env.py",
+      "bytes": 3260,
+      "sha256": "8b3ff1b980222cc6699cfb6b30517543a93405d16da176a9868eacdae64c5672"
+    },
+    {
+      "path": "source/学生管理系统源码/migrations/script.py.mako",
+      "bytes": 494,
+      "sha256": "f3fc6003e826fce85e8673bb0a22228d68279b4d1996ccc41ed207ac0605265d"
+    },
+    {
+      "path": "source/学生管理系统源码/migrations/versions/fab16ef0dd6f_initial_thirteen_domain_tables.py",
+      "bytes": 24053,
+      "sha256": "933094b48c8bf1e9e1b52370a29b21e9ce35839ea856c9487ebb313880624961"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/homepage-mobile.png",
+      "bytes": 67191,
+      "sha256": "064e477e5e4422a9ff6c9220470c6ea9547102135de0c72828134cbfd97f72c0"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/homepage.png",
+      "bytes": 76045,
+      "sha256": "0ced2a465c48363db2104640bc9c0d399883a069e392e6e96d9c1a9bdebcb8e9"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage2-homepage.png",
+      "bytes": 76364,
+      "sha256": "2a3774e912f92ca9f7ba68172c82eb659ca66d8ace378fa7bca921a84e46cc29"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage3-admin-dashboard.png",
+      "bytes": 51889,
+      "sha256": "941815c051bb3b1bb9390a26701e3e6ee8d47f0206d8a3312b560b4d4caf7822"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage3-homepage.png",
+      "bytes": 77166,
+      "sha256": "e2ced0a3d1a4d0e0f82046d3b9d584e00c8b68f86c046b5c1f043fdd3aa73729"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage3-login-mobile.png",
+      "bytes": 22550,
+      "sha256": "0d56644fb45dbeefec489c5c7a50eccc679f7532d61bdbee1663ec2bbf94d7aa"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage3-login.png",
+      "bytes": 41206,
+      "sha256": "09e4bf292ef3be93e7d8e6e31e1f5ae473d451f9ce70d7d37aa6676b41a3a8d1"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage3-student-dashboard.png",
+      "bytes": 44714,
+      "sha256": "1467b5ffed5644f923dedfcfe281e919d2830aaaf53e551903a89364d21c37a9"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage3-teacher-dashboard.png",
+      "bytes": 45445,
+      "sha256": "c602181eb010fe1e96bb309761ed1f0fa8dab3b6931e7e5f305ca34a15901bb1"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4a-admin-dashboard.png",
+      "bytes": 59833,
+      "sha256": "82527e44b0e6ac6bb191dde94c94643820948e8ba82ef44af44caf4ece56fb84"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4a-archive-confirmation.png",
+      "bytes": 46886,
+      "sha256": "ed02439b2fcc3e5e9d53c9eadd56ebba9398b53498e204dca7ca305de002002f"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4a-class-detail.png",
+      "bytes": 60734,
+      "sha256": "6e28dd871f3a605ea17d1438e00952922036fa2f4c81973c91c6a2a847ac2b3d"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4a-duplicate-student-error.png",
+      "bytes": 58860,
+      "sha256": "3b6d22bf85e1df2a74c83e9189b2c5f74ec8b604b40027499008e5ef0e494ee9"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4a-mobile-student-form.png",
+      "bytes": 42343,
+      "sha256": "67e6a132725da345cf9de1872696507e17eee10779773ebfae67f98c16a975c8"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4a-mobile-students.png",
+      "bytes": 41344,
+      "sha256": "71cb51bd7bd5d26981412ac4d9d04744d425c6f064c5d2c9ed345e90fa33656a"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4a-parent-detail.png",
+      "bytes": 50360,
+      "sha256": "7902966f6bd117de5bc4809ac4fbb383159209586651828295f5307eb9b2f8d3"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4a-parents-list.png",
+      "bytes": 69323,
+      "sha256": "cef8ba3f115a7385e3cc5c9ce5f97dc17076a51d478f5f394aa51df86de89f76"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4a-student-detail.png",
+      "bytes": 76410,
+      "sha256": "9a6d91cc3342c44e35a6e3694e0b7153ef3eaf739dec1c0fbdb22c4c3767a47e"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4a-student-form-error.png",
+      "bytes": 61118,
+      "sha256": "e6e53af049bcfbee07f6070e3de9e67ed3454a6987bcad479c7a55c829a58090"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4a-students-list.png",
+      "bytes": 50886,
+      "sha256": "ce1bcb807455a6befe6229c5d4af02cb7f2937c1e41eaf1b86c4b3b374b14896"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4a-teacher-detail.png",
+      "bytes": 67603,
+      "sha256": "393db5d5109299a679bbb3b90478408d3fbfa16b3ff410592d750ca0d0ebd1b7"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4b-class-roster.png",
+      "bytes": 42535,
+      "sha256": "55f754fbc5af14934e36fd38945636e845325b3838cca942f00e6c8e192307c7"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4b-contact-edit.png",
+      "bytes": 46903,
+      "sha256": "531ccb883aac6ced55d864253fdaed9e7da7dcf5d365e721b2c45b404f49488c"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4b-contact-saved.png",
+      "bytes": 47824,
+      "sha256": "fc3abbd8ffd16a409df1d7b2c4a2c7a011108748a9a79b15c7e7db3a369425b2"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4b-course-roster.png",
+      "bytes": 46054,
+      "sha256": "ce50a2c4470ac3c38f8be5d02e5386ee6e3456f52d36658565d77bf8252aba93"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4b-mobile-contact.png",
+      "bytes": 31411,
+      "sha256": "7eb9274d9e098a6db6903a76148b5dcb6e356dc2c603ad24b069743e8d9b714c"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4b-parent-read.png",
+      "bytes": 45739,
+      "sha256": "0ab092f8910cf3adabff301003fa779e9fc7e71c7453a23fc66b214ebb4f4808"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage4b-workbench.png",
+      "bytes": 48631,
+      "sha256": "20c0faaabfc820f626fb2f0fa03da51c3419e959ab9bdc4a4b330d7acd6f54b9"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage5-admin-course-duplicate.png",
+      "bytes": 49119,
+      "sha256": "795e1bb9369512e753ecc3778035d6e4c5c01c01db9382d04fb25b735dcd74e5"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage5-admin-course-form.png",
+      "bytes": 52231,
+      "sha256": "64022d316803e2c2c004738bd196ffaf86f4ee585cfef6e23d0fe03fe40c5905"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage5-admin-course-search.png",
+      "bytes": 47618,
+      "sha256": "53fb237c98c666a6c727d1e22c4786912e47b7949520a9a7f8cc5d6525f00e34"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage5-student-forbidden.png",
+      "bytes": 39390,
+      "sha256": "408d289b84fc23422f1137f947ddf8ee1a9e7a300ca6207d068b535a9cdcaff7"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage5-student-grades.png",
+      "bytes": 50569,
+      "sha256": "0375b51f3a6ce477d3cd05a0a629def1cb4e397f1bf5e796c16583e2afe9d606"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage5-teacher-enrollment-form.png",
+      "bytes": 46006,
+      "sha256": "52863f1aae8e587aed022bbd2b94cc52f5ffcf44d29b61c2d837f5ba74d836b4"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage5-teacher-grade-form.png",
+      "bytes": 45773,
+      "sha256": "611bfd16a14732cca7750f42aa6f3238b96ab5df59158854b2f94e90788da5b4"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage5-teacher-grade-mobile.png",
+      "bytes": 28785,
+      "sha256": "ffab132234e4c09b3e766c8266c6961eca8a699acb62a52c5acee9a9816bd57f"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage5-teacher-grade-result.png",
+      "bytes": 49231,
+      "sha256": "2738ad8a035e1d0c9fe748a254d5dedb647197d435777b4dc234a4bb1dbae668"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage6-admin-attendance-detail.png",
+      "bytes": 44904,
+      "sha256": "4dcb5b76e7987439d2f43393a393df58515a65ef014db12bf7029afad11f85b3"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage6-attendance-duplicate.png",
+      "bytes": 49830,
+      "sha256": "13eb8b6ef3085289eb4b05bfcbad49cf8cfcb3d096007963635911ceaff12022"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage6-attendance-mobile.png",
+      "bytes": 28202,
+      "sha256": "e9f233215e980fc5a888af277806433457dab70419f8c50299e1a041de57f1a0"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage6-student-attendance.png",
+      "bytes": 52932,
+      "sha256": "2e95fb5e022e765b88467d336b0ea002b491a1bd0d31ea66b9ba9130b1fbb6ff"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage6-student-forbidden.png",
+      "bytes": 39553,
+      "sha256": "0e25880dedbdd596099b22860f330f81167d68593532e81ab20a5695d4f77cd8"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage6-teacher-attendance-statistics.png",
+      "bytes": 51276,
+      "sha256": "4641815a1d41632e24889ebdcab09b9432f4b87da04741bcfd3f76a80e1f3fcb"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage6-teacher-contact-detail.png",
+      "bytes": 54164,
+      "sha256": "e9edc4b4baf5e70d12097ef2ca6d599c1a6701d10fc66c9c2a8c9f390a7ae209"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage6-teacher-notification-history.png",
+      "bytes": 56736,
+      "sha256": "face92368fd5d78164b7331c53316429342e951218543db7c9515a68debe1a49"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage6-teacher-rewards.png",
+      "bytes": 49345,
+      "sha256": "191a44b678d19b01b5521edfa34649e82325d194b4c5dec709ca88e2b56d83e1"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage6-teacher-simulated-email.png",
+      "bytes": 54558,
+      "sha256": "c5f2aa548d83d167efd09e11f2d5dc79f3c64e5f6cdad69fc59508d94044435a"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage7-admin-account-detail.png",
+      "bytes": 56262,
+      "sha256": "2080c534876ad250dd2e98e67c08e2c6f0d11641fbd2b1a2da52827082184a25"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage7-admin-audit-detail.png",
+      "bytes": 52039,
+      "sha256": "5aab8b58e246cfb6556914d86a12be414a90fdbc5712e47836da08a9f8f13180"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage7-admin-audit-list.png",
+      "bytes": 55757,
+      "sha256": "cd709ab973127b1048b180af5b73da8c435c9711b0d3919b93cf3efd70cec2e8"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage7-admin-dashboard.png",
+      "bytes": 97879,
+      "sha256": "9c22dc8c7b988730cc1c1bd76a9398429728bba9cf43086675a76733f93600d5"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage7-admin-duplicate.png",
+      "bytes": 60873,
+      "sha256": "56c26154fc1d88e1703e6485e2b38ac0a63a89f0d95cc8504e203fd9783563e8"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage7-admin-filters.png",
+      "bytes": 99765,
+      "sha256": "2f4d362f78c2240b337ba655a29699c4c47aa113e6195916164f349e01e1db13"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage7-admin-user-list.png",
+      "bytes": 51816,
+      "sha256": "9b41d86dc975dbc95a1b2ac19e8d931bf4c0960e28331f5aadd74ad937ee4afe"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage7-mobile-navigation.png",
+      "bytes": 44801,
+      "sha256": "741940d7bba81a6c3ccc7cbb1a7f67a53b4817d626481ed80fc2e596523ad70c"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage7-mobile-student.png",
+      "bytes": 40920,
+      "sha256": "f575cd37e836e52ca40358065780b91a1b7846723cdc957a7b9724a87f3d2a82"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage7-mobile-users.png",
+      "bytes": 29285,
+      "sha256": "3f72fe687babc46707eaf15d2d999e93f83b6d2129cb427c0a26aba785b59a5a"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage7-student-dashboard.png",
+      "bytes": 54370,
+      "sha256": "a10f311dd7bfc3d751674a95c0d0da8dc903e9a15b00240dd8080d76df67b08e"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage7-teacher-dashboard.png",
+      "bytes": 78504,
+      "sha256": "48bd5b3417d480bd2d23d4e8bb306e04ae226c6336b64ec6f22c2ebd12317553"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage8-account-detail.png",
+      "bytes": 53966,
+      "sha256": "ef06b4910cb6cdde677771548c60c7395950ac3b0b0f4694913e769ce8c28485"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage8-admin-dashboard.png",
+      "bytes": 99201,
+      "sha256": "9c971336adf1312542973ef61d1b4d83c25e30e88e5e1f7d32b536717925a8e4"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage8-audit-history.png",
+      "bytes": 59440,
+      "sha256": "289848f11b4252320a0a5fe16a0c1995038f97cc01de61144da51cdd886fa0d5"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage8-mobile-form.png",
+      "bytes": 26020,
+      "sha256": "64938883e6920fb6cb322db2435e19778513d2f4b96405ebc290d84d0911f082"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage8-mobile-student-grades.png",
+      "bytes": 28615,
+      "sha256": "840a5a436df487b87634291ee60ebe87805ab78dca26fdc649a87569021ffd27"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage8-permission-denied.png",
+      "bytes": 36941,
+      "sha256": "b6c2511174a7c58813294503495c4832236e5d766a47cbeff9390c29ca1facc7"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage8-student-dashboard.png",
+      "bytes": 52899,
+      "sha256": "b6f4113d99a1c5c1224c179f3ef92be53475f05d7d3ea217d5ead9fbe3a9260b"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage8-students-search.png",
+      "bytes": 54341,
+      "sha256": "f0b930b064f0e2d6becae6de1152d2c99ff41d1de70fbdd4e34565f1f8deb2a3"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage8-teacher-attendance.png",
+      "bytes": 54953,
+      "sha256": "72cdb00ca36e67f29a55d2bdb49d13c4a01c365e433d00c09ee1cfc488f519c9"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage8-teacher-contacts.png",
+      "bytes": 54642,
+      "sha256": "e46c86eecd54f213341c1e0e4478ab7eca7d7af64bde34292c7f968fca73ba79"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage8-teacher-dashboard.png",
+      "bytes": 77358,
+      "sha256": "2db4d4d6cafe1a07fd452ad716d6e9c485cb7890c967bc103ef9c33a6625c3ef"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage8-teacher-grades.png",
+      "bytes": 52542,
+      "sha256": "e5576e866c16f0fc53f5f9e07938b58f67f31f2ba930990a087f2bf5739d998c"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage8-teacher-notification.png",
+      "bytes": 57780,
+      "sha256": "0837d88eada5b762472db20d229d670912323b33dc21347dbd9c5ab1d9ccebeb"
+    },
+    {
+      "path": "source/学生管理系统源码/output/playwright/stage8-teacher-rewards.png",
+      "bytes": 55689,
+      "sha256": "e6cb21b758ec9d74278292d82e5b10acc1503a04ca150c48f03ee0c408ff38d2"
+    },
+    {
+      "path": "source/学生管理系统源码/pytest.ini",
+      "bytes": 56,
+      "sha256": "c28d7ee43186a578bc0f8867e26fdf7edcb0f1275b12d71d85a20e95a524c4ef"
+    },
+    {
+      "path": "source/学生管理系统源码/requirements.txt",
+      "bytes": 467,
+      "sha256": "b2442bd540c734c7765a0ba721d8942b82eba3a8b814106a6b62a4bd8b777918"
+    },
+    {
+      "path": "source/学生管理系统源码/run.py",
+      "bytes": 934,
+      "sha256": "a2b5273ef32a824495c524bf0d882b6dc86304f5e44d77a36b652489cc4ceaa0"
+    },
+    {
+      "path": "source/学生管理系统源码/scripts/sqlite_snapshot.py",
+      "bytes": 3401,
+      "sha256": "5a2f75ba49285945d1fbb81b33a8b59ac1b813a993993ae9594841cc166c12b9"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/academics_support.py",
+      "bytes": 1336,
+      "sha256": "aec4e782030922e67dee26e8caf168f8ae3c542a6be749466e971f313c744a69"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/archive_support.py",
+      "bytes": 889,
+      "sha256": "f5aff0d13764775210a6eae52855142314e6ba71c03bc08501e4728180b407a9"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/conftest.py",
+      "bytes": 3821,
+      "sha256": "6417c34ebc19e4d429c3a3628c527fdb725005baf62a5a207e0d492b823152a9"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/stage7_support.py",
+      "bytes": 2998,
+      "sha256": "6e0f14bbb9c9b617ae81bd0e4a5ad9c4464eea72df8c11a7f0960bbd976a9ec2"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/student_records_support.py",
+      "bytes": 2498,
+      "sha256": "727a83164839916f4ebe73e080d8574aed17691f006a5b3214753fd6e394bfa2"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/teacher_scope_support.py",
+      "bytes": 2600,
+      "sha256": "87de1f8abaebe696813c17aba96a5479edffbd1f5a3c227b86451f08835d466f"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_app.py",
+      "bytes": 488,
+      "sha256": "081b18af789008b5a1d0714a05a5d047ea97391a5a9c53ec3719329e7fbe4893"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_attendance_routes.py",
+      "bytes": 2142,
+      "sha256": "470210b5b228c631e281241b2909b071aad75efcafaf3463643373500f1ee669"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_attendance_service.py",
+      "bytes": 1892,
+      "sha256": "ec6c61e5f83132c901709309506969ad82c23fa7fe1d21e7f8a5cc062bf06dd9"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_audit_append_only_replace.py",
+      "bytes": 1679,
+      "sha256": "992af04092d3aa94beaf467b8189f781570443a531983faee7eb33b586d22d9e"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_audit_service.py",
+      "bytes": 4552,
+      "sha256": "77d02f3341cc7d65588091cc296490ad77187b7c363fa4821cead93baad85d89"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_auth_login.py",
+      "bytes": 1994,
+      "sha256": "2e414f7a67c2c724d61e052df10e049a8149645c90e97b449e43fe57349fa129"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_auth_logout.py",
+      "bytes": 993,
+      "sha256": "4c47008a0be2aa3449faf161b5c4bb9d78b64f2260ea9d3de14f278a1478db2d"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_auth_passwords.py",
+      "bytes": 5770,
+      "sha256": "e8c087b7b4a38a073f8eccea19a841403c20bb58df815e1846988ceefef5bd4b"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_auth_security.py",
+      "bytes": 3101,
+      "sha256": "0981247af8a3911d67cb5a18dda95564809ce26f0afc0bd32bd8969b690eb829"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_auth_session.py",
+      "bytes": 4210,
+      "sha256": "63979fa8cf57b058f7389d8285d100438c789430dadbc51e96fe6f1652e768b6"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_class_crud.py",
+      "bytes": 1551,
+      "sha256": "f7881c0b051e8d3a88246ef92c7f5ace776845e5dcecd381bf8cdaa97ad4817a"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_configuration.py",
+      "bytes": 3489,
+      "sha256": "42e0f5e07039322637a20d7c54152c3c956bb7b5ed677aaafce5e43d7f7033ee"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_course_crud.py",
+      "bytes": 2083,
+      "sha256": "b30049b8f307bedea52704c3fb08ddabe5caca5335496cb68e7ffc2665842899"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_csrf.py",
+      "bytes": 844,
+      "sha256": "d88997541283e1446773921e68f7a60c816409bbcf735bbed543aadd585841a2"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_data_validation_service.py",
+      "bytes": 7701,
+      "sha256": "318c790c936361e2b02680bb2c40bc2df1f282f94ec32ada9e0827d0407c768b"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_database_cli.py",
+      "bytes": 4863,
+      "sha256": "2b6640a1108019f465b83de4294205d6e4fd1859e9fa493cc9c16fb19a160459"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_database_constraints.py",
+      "bytes": 12639,
+      "sha256": "618cd2bf7f67fd74bbb7d55bc976dc02aa277fd259bc379679143f888566f11b"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_database_migrations.py",
+      "bytes": 1723,
+      "sha256": "7b9830f8711c9ca4cb670e98c777a4d8d75ea788f640ce3419584b6dcf2e4f8e"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_enrollment_service.py",
+      "bytes": 2435,
+      "sha256": "6306f8682bc787c11cc02fd4eddb1589b15d501ea0bc62d9876764786dc6fb2d"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_grade_service.py",
+      "bytes": 1656,
+      "sha256": "af310095b4a87b611f3ab1b6447c126ce126f799063fd2c2752a0641c524f070"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_models.py",
+      "bytes": 6402,
+      "sha256": "499c1b5800e6ceb82af3182f57afc848644eefa1abb56fcc3eb45f458be1491e"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_notification_service.py",
+      "bytes": 4979,
+      "sha256": "b13456eda946f3eecd9768c5f8a7a102db5b56e8cfd1fa54f8e52aa190dff128"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_object_permissions.py",
+      "bytes": 1719,
+      "sha256": "ed310682daf337415f4683d8a722b3bcacc2f90b66b6634b220a7adb6bc3d465"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_pages.py",
+      "bytes": 2212,
+      "sha256": "23417ee2b8fa3bea4e77c923ce1f264e19f9b7728459ec5c942e2d3594ca8fe6"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_parent_contact_service.py",
+      "bytes": 2673,
+      "sha256": "f425bd850e387d5db6c5fc335719c11c4eda22598858e5ef883d8e6d4ae2074d"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_parent_crud.py",
+      "bytes": 4077,
+      "sha256": "ceb9c16942385f8403d79df2266ca1d811b051661813796061a0fbc09cb77ddf"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_rbac.py",
+      "bytes": 1277,
+      "sha256": "d5cf6c192f84545f941b56f24224e95f89434039ad2e7b7d588ee1ff121c6779"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_reward_service.py",
+      "bytes": 2186,
+      "sha256": "dcfa80a65462e05d6e518b2f7da6366844f087faf102a69b1228e84a6e1efcff"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage4_audit.py",
+      "bytes": 8718,
+      "sha256": "f36f29e4344868ee60308ed3641d8bacec3c66ba89b9b5946a5c78dafe8263b6"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage4_permissions.py",
+      "bytes": 3703,
+      "sha256": "2a67dcfa04d74f5cfd8b5075e0ded4dfa014f68a0baa419b69bceab5acd9f87b"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage4b_permissions.py",
+      "bytes": 1881,
+      "sha256": "e6505efec3500773d1faa186d4c55c208b6d0b4a9dd468d5e8bf322c3da47edd"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage5_audit.py",
+      "bytes": 3237,
+      "sha256": "5ff66fb53473d99d66d143fcc07d11fbef539be18e83f41367908d452881124f"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage5_permissions.py",
+      "bytes": 3502,
+      "sha256": "43913d6a90d5e1793ac351157e7f5873ca47616e9139e62677f427d6b97c5033"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage5_routes.py",
+      "bytes": 2728,
+      "sha256": "345f1d79770eeb59e2c507f26f2f86e9cb2725aca3e4fb0268f0af113e4eeb67"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage6_audit.py",
+      "bytes": 4264,
+      "sha256": "673fbc66bb5ca591e3d0260058d9f6f061106bf21e4018c569b12bcb0c23a8c3"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage6_notifications.py",
+      "bytes": 3498,
+      "sha256": "b4e239bd36f5949c40a3946374f95ea06a59b6e7626a2098162f70a48b4f1e8a"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage6_permissions.py",
+      "bytes": 4771,
+      "sha256": "c23866cf0ee0d79603f0f1bf9639d68c740a9bdd0a80a6ae5c7f6e1a7cd88848"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage6_statistics.py",
+      "bytes": 1578,
+      "sha256": "68b6c265b9e3414c0d024fd34c3cc48f1fd741a26786ce246aab9f106cbbe341"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage7_account_security.py",
+      "bytes": 5612,
+      "sha256": "08fae4c4c8eec77cef858388d2b2d8258f97cd639914b0ba9b401f4c97496d96"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage7_audit_query.py",
+      "bytes": 2991,
+      "sha256": "a91b9695c70648c519fc2b405dff9ecb768df53b0c67daeb9eecad94a6ee3473"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage7_dashboard_permissions.py",
+      "bytes": 2150,
+      "sha256": "fcae4bc56df58c36a0e815799fce0da3588a215d954a141d40dca695801bee63"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage7_dashboard_statistics.py",
+      "bytes": 2494,
+      "sha256": "d76d5e8ed5f1fbd27872ef11ae2d460a9976cd1eb83c4af70fe8eeaf48c5b9f5"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage7_routes.py",
+      "bytes": 2190,
+      "sha256": "c3625e6ab3d3b85b4e456f2e7e8c08bee77fea1652d70edd0a371bf316ff66d2"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage7_user_management.py",
+      "bytes": 4396,
+      "sha256": "ab203d49ab1c6ad72f7d7b56381c8d7c330126080d69c0c3d775c5aebf06ec15"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage8_backup_restore.py",
+      "bytes": 3999,
+      "sha256": "fa675e60628f5173cf32b012321ceffe3a8fd5500df5b85cef8769dda00aeec2"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage8_configuration.py",
+      "bytes": 2578,
+      "sha256": "3f9d9e7d7070b7d719c500dfd14a788bc899ca23bcfb1c37ad57ac800156b4a4"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage8_deployment.py",
+      "bytes": 2619,
+      "sha256": "6c8cb2b80df4b5d6eeb2b8ee6638ed7576206bb130ae7ab40e43df8c9a7ac486"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage8_end_to_end.py",
+      "bytes": 1924,
+      "sha256": "09476f778a8d1189db7179e0b8a89346f998d9ecb06fbbe54b0189f5d289d33f"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_stage8_security.py",
+      "bytes": 2405,
+      "sha256": "7f0d66a3b26d8a9cd71d75c3332de9db7878d47ba45afa2fd6a03d9dc0745a22"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_student_crud.py",
+      "bytes": 6643,
+      "sha256": "828ff19b160ed2e6fa01c73c0479d99e07ad80a574a905ac781005f0c3ec552e"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_teacher_crud.py",
+      "bytes": 1668,
+      "sha256": "47417879c80edc12b74eab11e3215a3d87a7bed7cd9a249bd1b17703dd087846"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_teacher_limited_edit.py",
+      "bytes": 4755,
+      "sha256": "ec32a3e79dd3d998617f31e1d177d251a73502b64e5a4e2f7226278c1a1b6702"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_teacher_parent_read.py",
+      "bytes": 679,
+      "sha256": "aa27054528aa1b176ebb0109f7d838659f4008ff849ae14be1eee29c0c0130ba"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_teacher_scope.py",
+      "bytes": 2509,
+      "sha256": "ca05996b68a81943708dce3e95b0d17c5eaccb7b353506c26c9724b16225a8fe"
+    },
+    {
+      "path": "source/学生管理系统源码/tests/test_teacher_student_read.py",
+      "bytes": 2389,
+      "sha256": "8336a757c5d44ce20908db0b86cbff2bdc24d71e31ddf03a47ed82f8dd1b6465"
+    },
+    {
+      "path": "testing/stage8_acceptance_checklist.md",
+      "bytes": 1087,
+      "sha256": "7b1838ba64af85b9e38988ae3295c872de8c14547995538013ade020e29debb9"
+    },
+    {
+      "path": "testing/stage8_backup_restore.json",
+      "bytes": 1584,
+      "sha256": "a8078e56b70ecd668ee55093cd092febc965cfc641efba7f8f86fdcdea58fd05"
+    },
+    {
+      "path": "testing/stage8_baseline_pip_check.txt",
+      "bytes": 31,
+      "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "path": "testing/stage8_baseline_pytest.txt",
+      "bytes": 681,
+      "sha256": "66a92887954f6896da50c72c6cd116de502829d78c203b4a4997b80ca653d6fb"
+    },
+    {
+      "path": "testing/stage8_browser.json",
+      "bytes": 2446,
+      "sha256": "93da0778fae42b97db92f9c85b07a7130825b86ee259f39aad27d13e41b9fe49"
+    },
+    {
+      "path": "testing/stage8_compileall.txt",
+      "bytes": 91,
+      "sha256": "6610c7270dad9f9099600b556909067bc1cf5b83fe8cda359f4e85993eff9ccc"
+    },
+    {
+      "path": "testing/stage8_database_and_preservation.json",
+      "bytes": 943,
+      "sha256": "a65e711e86ca1a0c81667ca33502fb0df39a7dfc164eff9b00963f206b861c90"
+    },
+    {
+      "path": "testing/stage8_deployment_commands.txt",
+      "bytes": 11124,
+      "sha256": "1df5fd251af5c7238a6f9cd0ff956b80cce62fd9f33a489e3c54f42a24459452"
+    },
+    {
+      "path": "testing/stage8_development_db_check.txt",
+      "bytes": 838,
+      "sha256": "6e5ef7267e3fe42d3eb117e3c4f953827b0829096a9d5ada43419e0b3f4d5728"
+    },
+    {
+      "path": "testing/stage8_fresh_deployment.json",
+      "bytes": 4142,
+      "sha256": "d0d99e37507345ca9bd0ec9a18fc747cd48d51e3ae1abec9ef3f730b047d5a49"
+    },
+    {
+      "path": "testing/stage8_fresh_install.txt",
+      "bytes": 4815,
+      "sha256": "701f166b2b601571a23df7c4417c8c13d224f0b268ca6a33e09cc5df073151ba"
+    },
+    {
+      "path": "testing/stage8_fresh_pip_check.txt",
+      "bytes": 31,
+      "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf"
+    },
+    {
+      "path": "testing/stage8_pytest.txt",
+      "bytes": 681,
+      "sha256": "d16ed407bb1be4cb9da9a93093d6bcf9848f740c2de06b2f4b77e5c51da151cb"
+    },
+    {
+      "path": "testing/stage8_pytest_interrupted.txt",
+      "bytes": 324,
+      "sha256": "41538bec24feaac71a6928ba44cc38e6c7efe85b8e6f629edd94f555a282aaff"
+    },
+    {
+      "path": "testing/stage8_red.txt",
+      "bytes": 6230,
+      "sha256": "8e9246ef57143c214d99efdb49084cd7f5d44b89da2d34c9093a5755e4bf2378"
+    },
+    {
+      "path": "testing/stage8_report.md",
+      "bytes": 7114,
+      "sha256": "8e272185567d9330f5a57d42c3f77a87b7e87051c311b08a6a8c833a36f17378"
+    },
+    {
+      "path": "testing/stage8_routes.txt",
+      "bytes": 8615,
+      "sha256": "6b4cde48de4c5f4e49998b3245cbdd7cd0eb8a15dcd18349d671f192a9c81758"
+    },
+    {
+      "path": "testing/stage8_security_review.md",
+      "bytes": 4137,
+      "sha256": "52e474351cc06e543483f2ae705db1f16da7672a926eaae0d54c5817dc27ba3c"
+    },
+    {
+      "path": "testing/stage8_targeted_pytest.txt",
+      "bytes": 101,
+      "sha256": "671a35b980fbeba10eaa33e7aa8c80096681f0120105d265dea8ef926d794695"
+    },
+    {
+      "path": "testing/stage8_test_matrix.md",
+      "bytes": 3779,
+      "sha256": "90cc60ebde8e67839d91b87a3a8f7976758e36cf30101664df62db0d065a0729"
+    },
+    {
+      "path": "testing/stage8_uml_render.txt",
+      "bytes": 989,
+      "sha256": "f63fca1b6e61ee8e7d4943bb7677f4e16fc36e712216a1454e21ac6e0922cd93"
+    },
+    {
+      "path": "testing/stage8_uml_syntax.txt",
+      "bytes": 64,
+      "sha256": "9535e81f63f841e8fe98176e4d15f615ba49ebe6f2d20148225247a36ab061f2"
+    },
+    {
+      "path": "testing/stage9_pytest.txt",
+      "bytes": 681,
+      "sha256": "7db96aa5323a8070f2e83ad415d18d1b5ddddab7c2b7757da1c986591f75d866"
+    },
+    {
+      "path": "testing/stage9_report.md",
+      "bytes": 5004,
+      "sha256": "1170d29c8ebf34a3fce6fa48b4c1ed995c85f1ff3349aecb534a0cbbd0c5b325"
+    },
+    {
+      "path": "testing/stage9_verification.json",
+      "bytes": 4427,
+      "sha256": "e05fa4be85986f70a5069a92b2ca807eed6c7d35bce02e8ec18d5a3ecb113c5a"
+    },
+    {
+      "path": "uml/README.md",
+      "bytes": 1020,
+      "sha256": "63240b6b26f259caad638fbb2bf9a7678d12f57b397b4cf6dc28c804eb9f07bc"
+    },
+    {
+      "path": "uml/png/activity_diagram.png",
+      "bytes": 100473,
+      "sha256": "9e21952c06b6fcbf338f5c504d851af25aa98696972387106ad141c091f95e02"
+    },
+    {
+      "path": "uml/png/activity_diagram_001.png",
+      "bytes": 66818,
+      "sha256": "907327bf75dae71bd49c05bd2636385380d818919511b77d3d259d7f61dc514d"
+    },
+    {
+      "path": "uml/png/activity_diagram_002.png",
+      "bytes": 57420,
+      "sha256": "4c045b77104dacbc630177edf8697a122ce21bde79129cb6461ad47933ddf8a3"
+    },
+    {
+      "path": "uml/png/archive_state.png",
+      "bytes": 51268,
+      "sha256": "c170415553a1db35a71663b237dd5295a8d5d92c383970c53df30980861f8601"
+    },
+    {
+      "path": "uml/png/auth_activity.png",
+      "bytes": 105288,
+      "sha256": "102365ca6b96e772fd4cc062b3e29fae4325a6432ef23230fcd718b73f029615"
+    },
+    {
+      "path": "uml/png/auth_sequence.png",
+      "bytes": 167195,
+      "sha256": "93bcaa957eac6e61700d29c02424a7dff92227ac232aea3909e64a8f3660c83b"
+    },
+    {
+      "path": "uml/png/class_diagram.png",
+      "bytes": 1567695,
+      "sha256": "cc4e96a327b9683ddfedc33f701f87826ca2f813ecc9c8ddf3698672c181906b"
+    },
+    {
+      "path": "uml/png/communication_diagram.png",
+      "bytes": 190250,
+      "sha256": "bd2b69e9c94ba4204f8407fb3e7574eff01ff330eb7d87871aa87d33c4494490"
+    },
+    {
+      "path": "uml/png/communication_diagram_001.png",
+      "bytes": 100190,
+      "sha256": "db48f0e2c24f04f39f83741eb834f3cf2024c64e53e3aaf4635a2adef6db32b5"
+    },
+    {
+      "path": "uml/png/er_diagram.png",
+      "bytes": 497546,
+      "sha256": "05e6a7b2e2d885a03c10620ea3210ecd24478690094a1ad7e7345ba17bd9281f"
+    },
+    {
+      "path": "uml/png/sequence_diagram.png",
+      "bytes": 203853,
+      "sha256": "9f09df61970c60a4d1e0bff4f6f32d469cf14c7b0ccbbf4cf996d9fea0342700"
+    },
+    {
+      "path": "uml/png/sequence_diagram_001.png",
+      "bytes": 148647,
+      "sha256": "d02373c780ff2b58108a06bf745375b6f11b5a4d0f67599fa762d4a60f61c8c8"
+    },
+    {
+      "path": "uml/png/stage6_attendance_sequence.png",
+      "bytes": 141588,
+      "sha256": "0429cb1248c7a0e3811c3a9d1becdfd4c5b9c9f181afc318a60b14c639b03f6b"
+    },
+    {
+      "path": "uml/png/stage6_attendance_statistics.png",
+      "bytes": 45822,
+      "sha256": "9398f841bf9244aa6bae39dff9d83125e65cb34832b8e8a75a4cc2814821c742"
+    },
+    {
+      "path": "uml/png/stage6_records_activity.png",
+      "bytes": 67424,
+      "sha256": "a07df1ad900d6f769f52961f41733ba29f7abae8eaba54942545cdab65ec7f7c"
+    },
+    {
+      "path": "uml/png/stage6_records_communication.png",
+      "bytes": 77330,
+      "sha256": "51445242745f065f5380c082e2b2b3033e49154d42ff301dcb0c62f18023f00c"
+    },
+    {
+      "path": "uml/png/stage6_records_sequence.png",
+      "bytes": 131147,
+      "sha256": "46afd1fc0ddd462695eda8def8e709cf777bc8074762102608342e10207da2cf"
+    },
+    {
+      "path": "uml/png/stage7_audit_sequence.png",
+      "bytes": 68875,
+      "sha256": "94659048b8e47df5400f368bc1aaa47c35851b5096516a992c35c97193f68488"
+    },
+    {
+      "path": "uml/png/stage7_statistics_activity.png",
+      "bytes": 55494,
+      "sha256": "d803241df5e64a8d380a66cc96e2c8bbefc8e8a2551b3a7fd1f6ec34f997385a"
+    },
+    {
+      "path": "uml/png/stage7_user_activity.png",
+      "bytes": 68736,
+      "sha256": "e858d5cf670db6755b3292793118447e6c0f04def8a0c83f49742a60f9f1dd92"
+    },
+    {
+      "path": "uml/png/stage7_user_sequence.png",
+      "bytes": 123974,
+      "sha256": "9394d08708e7f032c7f50562118114b8ed6f8c4286d3d222076de97f2e8d3a4d"
+    },
+    {
+      "path": "uml/png/stage7_workbench_communication.png",
+      "bytes": 61046,
+      "sha256": "663bf02bd06c8a31a7161ea2b3f0e137c3f79fb5987c5b179c3274b0121d885f"
+    },
+    {
+      "path": "uml/png/state_diagram.png",
+      "bytes": 108888,
+      "sha256": "72dfc34dd026daca32e6ffc7b3479f2fcd1b7adb254a40e3533f574d7894c9aa"
+    },
+    {
+      "path": "uml/png/teacher_contact_communication.png",
+      "bytes": 90127,
+      "sha256": "153c0893db8dd43511bd61d9e67348b1a516167b81eb102208ca2aeeeb1450cd"
+    },
+    {
+      "path": "uml/png/teacher_contact_sequence.png",
+      "bytes": 121963,
+      "sha256": "58830b81417fd5ff5119f2f6e03e4b0df2cc48a5812274c899f2118328c25dca"
+    },
+    {
+      "path": "uml/png/usecase.png",
+      "bytes": 641929,
+      "sha256": "dd09cb634f155e2446426b80d157d6cb44a55a65fd10997b7a40ec11786c302b"
+    },
+    {
+      "path": "uml/source/activity_diagram.puml",
+      "bytes": 7202,
+      "sha256": "14baeb5fce17ca18e05bc4366fa32c04e732aa972ce3cc8d9c6bbbfac968db59"
+    },
+    {
+      "path": "uml/source/class_diagram.puml",
+      "bytes": 14575,
+      "sha256": "02546294b3a3e03300754b1a93ab3aab8069006c0964846a9e368388d3a47cd7"
+    },
+    {
+      "path": "uml/source/communication_diagram.puml",
+      "bytes": 5968,
+      "sha256": "5cc38a018ff31496191f7483e9818a4a6c49648f027703271c6798c793b36029"
+    },
+    {
+      "path": "uml/source/er_diagram.puml",
+      "bytes": 6449,
+      "sha256": "44318eab7fad3e1d230d295f06c4090c094b8e11747ea288771e2bfb1d8b5a39"
+    },
+    {
+      "path": "uml/source/sequence_diagram.puml",
+      "bytes": 12904,
+      "sha256": "d7caa414ce05c93ca6db770a6f2298df9e1d1257a562f75a81fea2c8d5b41d2f"
+    },
+    {
+      "path": "uml/source/state_diagram.puml",
+      "bytes": 1938,
+      "sha256": "ae9d8d00abf6dd00e47ad7975c602e982671b68a8121b908c3e0024678a8cb2d"
+    },
+    {
+      "path": "uml/source/usecase.puml",
+      "bytes": 5912,
+      "sha256": "2275c2849856833322676e77c9293226c9363fb5cd1a4a8db5b3f5751906fdf6"
+    },
+    {
+      "path": "video/系统演示.mp4",
+      "bytes": 5917950,
+      "sha256": "a601dc2b0434ae866870409591b252bc89faadadb7b09512235e5622b24ae3a9"
+    },
+    {
+      "path": "video/视频录制清单.md",
+      "bytes": 2408,
+      "sha256": "a035af6ea38ce34280d15f3bccedf8d985edb17955201ff8922310e08b32605c"
+    },
+    {
+      "path": "video/视频演示脚本.md",
+      "bytes": 4599,
+      "sha256": "91de8d81eeab2dab490852929216dc8d39bda912d0a4613038f0a837b8986b20"
+    }
+  ]
+}

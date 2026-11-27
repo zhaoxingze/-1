@@ -1,0 +1,141 @@
+@startuml
+!pragma layout smetana
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName Microsoft YaHei
+title 学生综合信息管理系统用例图
+actor "管理员" as Admin
+actor "教师" as Teacher
+actor "学生" as Student
+actor "系统用户" as LoginUser
+Admin --|> LoginUser
+Teacher --|> LoginUser
+Student --|> LoginUser
+
+rectangle "学生综合信息管理系统" {
+  usecase "UC-01 用户登录\nFR-01/02" as UC01
+  usecase "UC-11 退出及修改本人密码\nFR-01/04" as UC11
+  usecase "UC-02 新增学生\nFR-05" as UC02
+  usecase "UC-03 学生档案查询\nFR-05" as UC03Read
+  usecase "UC-03 学生档案修改与学籍维护\nFR-05/06" as UC03Write
+  usecase "UC-03 本班学生基本资料\n阶段4B" as UC03Homeroom
+  usecase "UC-03 本班学生电话与住址编辑\n阶段4B" as UC03Contact
+  usecase "UC-04 当前所授课程身份名单\n学号和姓名，阶段4B" as UC04Identity
+  usecase "UC-13 本班家长联系方式只读\n阶段4B" as UC13Read
+  usecase "UC-04 新建与修改课程、指派教师\n阶段5 FR-09" as UC04Course
+  usecase "UC-04 按范围查看课程与分学期选课\n阶段5 FR-09/10" as UC04Read
+  usecase "UC-04 按学期建立选课\n阶段5 FR-10" as UC04Enroll
+  usecase "UC-05 成绩录入、修改及查询\n阶段5 FR-11/12/13" as UC05
+  usecase "UC-06 登记、编辑和查询考勤\n阶段6 FR-14/15" as UC06
+  usecase "UC-07 新增、编辑和查询奖惩\n阶段6 FR-17/18/19" as UC07
+  usecase "UC-08 新增、编辑和查询家长联系\n阶段6 FR-20/21" as UC08
+  usecase "UC-09 查询本人资料、选课与成绩\n阶段3/5 FR-05/13" as UC09
+  usecase "UC-09 查询本人考勤\n阶段6 FR-15" as UC09Attendance
+  usecase "UC-10 创建、编辑、绑定、启停与重置密码\n阶段7 FR-02/03/04/25" as UC10
+  usecase "UC-10 查询脱敏审计与实体历史\n阶段7" as UC10Audit
+  usecase "UC-12 班级与教师档案维护\nFR-07 与原案阶段 4" as UC12
+  usecase "UC-13 维护家长档案\nFR-08" as UC13
+  usecase "UC-14 按范围统计考勤\n阶段6 FR-16" as UC14Attendance
+  usecase "UC-14 三角色统计工作台\n阶段7 FR-23/24" as UC14
+  usecase "UC-15 创建或查询模拟通知\n阶段6 FR-22" as UC15
+}
+
+LoginUser -- UC01
+LoginUser -- UC11
+Admin -- UC02
+Admin -- UC03Read
+Admin -- UC03Write
+Admin -- UC04Course
+Admin -- UC04Read
+Admin -- UC04Enroll
+Admin -- UC05
+Admin -- UC06
+Admin -- UC07
+Admin -- UC08
+Admin -- UC10
+Admin -- UC10Audit
+Admin -- UC12
+Admin -- UC13
+Admin -- UC14
+Admin -- UC14Attendance
+Admin -- UC15
+Teacher -- UC03Homeroom
+Teacher -- UC03Contact
+Teacher -- UC04Identity
+Teacher -- UC04Read
+Teacher -- UC04Enroll
+Teacher -- UC05
+Teacher -- UC06
+Teacher -- UC07
+Teacher -- UC08
+Teacher -- UC13Read
+Teacher -- UC14
+Teacher -- UC14Attendance
+Teacher -- UC15
+Student -- UC09
+Student -- UC04Read
+Student -- UC09Attendance
+Student -- UC14
+Student -- UC14Attendance
+
+note right of UC03Write
+  管理员完整档案写入；班主任限电话和住址，走UC03Contact。
+  学号、班级、学籍和归档由管理员维护。
+end note
+note right of UC04Enroll
+  A-22 要求教师绑定有效、当前负责课程、学生在本班且为配置学期。
+  管理员可为任意已存在的学生和课程选课；三项成绩初值 NULL。
+end note
+note right of UC05
+  教师仅可访问本人当前课程在配置学期的成绩，管理员可跨学期。
+  两项分数必填且在 0–100 内，按 30/70 加权，以 Decimal 半入两位。
+end note
+note right of UC06
+  管理员全局，班主任限当前本班学生。
+  日期、学生、节次组合唯一，节次为非空字符串。
+end note
+note right of UC07
+  教师限当前本班学生。A-12 对学生默认拒绝。
+end note
+note right of UC08
+  教师限当前负责班级学生。
+  联系对象保存历史姓名和电话，关联家长须属该学生。
+end note
+note right of UC14Attendance
+  (出勤 + 迟到) / (出勤 + 迟到 + 缺勤) × 100%。
+  仅统计授权记录，分母为零显示无可统计数据。
+end note
+note right of UC10
+  固定三角色，档案一对一。禁止停用自身或解除自身管理员权限。
+  变更状态、角色或档案使旧会话失效。
+end note
+note right of UC10Audit
+  管理员只读，按实体、操作者、动作、UTC 日期筛选。
+  展示许可业务字段。
+end note
+note right of UC14
+  管理员全局；教师区分当前本班与课程；学生本人。
+  考勤最近30个UTC自然日，均分为选定学期完整成绩。
+end note
+note right of UC15
+  管理员全局，班主任限当前负责班级学生。
+  显式操作生成模拟短信/邮件记录及快照，未实际发送。
+end note
+legend bottom
+  所有受限用例含服务端角色和对象范围校验（FR-25），不把登录画成每次调用的 include。
+  管理员全局；教师按明确负责关系；学生固定本人，不可凭连线推导范围外权限。
+  教师读取班级、教师的必要信息已归入负责范围查询，不授予 UC-12 维护权。
+  UC-11 至 UC-15 是原案已有功能的补充编号，不是新增需求。
+  学生奖惩默认拒绝。家长为信息对象。
+endlegend
+note as S4A
+  阶段4A已实现：管理员UC-02新增学生、UC-03档案编辑/学籍/归档，
+  UC-12班级与教师档案、UC-13家长档案/主要联系人。
+  UC-01/11认证、UC-10仅密码重置、UC-09最小本人资料沿用阶段3。
+  阶段4B按当前班主任及任课关系校验，分别开放本班详情、
+  联系字段编辑、家长联系档案只读及课程最小身份名单。
+  阶段5新增课程、选课和成绩用例。
+  阶段6开放考勤、奖惩、家长联系、模拟通知和考勤统计。
+  阶段7开放账号及审计管理、三角色统计。
+end note
+@enduml
